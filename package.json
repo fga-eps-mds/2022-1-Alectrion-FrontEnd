@@ -21,9 +21,9 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "npx eslint --fix src/*",
-    "test": "react-scripts test",
-    "test:staged": "CI=true npm test --  --env=jsdom --findRelatedTests src/*.test.tsx",
-    "test:coverage": "react-scripts test --collect-coverage",
+    "test": "react-scripts test ",
+    "test:staged": "CI=true npm test --  --env=jsdom --findRelatedTests src/**/*.test.tsx",
+    "test:all": "react-scripts test --coverage --watchAll",
     "prepare": "husky install"
   },
   "eslintConfig": {
