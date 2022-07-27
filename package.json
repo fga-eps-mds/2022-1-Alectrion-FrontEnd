@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
+    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
@@ -23,6 +23,7 @@
     "lint": "npx eslint --fix src/*",
     "test": "react-scripts test",
     "test:staged": "CI=true npm test --  --env=jsdom --findRelatedTests src/*.test.tsx",
+    "test:coverage": "react-scripts test --collect-coverage",
     "prepare": "husky install"
   },
   "eslintConfig": {
