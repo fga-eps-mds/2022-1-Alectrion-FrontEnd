@@ -23,7 +23,7 @@
     "lint": "npx eslint --fix src/*",
     "test": "react-scripts test ",
     "test:staged": "CI=true npm test --  --env=jsdom --findRelatedTests src/**/*.test.tsx",
-    "test:all": "react-scripts test --coverage --watchAll",
+    "test:all": "CI=true npm test --  --env=jsdom --coverage",
     "prepare": "husky install"
   },
   "eslintConfig": {
