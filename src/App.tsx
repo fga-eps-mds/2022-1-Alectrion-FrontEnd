@@ -1,14 +1,13 @@
-import Teste from './components/teste'
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import { AppRoutes } from './routes/routes'
+import { theme } from './styles/theme'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div>
-          <Teste />
-        </div>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppRoutes />
+    </ThemeProvider>
   )
 }
 
