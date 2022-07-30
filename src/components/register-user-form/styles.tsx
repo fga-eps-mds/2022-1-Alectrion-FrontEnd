@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { TextField } from '@mui/material'
 
 export const FormStylized = styled.form`
   display: flex;
@@ -8,17 +9,20 @@ export const FormStylized = styled.form`
   margin-left: 480px;
   margin-right: 480px;
   height: 616px;
+  justify-content: space-evenly;
 `
 export const TitleStylized = styled.text`
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
-  line-height: 49px;
   display: flex;
   align-items: center;
   color: #000000;
-  margin-top: 144px;
-  margin-left: 508px;
-  margin-right: 507px;
+  margin-left: 45%;
+`
+
+export const TextFieldStylized = styled(TextField)`
+  color: #000000 !important;
+  border-radius: 50px;
 `

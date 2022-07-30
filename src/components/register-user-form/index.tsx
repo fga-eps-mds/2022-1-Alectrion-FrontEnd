@@ -1,7 +1,6 @@
 import { useFormik } from 'formik'
-import TextField from '@mui/material/TextField'
 import CardContent from '@mui/material/CardContent'
-import { FormStylized, TitleStylized } from './styles'
+import { FormStylized, TitleStylized, TextFieldStylized } from './styles'
 import * as yup from 'yup'
 import { ButtonStylized } from '../button'
 import { Card, MenuItem, Select } from '@mui/material'
@@ -40,7 +39,7 @@ const CreateUserScreen = () => {
       <Card>
         <CardContent>
           <FormStylized onSubmit={formik.handleSubmit}>
-            <TextField
+            <TextFieldStylized
               id="outlined-basic"
               label="Nome completo"
               type="text"
@@ -49,7 +48,7 @@ const CreateUserScreen = () => {
               onChange={formik.handleChange}
               value={formik.values.name}
             />
-            <TextField
+            <TextFieldStylized
               id="outlined-basic"
               label="Email"
               type="email"
@@ -58,7 +57,7 @@ const CreateUserScreen = () => {
               onChange={formik.handleChange}
               value={formik.values.email}
             />
-            <TextField
+            <TextFieldStylized
               id="outlined-basic"
               label="Nome de usuário"
               type="text"
@@ -67,7 +66,7 @@ const CreateUserScreen = () => {
               onChange={formik.handleChange}
               value={formik.values.username}
             />
-            <TextField
+            <TextFieldStylized
               id="outlined-basic"
               label="Cargo"
               type="text"
@@ -89,7 +88,7 @@ const CreateUserScreen = () => {
               <MenuItem value={2}>Admin</MenuItem>
               <MenuItem value={3}>Gerente</MenuItem>
             </Select>
-            <TextField
+            <TextFieldStylized
               id="outlined-basic"
               label="Nova senha"
               type="password"
@@ -98,7 +97,7 @@ const CreateUserScreen = () => {
               onChange={formik.handleChange}
               value={formik.values.password}
             />
-            <TextField
+            <TextFieldStylized
               id="outlined-basic"
               label="Confirmar senha"
               type="password"
@@ -120,4 +119,4 @@ const CreateUserScreen = () => {
   )
 }
 
-export { CreateUserScreen }
+export default CreateUserScreen
