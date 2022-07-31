@@ -1,3 +1,4 @@
+import { styled as styledSystem } from '@mui/system'
 import styled from 'styled-components'
 import { TextField } from '@mui/material'
 
@@ -22,7 +23,9 @@ export const TitleStylized = styled.text`
   margin-left: 45%;
 `
 
-export const TextFieldStylized = styled(TextField)`
-  color: #000000 !important;
-  border-radius: 50px;
-`
+export const TextFieldStylized = styledSystem(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px',
+    borderColor: theme.palette.primary.main
+  }
+}))

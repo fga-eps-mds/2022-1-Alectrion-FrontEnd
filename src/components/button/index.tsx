@@ -14,16 +14,18 @@ interface PropTypes {
     | 'warning'
     | undefined
   size?: 'small' | 'medium' | 'large' | undefined
+  type?: 'button' | 'submit' | 'reset' | undefined
 }
 
 const ButtonStylized: React.FC<PropTypes> = ({
   text,
   variant,
   color,
-  size
+  size,
+  type
 }) => {
   return (
-    <Button type="submit" variant={variant} color={color} size={size}>
+    <Button variant={variant} color={color} size={size} type={type}>
       {text}
     </Button>
   )

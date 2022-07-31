@@ -110,6 +110,7 @@ const CreateUserScreen = () => {
               text="Cadastrar"
               variant="contained"
               color="primary"
+              type="submit"
             />
             <ButtonStylized text="Voltar" variant="contained" />
           </FormStylized>
