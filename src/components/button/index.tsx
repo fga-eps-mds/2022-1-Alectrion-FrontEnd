@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '@mui/material/Button'
+import { StyledButton } from './styles'
 
 interface PropTypes {
   text: string
@@ -17,18 +17,12 @@ interface PropTypes {
   type?: 'button' | 'submit' | 'reset' | undefined
 }
 
-const ButtonStylized: React.FC<PropTypes> = ({
-  text,
-  variant,
-  color,
-  size,
-  type
-}) => {
+const Button: React.FC<PropTypes> = ({ text, variant, color, size, type }) => {
   return (
-    <Button variant={variant} color={color} size={size} type={type}>
+    <StyledButton variant={variant} color={color} size={size} type={type}>
       {text}
-    </Button>
+    </StyledButton>
   )
 }
 
-export { ButtonStylized }
+export { Button }
