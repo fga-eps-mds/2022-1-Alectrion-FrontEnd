@@ -1,15 +1,15 @@
 import { styled as styledSystem } from '@mui/system'
 import styled from 'styled-components'
-import { TextField, Card } from '@mui/material'
+import { TextField, Card, Select } from '@mui/material'
 
-export const FormStylized = styled.form`
+export const StyledForm = styled.form`
   display: grid;
   grid-template-columns: 416px;
   row-gap: 24px;
   align-content: center;
 `
 
-export const TextFieldStylized = styledSystem(TextField)(({ theme }) => ({
+export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
     borderRadius: '15px',
     borderColor: theme.palette.primary.gray
@@ -20,9 +20,7 @@ export const TextFieldStylized = styledSystem(TextField)(({ theme }) => ({
     padding: '8.5px'
   },
   maxWidth: '416px',
-  color: 'red',
   height: '40px',
-  mixHeight: '100%',
   '& .MuiFormLabel-root': {
     Color: theme.palette.background.default
   }
@@ -37,4 +35,20 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
   maxHeight: '680px',
   borderRadius: '10px',
   backgroundColor: theme.palette.primary.light
+}))
+
+export const StyledSelect = styledSystem(Select)(({ theme }) => ({
+  '& .MuiSelect-select': {
+    backgroundColor: theme.palette.background.default,
+    padding: '8.5px',
+    borderRadius: '15px'
+  },
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '15px'
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px'
+  },
+  maxWidth: '416px',
+  height: '40px'
 }))

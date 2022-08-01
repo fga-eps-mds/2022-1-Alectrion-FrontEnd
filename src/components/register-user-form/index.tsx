@@ -1,9 +1,11 @@
 import { useFormik } from 'formik'
 import CardContent from '@mui/material/CardContent'
-import { StyledCard, FormStylized, TextFieldStylized } from './styles'
+import { StyledCard, StyledForm, StyledSelect, StyledTextField } from './styles'
 import * as yup from 'yup'
 import { Button } from '../button'
-import { MenuItem, Select } from '@mui/material'
+import { FormControl, InputLabel, MenuItem } from '@mui/material'
+import { theme } from '../../styles/theme'
+// import { StyledReturnButton } from '../button/styles'
 
 const CreateUserScreen = () => {
   const validationSchema = yup.object({
@@ -15,7 +17,8 @@ const CreateUserScreen = () => {
     username: yup.string().required('Esse campo é obrigatório'),
     office: yup.string().required('Esse campo é obrigatório'),
     profile: yup.string().required('Esse campo é obrigatório'),
-    password: yup.string().required('Esse campo é obrigatório')
+    newPassword: yup.string().required('Esse campo é obrigatório'),
+    confirmPassword: yup.string().required('Esse campo é obrigatório')
   })
   const formik = useFormik({
     initialValues: {
@@ -24,7 +27,8 @@ const CreateUserScreen = () => {
       username: '',
       job: '',
       profile: '',
-      password: ''
+      newPassword: '',
+      confirmPassword: ''
     },
     validationSchema,
     onSubmit: (values) => {
@@ -34,8 +38,8 @@ const CreateUserScreen = () => {
   return (
     <StyledCard>
       <CardContent>
-        <FormStylized onSubmit={formik.handleSubmit}>
-          <TextFieldStylized
+        <StyledForm onSubmit={formik.handleSubmit}>
+          <StyledTextField
             id="outlined-basic"
             label="Nome completo"
             type="text"
@@ -44,7 +48,7 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.name}
           />
-          <TextFieldStylized
+          <StyledTextField
             id="outlined-basic"
             label="Email"
             type="email"
@@ -53,7 +57,7 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.email}
           />
-          <TextFieldStylized
+          <StyledTextField
             id="outlined-basic"
             label="Nome de usuário"
             type="text"
@@ -62,7 +66,7 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.username}
           />
-          <TextFieldStylized
+          <StyledTextField
             id="outlined-basic"
             label="Cargo"
             type="text"
@@ -71,45 +75,52 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.job}
           />
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Perfil"
-            type="text"
-            name="profile"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.profile}>
-            <MenuItem value={1}>Padrão</MenuItem>
-            <MenuItem value={2}>Admin</MenuItem>
-            <MenuItem value={3}>Gerente</MenuItem>
-          </Select>
-          <TextFieldStylized
+          <FormControl fullWidth>
+            <InputLabel id="profile-select-label">Perfil</InputLabel>
+            <StyledSelect
+              id="profile-select-label"
+              label="Perfil"
+              type="text"
+              name="profile"
+              variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.profile}>
+              <MenuItem value={1}>Padrão</MenuItem>
+              <MenuItem value={2}>Admin</MenuItem>
+              <MenuItem value={3}>Gerente</MenuItem>
+            </StyledSelect>
+          </FormControl>
+          <StyledTextField
             id="outlined-basic"
             label="Nova senha"
             type="password"
-            name="password"
+            name="newPassword"
             variant="outlined"
             onChange={formik.handleChange}
-            value={formik.values.password}
+            value={formik.values.newPassword}
           />
-          <TextFieldStylized
+          <StyledTextField
             id="outlined-basic"
             label="Confirmar senha"
             type="password"
-            name="password"
+            name="confirmPassword"
             variant="outlined"
             onChange={formik.handleChange}
-            value={formik.values.password}
+            value={formik.values.confirmPassword}
           />
           <Button
-            text="Cadastrar"
             variant="contained"
-            color="primary"
             type="submit"
-          />
-          <Button text="Voltar" variant="contained" />
-        </FormStylized>
+            styledColor={theme.palette.primary.main}>
+            Cadastrar
+          </Button>
+          <Button
+            variant="contained"
+            styledColor={theme.palette.grey[100]}
+            textColor={theme.palette.grey[900]}>
+            Voltar
+          </Button>
+        </StyledForm>
       </CardContent>
     </StyledCard>
   )
