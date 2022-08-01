@@ -1,5 +1,8 @@
-import React from 'react'
+import * as React from 'react'
+import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
+// import { DivBoxText } from './styles'
+// import { createTheme } from '@mui/material/styles'
 
 interface PropTypes {
   id: string | undefined
@@ -7,6 +10,7 @@ interface PropTypes {
   label: 'Nome' | 'Cargo' | 'Email' | 'Username' | 'Senha' | 'Confirmar Senha'
   variant: 'outlined' | 'standard' | 'filled' | undefined
   value: string
+  color: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
   type: 'nome' | 'email' | 'cargo' | 'username' | 'senha' | 'confirmarSenha'
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
@@ -18,18 +22,22 @@ const BasicTextFields: React.FC<PropTypes> = ({
   variant,
   value,
   type,
-  onChange
+  onChange,
+  color
 }) => {
   return (
-    <TextField
-      id={id}
-      name={name}
-      variant={variant}
-      label={label}
-      value={value}
-      type={type}
-      onChange={onChange}
-    />
+    <Box>
+      <TextField
+        id={id}
+        name={name}
+        variant={variant}
+        label={label}
+        value={value}
+        type={type}
+        onChange={onChange}
+        color={color}
+      />
+    </Box>
   )
 }
 

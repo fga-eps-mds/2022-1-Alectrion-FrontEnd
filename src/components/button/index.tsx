@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '@mui/material/Button'
+import { DivButton } from './styles'
 
 interface PropTypes {
   id?: string | undefined
@@ -25,9 +26,11 @@ const BasicButton: React.FC<PropTypes> = ({
   size
 }) => {
   return (
-    <Button type="submit" id={id} variant={variant} color={color} size={size}>
-      {text}
-    </Button>
+    <DivButton>
+      <Button type="submit" id={id} variant={variant} color={color} size={size}>
+        {text}
+      </Button>
+    </DivButton>
   )
 }
 

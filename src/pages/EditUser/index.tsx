@@ -1,10 +1,11 @@
 import React from 'react'
 import Form from '../../components/form'
+import { DivForm } from './styles'
 
 export default function EditUser() {
   return (
-    <div>
+    <DivForm>
       <Form />
-    </div>
+    </DivForm>
   )
 }
