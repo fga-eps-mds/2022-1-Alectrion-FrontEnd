@@ -7,6 +7,7 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     padding: '8.5px',
     borderRadius: '15px'
+    // borderRadiusColor: '#3C4B54'
   },
   '& .MuiOutlinedInput-root': {
     borderRadius: '15px'
@@ -14,6 +15,8 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
     borderRadius: '15px'
   },
+  borderRadius: '15px',
+
   maxWidth: '416px',
   height: '40px'
 }))
