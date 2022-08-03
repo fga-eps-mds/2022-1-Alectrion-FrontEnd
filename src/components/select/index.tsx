@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import { SelectChangeEvent } from '@mui/material/Select'
 import { StyledSelect } from './styles'
+import { ReactNode } from 'react'
 
 interface PropTypes {
   labelId?: string | undefined
@@ -13,7 +14,7 @@ interface PropTypes {
   id?: string | undefined
   value: string | undefined
   label?: 'perfilUsuario'
-  onChange: (event: SelectChangeEvent) => void
+  onChange: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
 }
 
 const BasicSelect: React.FC<PropTypes> = ({
