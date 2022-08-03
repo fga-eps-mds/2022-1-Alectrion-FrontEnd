@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import { Button } from '../button'
 import { FormControl, InputLabel, MenuItem } from '@mui/material'
 import { theme } from '../../styles/theme'
+import api from '../../api/config'
 // import { StyledReturnButton } from '../button/styles'
 
 const CreateUserScreen = () => {
@@ -15,7 +16,7 @@ const CreateUserScreen = () => {
       .required('Esse campo é obrigatório'),
     name: yup.string().required('Esse campo é obrigatório'),
     username: yup.string().required('Esse campo é obrigatório'),
-    office: yup.string().required('Esse campo é obrigatório'),
+    job: yup.string().required('Esse campo é obrigatório'),
     profile: yup.string().required('Esse campo é obrigatório'),
     newPassword: yup.string().required('Esse campo é obrigatório'),
     confirmPassword: yup.string().required('Esse campo é obrigatório')
@@ -31,8 +32,18 @@ const CreateUserScreen = () => {
       confirmPassword: ''
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values) => {
+      console.log(api)
+      try {
+        await api.post('/user/create', {
+          name: values.name,
+          username: values.username,
+          email: values.email,
+          jobFunction: values.job,
+          password: values.newPassword
+        })
+      } catch (error) {}
+      //   alert(JSON.stringify(values, null, 2))
     }
   })
   return (
