@@ -131,7 +131,7 @@ const Form = () => {
             text="Voltar"
             variant="contained"
             color="inherit"
-            classes={{ root: 'rootButton' }}
+            classes={{ root: 'rootVoltar' }}
           />
 
           <BasicButton
@@ -139,7 +139,7 @@ const Form = () => {
             text="Remover"
             variant="contained"
             color="inherit"
-            classes={{ root: 'rootVoltar' }}
+            classes={{ root: 'rootRemover' }}
           />
         </FormStyled>
       </CardContent>
