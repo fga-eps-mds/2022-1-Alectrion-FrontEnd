@@ -7,15 +7,27 @@ export const FormStyled = styled.form`
   grid-template-columns: 416px;
   row-gap: 24px;
   align-content: center;
+  width: 416px;
+  height: 616px;
+  //margin: 32px;
+  align-self: center;
 `
 export const StyledCard = styledSystem(Card)(({ theme }) => ({
   '& .MuiCardContent-root': {
-    alignSelf: 'center'
-    // padding: '32px'
+    // alignSelf: 'center',
+    width: '416px',
+    height: '616px',
+    // padding: '0px',
+    // paddingBottom: '0px',
+    margin: '32px'
+    // justifyContent: 'center',
   },
+  marginTop: '283px',
+  alignSelf: 'center',
+  justifyContent: 'center',
   boxShadow: '0 8px 10px rgba(0,0,0,0.45)',
-  maxWidth: '460px',
-  maxHeight: '680px',
+  width: '480px',
+  height: '680px',
   borderRadius: '10px',
   backgroundColor: theme.palette.primary.light
 }))

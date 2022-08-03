@@ -39,7 +39,7 @@ const Form = () => {
   })
 
   return (
-    <StyledCard>
+    <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
         <FormStyled onSubmit={formik.handleSubmit}>
           <BasicTextFields
