@@ -3,7 +3,8 @@ import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { SelectChangeEvent } from '@mui/material/Select'
+import { StyledSelect } from './styles'
 
 interface PropTypes {
   labelId?: string | undefined
@@ -28,7 +29,7 @@ const BasicSelect: React.FC<PropTypes> = ({
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Perfil do Usuário</InputLabel>
-        <Select
+        <StyledSelect
           labelId={labelId}
           name={name}
           type={type}
@@ -38,7 +39,7 @@ const BasicSelect: React.FC<PropTypes> = ({
           onChange={onChange}>
           <MenuItem value={'Administrador'}>Administrador</MenuItem>
           <MenuItem value={'Usuário Comum'}>Usuário Comum</MenuItem>
-        </Select>
+        </StyledSelect>
       </FormControl>
     </Box>
   )

@@ -1,8 +1,9 @@
 import * as React from 'react'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
+// import Box from '@mui/material/Box'
+// import TextField from '@mui/material/TextField'
 // import { DivBoxText } from './styles'
 // import { createTheme } from '@mui/material/styles'
+import { StyledTextField } from './styles'
 
 interface PropTypes {
   id: string | undefined
@@ -26,18 +27,18 @@ const BasicTextFields: React.FC<PropTypes> = ({
   color
 }) => {
   return (
-    <Box>
-      <TextField
-        id={id}
-        name={name}
-        variant={variant}
-        label={label}
-        value={value}
-        type={type}
-        onChange={onChange}
-        color={color}
-      />
-    </Box>
+    <StyledTextField
+      fullWidth
+      margin="normal"
+      id={id}
+      name={name}
+      variant={variant}
+      label={label}
+      value={value}
+      type={type}
+      onChange={onChange}
+      color={color}
+    />
   )
 }
 
