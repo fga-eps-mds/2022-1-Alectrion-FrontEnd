@@ -17,8 +17,8 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
     // alignSelf: 'center',
     width: '416px',
     height: '616px',
-    // padding: '0px',
-    // paddingBottom: '0px',
+    padding: '0px',
+    paddingBottom: '0px',
     margin: '32px'
     // justifyContent: 'center',
   },
