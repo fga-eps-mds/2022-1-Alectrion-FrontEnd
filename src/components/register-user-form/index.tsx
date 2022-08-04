@@ -59,6 +59,9 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.name}
           />
+          {formik.touched.name && formik.errors.name ? (
+            <div>{formik.errors.name}</div>
+          ) : null}
           <StyledTextField
             id="outlined-basic"
             label="Email"
@@ -68,6 +71,9 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.email}
           />
+          {formik.touched.email && formik.errors.email ? (
+            <div>{formik.errors.email}</div>
+          ) : null}
           <StyledTextField
             id="outlined-basic"
             label="Nome de usuário"
@@ -77,6 +83,9 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.username}
           />
+          {formik.touched.username && formik.errors.username ? (
+            <div>{formik.errors.username}</div>
+          ) : null}
           <StyledTextField
             id="outlined-basic"
             label="Cargo"
@@ -86,6 +95,9 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.job}
           />
+          {formik.touched.job && formik.errors.job ? (
+            <div>{formik.errors.job}</div>
+          ) : null}
           <FormControl fullWidth>
             <InputLabel id="profile-select-label">Perfil</InputLabel>
             <StyledSelect
@@ -110,6 +122,9 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.newPassword}
           />
+          {formik.touched.newPassword && formik.errors.newPassword ? (
+            <div>{formik.errors.newPassword}</div>
+          ) : null}
           <StyledTextField
             id="outlined-basic"
             label="Confirmar senha"
@@ -119,6 +134,9 @@ const CreateUserScreen = () => {
             onChange={formik.handleChange}
             value={formik.values.confirmPassword}
           />
+          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+            <div>{formik.errors.confirmPassword}</div>
+          ) : null}
           <Button
             variant="contained"
             type="submit"
