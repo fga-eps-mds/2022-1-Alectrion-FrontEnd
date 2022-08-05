@@ -1,5 +1,4 @@
 import { styled as styledSystem } from '@mui/system'
-// import styled from 'styled-components'
 import { Select } from '@mui/material'
 
 export const StyledSelect = styledSystem(Select)(({ theme }) => ({
@@ -7,7 +6,6 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     padding: '8.5px',
     borderRadius: '15px'
-    // borderRadiusColor: '#3C4B54'
   },
   '& .MuiOutlinedInput-root': {
     borderRadius: '15px'

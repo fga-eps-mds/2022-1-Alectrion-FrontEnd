@@ -1,4 +1,3 @@
-// import styled from 'styled-components'
 import { styled as styledSystem } from '@mui/system'
 import { TextField } from '@mui/material'
 
@@ -10,7 +9,6 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
 
   '& .MuiFormLabel-root': {
     Color: theme.palette.background.default
-    // Color: '#FFF'
   },
   '& .MuiOutlinedInput-input': {
     backgroundColor: theme.palette.background.default,
