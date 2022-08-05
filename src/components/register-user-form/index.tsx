@@ -51,9 +51,11 @@ const CreateUserScreen = () => {
       <CardContent>
         <StyledForm onSubmit={formik.handleSubmit}>
           <StyledTextField
+            size="small"
             id="outlined-basic"
             label="Nome completo"
             type="text"
+            required
             name="name"
             variant="outlined"
             onChange={formik.handleChange}
@@ -63,9 +65,11 @@ const CreateUserScreen = () => {
             <div>{formik.errors.name}</div>
           ) : null}
           <StyledTextField
+            size="small"
             id="outlined-basic"
             label="Email"
             type="email"
+            required
             name="email"
             variant="outlined"
             onChange={formik.handleChange}
@@ -75,9 +79,11 @@ const CreateUserScreen = () => {
             <div>{formik.errors.email}</div>
           ) : null}
           <StyledTextField
+            size="small"
             id="outlined-basic"
             label="Nome de usuário"
             type="text"
+            required
             name="username"
             variant="outlined"
             onChange={formik.handleChange}
@@ -87,9 +93,11 @@ const CreateUserScreen = () => {
             <div>{formik.errors.username}</div>
           ) : null}
           <StyledTextField
+            size="small"
             id="outlined-basic"
             label="Cargo"
             type="text"
+            required
             name="job"
             variant="outlined"
             onChange={formik.handleChange}
@@ -104,6 +112,7 @@ const CreateUserScreen = () => {
               id="profile-select-label"
               label="Perfil"
               type="text"
+              required
               name="profile"
               variant="outlined"
               onChange={formik.handleChange}
@@ -114,9 +123,11 @@ const CreateUserScreen = () => {
             </StyledSelect>
           </FormControl>
           <StyledTextField
+            size="small"
             id="outlined-basic"
             label="Nova senha"
             type="password"
+            required
             name="newPassword"
             variant="outlined"
             onChange={formik.handleChange}
@@ -126,9 +137,11 @@ const CreateUserScreen = () => {
             <div>{formik.errors.newPassword}</div>
           ) : null}
           <StyledTextField
+            size="small"
             id="outlined-basic"
             label="Confirmar senha"
             type="password"
+            required
             name="confirmPassword"
             variant="outlined"
             onChange={formik.handleChange}
