@@ -6,20 +6,20 @@ import { Button } from '../button'
 import { FormControl, InputLabel, MenuItem } from '@mui/material'
 import { theme } from '../../styles/theme'
 import api from '../../api/config'
-// import { StyledReturnButton } from '../button/styles'
+import { toast } from 'react-toastify'
 
 const CreateUserScreen = () => {
-  const validationSchema = yup.object({
+  const validationSchema = yup.object().shape({
     email: yup
       .string()
-      .email('Insira um email válido')
-      .required('Esse campo é obrigatório'),
+      .required('Esse campo é obrigatório')
+      .email('Insira um email válido'),
     name: yup.string().required('Esse campo é obrigatório'),
     username: yup.string().required('Esse campo é obrigatório'),
     job: yup.string().required('Esse campo é obrigatório'),
     profile: yup.string().required('Esse campo é obrigatório'),
-    newPassword: yup.string().required('Esse campo é obrigatório'),
-    confirmPassword: yup.string().required('Esse campo é obrigatório')
+    newPassword: yup.string().min(4).required('Esse campo é obrigatório'),
+    confirmPassword: yup.string().min(4).required('Esse campo é obrigatório')
   })
   const formik = useFormik({
     initialValues: {
@@ -27,13 +27,12 @@ const CreateUserScreen = () => {
       email: '',
       username: '',
       job: '',
-      profile: '',
+      profile: 'Padrão',
       newPassword: '',
       confirmPassword: ''
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log(api)
       try {
         await api.post('/user/create', {
           name: values.name,
@@ -42,8 +41,10 @@ const CreateUserScreen = () => {
           jobFunction: values.job,
           password: values.newPassword
         })
-      } catch (error) {}
-      //   alert(JSON.stringify(values, null, 2))
+        toast.success('Usuário criado.')
+      } catch (error) {
+        toast.error('Aconteceu algum erro.')
+      }
     }
   })
   return (
@@ -55,71 +56,62 @@ const CreateUserScreen = () => {
             id="outlined-basic"
             label="Nome completo"
             type="text"
-            required
             name="name"
             variant="outlined"
             onChange={formik.handleChange}
             value={formik.values.name}
+            helperText={formik.touched.name && formik.errors.name}
+            error={formik.touched.name && Boolean(formik.errors.name)}
           />
-          {formik.touched.name && formik.errors.name ? (
-            <div>{formik.errors.name}</div>
-          ) : null}
           <StyledTextField
             size="small"
             id="outlined-basic"
             label="Email"
-            type="email"
-            required
             name="email"
             variant="outlined"
             onChange={formik.handleChange}
             value={formik.values.email}
+            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
           />
-          {formik.touched.email && formik.errors.email ? (
-            <div>{formik.errors.email}</div>
-          ) : null}
           <StyledTextField
             size="small"
             id="outlined-basic"
             label="Nome de usuário"
             type="text"
-            required
             name="username"
             variant="outlined"
             onChange={formik.handleChange}
             value={formik.values.username}
+            helperText={formik.touched.username && formik.errors.username}
+            error={formik.touched.username && Boolean(formik.errors.username)}
           />
-          {formik.touched.username && formik.errors.username ? (
-            <div>{formik.errors.username}</div>
-          ) : null}
           <StyledTextField
             size="small"
             id="outlined-basic"
             label="Cargo"
             type="text"
-            required
             name="job"
             variant="outlined"
             onChange={formik.handleChange}
             value={formik.values.job}
+            helperText={formik.touched.job && formik.errors.job}
+            error={formik.touched.job && Boolean(formik.errors.job)}
           />
-          {formik.touched.job && formik.errors.job ? (
-            <div>{formik.errors.job}</div>
-          ) : null}
           <FormControl fullWidth>
             <InputLabel id="profile-select-label">Perfil</InputLabel>
             <StyledSelect
               id="profile-select-label"
               label="Perfil"
               type="text"
-              required
               name="profile"
               variant="outlined"
+              error={formik.touched.profile && Boolean(formik.errors.profile)}
               onChange={formik.handleChange}
               value={formik.values.profile}>
-              <MenuItem value={1}>Padrão</MenuItem>
-              <MenuItem value={2}>Admin</MenuItem>
-              <MenuItem value={3}>Gerente</MenuItem>
+              <MenuItem value="Padrão">Padrão</MenuItem>
+              <MenuItem value="Admin">Admin</MenuItem>
+              <MenuItem value="Gerente">Gerente</MenuItem>
             </StyledSelect>
           </FormControl>
           <StyledTextField
@@ -127,29 +119,32 @@ const CreateUserScreen = () => {
             id="outlined-basic"
             label="Nova senha"
             type="password"
-            required
             name="newPassword"
             variant="outlined"
             onChange={formik.handleChange}
             value={formik.values.newPassword}
+            helperText={formik.touched.newPassword && formik.errors.newPassword}
+            error={
+              formik.touched.newPassword && Boolean(formik.errors.newPassword)
+            }
           />
-          {formik.touched.newPassword && formik.errors.newPassword ? (
-            <div>{formik.errors.newPassword}</div>
-          ) : null}
           <StyledTextField
             size="small"
             id="outlined-basic"
             label="Confirmar senha"
             type="password"
-            required
             name="confirmPassword"
             variant="outlined"
             onChange={formik.handleChange}
             value={formik.values.confirmPassword}
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
+            error={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
           />
-          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div>{formik.errors.confirmPassword}</div>
-          ) : null}
           <Button
             variant="contained"
             type="submit"
