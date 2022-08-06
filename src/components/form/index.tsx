@@ -1,3 +1,4 @@
+// import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import BasicTextFields from '../text-field'
@@ -6,6 +7,7 @@ import BasicSelect from '../select'
 import { FormStyled, StyledCard } from './styles'
 import { CardContent } from '@mui/material'
 import './styleForm.css'
+// import api from '../../api/config'
 
 const Form = () => {
   const validationSchema = yup.object({
@@ -21,8 +23,25 @@ const Form = () => {
     confirmarSenha: yup.string().required('O campo é obrigatório.')
   })
 
+  // const [userData, setUserData] = useState({})
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const data = await api.get('/user')
+  //     setUserData(data)
+  //   }
+  //   getUser()
+  // }, [])
+
   const formik = useFormik({
     initialValues: {
+      // nome: userData.name,
+      // email: userData.email,
+      // cargo: userData.cargo,
+      // perfilUsuario: userData.perfilUsuario,
+      // username: userData.username,
+      // senha: userData.senha,
+      // confirmarSenha: userData.senha
       nome: '',
       email: '',
       cargo: '',
@@ -35,6 +54,18 @@ const Form = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
     }
+
+    // onSubmit: async (values) => {
+    //   try {
+    //     await api.put('/user/update', {
+    //       nome: values.username,
+    //       email: values.email,
+    //       jobFunction: values.cargo,
+    //       username: values.username,
+    //       password: values.senha
+    //     })
+    //   } catch (error) {}
+    // }
   })
 
   return (
@@ -126,6 +157,7 @@ const Form = () => {
           />
 
           <BasicButton
+            disabled="desabilitar"
             id="voltar"
             text="Voltar"
             variant="contained"
@@ -134,6 +166,7 @@ const Form = () => {
           />
 
           <BasicButton
+            disabled="desabilitar"
             id="remover"
             text="Remover"
             variant="contained"

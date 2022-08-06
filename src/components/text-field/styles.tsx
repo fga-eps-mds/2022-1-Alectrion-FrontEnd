@@ -8,15 +8,16 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
   marginBottom: '0px',
 
   '& .MuiFormLabel-root': {
-    Color: theme.palette.background.default
+    // Color: theme.palette.background.default,
+    borderRadius: '15px'
   },
   '& .MuiOutlinedInput-input': {
     backgroundColor: theme.palette.background.default,
-    borderRadius: '15px',
+    borderRadius: '15px !important',
     padding: '8.5px'
   },
   '& .MuiOutlinedInput-notchedOutline': {
-    borderRadius: '15px',
-    borderColor: theme.palette.primary.gray
+    borderRadius: '15px'
+    // borderColor: theme.palette.primary.gray
   }
 }))
