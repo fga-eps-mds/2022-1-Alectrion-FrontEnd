@@ -29,6 +29,7 @@ const RegisterUserForm = () => {
     newPassword: yup.string().min(4).required('Esse campo é obrigatório'),
     confirmPassword: yup.string().min(4).required('Esse campo é obrigatório')
   })
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -56,14 +57,16 @@ const RegisterUserForm = () => {
       }
     }
   })
+
   return (
     <StyledCard>
       <CardContent>
         <StyledForm onSubmit={formik.handleSubmit}>
           <StyledTextField
             size="small"
-            id="outlined-basic"
+            id="name-input"
             label="Nome completo"
+            data-testId="name-input"
             type="text"
             name="name"
             variant="outlined"
@@ -74,7 +77,7 @@ const RegisterUserForm = () => {
           />
           <StyledTextField
             size="small"
-            id="outlined-basic"
+            id="email-input"
             label="Email"
             name="email"
             variant="outlined"
@@ -85,7 +88,7 @@ const RegisterUserForm = () => {
           />
           <StyledTextField
             size="small"
-            id="outlined-basic"
+            id="username-input"
             label="Nome de usuário"
             type="text"
             name="username"
@@ -99,6 +102,7 @@ const RegisterUserForm = () => {
             <StyledInputLabel id="job-select-label">Cargo</StyledInputLabel>
             <StyledSelect
               id="job-select-label"
+              data-testid="job-select"
               label="Cargo"
               type="text"
               name="job"
@@ -120,6 +124,7 @@ const RegisterUserForm = () => {
             </StyledInputLabel>
             <StyledSelect
               id="profile-select-label"
+              data-testid="profile-select"
               label="Perfil"
               type="text"
               name="profile"
@@ -134,8 +139,8 @@ const RegisterUserForm = () => {
           </FormControl>
           <StyledTextField
             size="small"
-            id="outlined-basic"
-            label="Nova senha"
+            id="password-input"
+            label="Senha"
             type="password"
             name="newPassword"
             variant="outlined"
@@ -148,7 +153,7 @@ const RegisterUserForm = () => {
           />
           <StyledTextField
             size="small"
-            id="outlined-basic"
+            id="confirmpassword-input"
             label="Confirmar senha"
             type="password"
             name="confirmPassword"
