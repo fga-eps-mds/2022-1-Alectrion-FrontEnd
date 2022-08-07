@@ -16,21 +16,21 @@ const Form = () => {
       .string()
       .email('E-mail inválido.')
       .required('O campo é obrigatório.'),
-    cargo: yup.string().required('O campo é obrigatório.'),
-    perfilUsuario: yup.string(),
+    job: yup.string().required('O campo é obrigatório.'),
+    profile: yup.string(),
     username: yup.string().required('O campo é obrigatório.'),
-    senha: yup.string().required('O campo é obrigatório.'),
-    confirmarSenha: yup.string().required('O campo é obrigatório.')
+    password: yup.string().required('O campo é obrigatório.'),
+    confirmPassword: yup.string().required('O campo é obrigatório.')
   })
 
   // const [userData, setUserData] = useState({})
 
   // useEffect(() => {
   //   const getUser = async () => {
-  //     const data = await api.get('/user')
+  //     const data = await api.get('/user/1')
   //     setUserData(data)
-  //   }
-  //   getUser()
+  //   };
+  //   getUser();
   // }, [])
 
   const formik = useFormik({
@@ -42,13 +42,14 @@ const Form = () => {
       // username: userData.username,
       // senha: userData.senha,
       // confirmarSenha: userData.senha
+
       nome: '',
       email: '',
-      cargo: '',
-      perfilUsuario: '',
+      job: '',
+      profile: '',
       username: '',
-      senha: '',
-      confirmarSenha: ''
+      password: '',
+      confirmPassword: ''
     },
     validationSchema,
     onSubmit: (values) => {
@@ -110,7 +111,7 @@ const Form = () => {
             name="cargo"
             label="Cargo"
             variant="outlined"
-            value={formik.values.cargo}
+            value={formik.values.job}
             type="cargo"
             onChange={formik.handleChange}
             color="primary"
@@ -121,7 +122,7 @@ const Form = () => {
             name="perfilUsuario"
             type="perfillUsuario"
             id="demo-simple-select"
-            value={formik.values.perfilUsuario}
+            value={formik.values.profile}
             label="perfilUsuario"
             onChange={formik.handleChange}
           />
@@ -131,7 +132,7 @@ const Form = () => {
             name="senha"
             label="Senha"
             variant="outlined"
-            value={formik.values.senha}
+            value={formik.values.password}
             type="senha"
             onChange={formik.handleChange}
             color="primary"
@@ -142,7 +143,7 @@ const Form = () => {
             name="confirmarSenha"
             label="Confirmar Senha"
             variant="outlined"
-            value={formik.values.confirmarSenha}
+            value={formik.values.confirmPassword}
             type="confirmarSenha"
             onChange={formik.handleChange}
             color="primary"
