@@ -11,7 +11,7 @@ import './styleForm.css'
 
 const Form = () => {
   const validationSchema = yup.object({
-    nome: yup.string().required('O campo é obrigatório.'),
+    name: yup.string().required('O campo é obrigatório.'),
     email: yup
       .string()
       .email('E-mail inválido.')
@@ -29,21 +29,21 @@ const Form = () => {
   //   const getUser = async () => {
   //     const data = await api.get('/user/1')
   //     setUserData(data)
-  //   };
-  //   getUser();
+  //   }
+  //   getUser()
   // }, [])
 
   const formik = useFormik({
     initialValues: {
-      // nome: userData.name,
+      // name: userData.name,
       // email: userData.email,
-      // cargo: userData.cargo,
-      // perfilUsuario: userData.perfilUsuario,
+      // job: userData.job,
+      // profile: userData.profile,
       // username: userData.username,
-      // senha: userData.senha,
-      // confirmarSenha: userData.senha
+      // password: userData.password,
+      // confirmPassword: userData.password
 
-      nome: '',
+      name: '',
       email: '',
       job: '',
       profile: '',
@@ -59,11 +59,11 @@ const Form = () => {
     // onSubmit: async (values) => {
     //   try {
     //     await api.put('/user/update', {
-    //       nome: values.username,
+    //       name: values.name,
     //       email: values.email,
-    //       jobFunction: values.cargo,
+    //       job: values.job,
     //       username: values.username,
-    //       password: values.senha
+    //       password: values.password
     //     })
     //   } catch (error) {}
     // }
@@ -74,12 +74,12 @@ const Form = () => {
       <CardContent>
         <FormStyled onSubmit={formik.handleSubmit}>
           <BasicTextFields
-            id="nome"
-            name="nome"
+            id="name"
+            name="name"
             label="Nome"
             variant="outlined"
-            value={formik.values.nome}
-            type="nome"
+            value={formik.values.name}
+            type="name"
             onChange={formik.handleChange}
             color="primary"
           />
@@ -107,20 +107,20 @@ const Form = () => {
           />
 
           <BasicTextFields
-            id="cargo"
-            name="cargo"
+            id="job"
+            name="job"
             label="Cargo"
             variant="outlined"
             value={formik.values.job}
-            type="cargo"
+            type="job"
             onChange={formik.handleChange}
             color="primary"
           />
 
           <BasicSelect
             labelId="demo-simple-select-label"
-            name="perfilUsuario"
-            type="perfillUsuario"
+            name="profile"
+            type="profile"
             id="demo-simple-select"
             value={formik.values.profile}
             label="perfilUsuario"
@@ -128,23 +128,23 @@ const Form = () => {
           />
 
           <BasicTextFields
-            id="senha"
-            name="senha"
+            id="password"
+            name="password"
             label="Senha"
             variant="outlined"
             value={formik.values.password}
-            type="senha"
+            type="password"
             onChange={formik.handleChange}
             color="primary"
           />
 
           <BasicTextFields
-            id="confirmarSenha"
-            name="confirmarSenha"
+            id="confirmPassword"
+            name="confirmPassword"
             label="Confirmar Senha"
             variant="outlined"
             value={formik.values.confirmPassword}
-            type="confirmarSenha"
+            type="confirmPassword"
             onChange={formik.handleChange}
             color="primary"
           />

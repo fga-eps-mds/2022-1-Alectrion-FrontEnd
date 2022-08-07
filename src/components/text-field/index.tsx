@@ -8,7 +8,7 @@ interface PropTypes {
   variant: 'outlined' | 'standard' | 'filled' | undefined
   value: string
   color: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
-  type: 'nome' | 'email' | 'cargo' | 'username' | 'senha' | 'confirmarSenha'
+  type: 'name' | 'email' | 'job' | 'username' | 'password' | 'confirmPassword'
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
