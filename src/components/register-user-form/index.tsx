@@ -1,14 +1,22 @@
 import { useFormik } from 'formik'
 import CardContent from '@mui/material/CardContent'
-import { StyledCard, StyledForm, StyledSelect, StyledTextField } from './styles'
+import {
+  StyledCard,
+  StyledForm,
+  StyledSelect,
+  StyledTextField,
+  StyledInputLabel
+} from './styles'
 import * as yup from 'yup'
 import { Button } from '../button'
-import { FormControl, InputLabel, MenuItem } from '@mui/material'
+import { FormControl, MenuItem } from '@mui/material'
 import { theme } from '../../styles/theme'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const RegisterUserForm = () => {
+  const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -88,7 +96,7 @@ const RegisterUserForm = () => {
             error={formik.touched.username && Boolean(formik.errors.username)}
           />
           <FormControl fullWidth>
-            <InputLabel id="job-select-label">Cargo</InputLabel>
+            <StyledInputLabel id="job-select-label">Cargo</StyledInputLabel>
             <StyledSelect
               id="job-select-label"
               label="Cargo"
@@ -107,7 +115,9 @@ const RegisterUserForm = () => {
             </StyledSelect>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="profile-select-label">Perfil</InputLabel>
+            <StyledInputLabel id="profile-select-label">
+              Perfil
+            </StyledInputLabel>
             <StyledSelect
               id="profile-select-label"
               label="Perfil"
@@ -162,7 +172,8 @@ const RegisterUserForm = () => {
           <Button
             variant="contained"
             styledColor={theme.palette.grey[100]}
-            textColor={theme.palette.grey[900]}>
+            textColor={theme.palette.grey[900]}
+            onClick={() => navigate('/users')}>
             Voltar
           </Button>
         </StyledForm>

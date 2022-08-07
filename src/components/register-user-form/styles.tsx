@@ -1,6 +1,6 @@
 import { styled as styledSystem } from '@mui/system'
 import styled from 'styled-components'
-import { TextField, Card, Select } from '@mui/material'
+import { TextField, Card, Select, InputLabel } from '@mui/material'
 
 export const StyledForm = styled.form`
   display: grid;
@@ -8,6 +8,11 @@ export const StyledForm = styled.form`
   row-gap: 24px;
   align-content: center;
 `
+export const StyledInputLabel = styledSystem(InputLabel)(({ theme }) => ({
+  marginTop: '-7px',
+  color: theme.palette.background.default,
+  textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+}))
 
 export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
@@ -19,8 +24,10 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
   },
   maxWidth: '416px',
   height: '40px',
-  '& .MuiFormLabel-root': {
-    borderRadius: '15px'
+  '& .MuiInputLabel-shrink': {
+    marginTop: '-7px',
+    color: theme.palette.background.default,
+    textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
   }
 }))
 
@@ -39,7 +46,8 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
   '& .MuiSelect-select': {
     backgroundColor: theme.palette.background.default,
     padding: '8.5px',
-    borderRadius: '15px !important'
+    borderRadius: '15px !important',
+    color: '#666666'
   },
   '& .MuiOutlinedInput-root': {
     borderRadius: '15px'
@@ -48,5 +56,8 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
     borderRadius: '15px'
   },
   maxWidth: '416px',
-  height: '40px'
+  height: '40px',
+  '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input': {
+    marginLeft: '2px'
+  }
 }))
