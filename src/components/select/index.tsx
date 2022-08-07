@@ -38,8 +38,9 @@ const BasicSelect: React.FC<PropTypes> = ({
           value={value}
           label={label}
           onChange={onChange}>
-          <MenuItem value={'Administrador'}>Administrador</MenuItem>
-          <MenuItem value={'Usuário Comum'}>Usuário Comum</MenuItem>
+          <MenuItem value={'Basico'}>Básico</MenuItem>
+          <MenuItem value={'Admin'}>Admin</MenuItem>
+          <MenuItem value={'Gerente'}>Gerente</MenuItem>
         </StyledSelect>
       </FormControl>
     </Box>

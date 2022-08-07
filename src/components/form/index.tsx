@@ -1,4 +1,4 @@
-// import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import BasicTextFields from '../text-field'
@@ -7,66 +7,71 @@ import BasicSelect from '../select'
 import { FormStyled, StyledCard } from './styles'
 import { CardContent } from '@mui/material'
 import './styleForm.css'
-// import api from '../../api/config'
+import api from '../../api/config'
+// import { toast } from 'react-toastify'
 
 const Form = () => {
-  const validationSchema = yup.object({
+  const validationSchema = yup.object().shape({
     name: yup.string().required('O campo é obrigatório.'),
     email: yup
       .string()
       .email('E-mail inválido.')
       .required('O campo é obrigatório.'),
     job: yup.string().required('O campo é obrigatório.'),
-    profile: yup.string(),
+    profile: yup.string().required('O campo é obrigatório.'),
     username: yup.string().required('O campo é obrigatório.'),
-    password: yup.string().required('O campo é obrigatório.'),
-    confirmPassword: yup.string().required('O campo é obrigatório.')
+    password: yup.string().min(4).required('O campo é obrigatório.'),
+    confirmPassword: yup.string().min(4).required('O campo é obrigatório.')
   })
 
-  // const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({})
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const data = await api.get('/user/1')
-  //     setUserData(data)
-  //   }
-  //   getUser()
-  // }, [])
+  useEffect(() => {
+    const getUser = async () => {
+      const data = await api.get('/user')
+      setUserData(data)
+    }
+    getUser()
+  }, [])
 
   const formik = useFormik({
     initialValues: {
-      // name: userData.name,
-      // email: userData.email,
-      // job: userData.job,
-      // profile: userData.profile,
-      // username: userData.username,
-      // password: userData.password,
-      // confirmPassword: userData.password
+      name: userData.name,
+      email: userData.email,
+      job: userData.jobFunction,
+      profile: userData.role,
+      username: userData.username,
+      password: userData.password,
+      confirmPassword: userData.password
 
-      name: '',
-      email: '',
-      job: '',
-      profile: '',
-      username: '',
-      password: '',
-      confirmPassword: ''
+      // name: '',
+      // email: '',
+      // job: '',
+      // profile: '',
+      // username: '',
+      // password: '',
+      // confirmPassword: ''
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    }
-
-    // onSubmit: async (values) => {
-    //   try {
-    //     await api.put('/user/update', {
-    //       name: values.name,
-    //       email: values.email,
-    //       job: values.job,
-    //       username: values.username,
-    //       password: values.password
-    //     })
-    //   } catch (error) {}
+    // onSubmit: (values) => {
+    //   alert(JSON.stringify(values, null, 2))
     // }
+
+    onSubmit: async (values) => {
+      try {
+        await api.put('/user/update', {
+          name: values.name,
+          email: values.email,
+          jobFunction: values.job,
+          role: values.profile,
+          username: values.username,
+          password: values.password
+        })
+        // toast.success('Usuário criado.')
+      } catch (error) {
+        // toast.error('Aconteceu algum erro.')
+      }
+    }
   })
 
   return (
