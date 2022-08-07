@@ -49,7 +49,7 @@ const Form = () => {
       profile: '',
       username: '',
       password: '',
-      confirmPassowrd: ''
+      confirmPassword: ''
     },
     validationSchema,
     onSubmit: (values) => {
@@ -143,7 +143,7 @@ const Form = () => {
             name="confirmarSenha"
             label="Confirmar Senha"
             variant="outlined"
-            value={formik.values.confirmPassowrd}
+            value={formik.values.confirmPassword}
             type="confirmarSenha"
             onChange={formik.handleChange}
             color="primary"
