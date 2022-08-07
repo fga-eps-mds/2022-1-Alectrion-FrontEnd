@@ -8,7 +8,7 @@ import { theme } from '../../styles/theme'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 
-const CreateUserScreen = () => {
+const RegisterUserForm = () => {
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -26,8 +26,8 @@ const CreateUserScreen = () => {
       name: '',
       email: '',
       username: '',
-      job: '',
-      profile: 'Padrão',
+      job: 'GENERICO',
+      profile: 'BASICO',
       newPassword: '',
       confirmPassword: ''
     },
@@ -39,6 +39,7 @@ const CreateUserScreen = () => {
           username: values.username,
           email: values.email,
           jobFunction: values.job,
+          role: values.profile,
           password: values.newPassword
         })
         toast.success('Usuário criado.')
@@ -86,18 +87,25 @@ const CreateUserScreen = () => {
             helperText={formik.touched.username && formik.errors.username}
             error={formik.touched.username && Boolean(formik.errors.username)}
           />
-          <StyledTextField
-            size="small"
-            id="outlined-basic"
-            label="Cargo"
-            type="text"
-            name="job"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.job}
-            helperText={formik.touched.job && formik.errors.job}
-            error={formik.touched.job && Boolean(formik.errors.job)}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="job-select-label">Cargo</InputLabel>
+            <StyledSelect
+              id="job-select-label"
+              label="Cargo"
+              type="text"
+              name="job"
+              variant="outlined"
+              error={formik.touched.job && Boolean(formik.errors.job)}
+              onChange={formik.handleChange}
+              value={formik.values.job}>
+              <MenuItem value="DELEGADO">Básico</MenuItem>
+              <MenuItem value="AGENTE_POLICIA">Agente de policia</MenuItem>
+              <MenuItem value="ESCRIVAO">Escrivão</MenuItem>
+              <MenuItem value="COORDENADOR">Coordenador</MenuItem>
+              <MenuItem value="CHEFE_SECAO">Chefe de seção</MenuItem>
+              <MenuItem value="GENERICO">Genérico</MenuItem>
+            </StyledSelect>
+          </FormControl>
           <FormControl fullWidth>
             <InputLabel id="profile-select-label">Perfil</InputLabel>
             <StyledSelect
@@ -109,9 +117,9 @@ const CreateUserScreen = () => {
               error={formik.touched.profile && Boolean(formik.errors.profile)}
               onChange={formik.handleChange}
               value={formik.values.profile}>
-              <MenuItem value="Padrão">Padrão</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
-              <MenuItem value="Gerente">Gerente</MenuItem>
+              <MenuItem value="BASICO">Básico</MenuItem>
+              <MenuItem value="ADMIN">Admin</MenuItem>
+              <MenuItem value="GERENTE">Gerente</MenuItem>
             </StyledSelect>
           </FormControl>
           <StyledTextField
@@ -163,4 +171,4 @@ const CreateUserScreen = () => {
   )
 }
 
-export default CreateUserScreen
+export default RegisterUserForm

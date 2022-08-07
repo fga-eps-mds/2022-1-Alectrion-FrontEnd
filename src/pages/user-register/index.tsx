@@ -1,4 +1,4 @@
-import CreateUserScreen from '../../components/register-user-form'
+import RegisterUserForm from '../../components/register-user-form'
 import { Typography, Toolbar, AppBar } from '@mui/material'
 import { Container } from '../user-register/styles'
 import { styled } from '@mui/system'
@@ -19,7 +19,7 @@ const UserRegister = () => {
       </StyledAppBar>
       <Container>
         <Typography variant="h3">Cadastro Usuário</Typography>
-        <CreateUserScreen />
+        <RegisterUserForm />
       </Container>
     </>
   )
