@@ -13,8 +13,6 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 
-const pages = ['Equipamentos', 'Ordem de Serviço', 'Usuários']
-
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
@@ -82,18 +80,40 @@ const NavBar = () => {
               sx={{
                 display: { xs: 'block', md: 'none' }
               }}>
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key={''} onClick={handleCloseNavMenu}>
+                <Button
+                  key={''}
+                  href="/equipaments"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block' }}>
+                  Equipamentos
+                </Button>
+              </MenuItem>
+              <MenuItem key={''} onClick={handleCloseNavMenu}>
+                <Button
+                  key={''}
+                  href="/ordemservico"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block' }}>
+                  Ordem de Serviço
+                </Button>
+              </MenuItem>
+              <MenuItem key={''} onClick={handleCloseNavMenu}>
+                <Button
+                  key={''}
+                  href="/users"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block' }}>
+                  Usuários
+                </Button>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
