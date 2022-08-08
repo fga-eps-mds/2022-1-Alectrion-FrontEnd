@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, MouseEvent } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -15,10 +15,10 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 
 const pages = ['Equipamentos', 'Ordem de Serviço', 'Usuários']
 
-const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+const NavBar = () => {
+  const [anchorElNav, setAnchorElNav] = useState(null)
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
   }
 
@@ -150,4 +150,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   )
 }
-export default ResponsiveAppBar
+export default NavBar
