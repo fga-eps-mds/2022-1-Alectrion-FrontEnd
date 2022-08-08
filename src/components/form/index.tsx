@@ -8,7 +8,29 @@ import { FormStyled, StyledCard } from './styles'
 import { CardContent } from '@mui/material'
 import './styleForm.css'
 import api from '../../api/config'
-// import { toast } from 'react-toastify'
+import { toast } from 'react-toastify'
+
+interface UserData {
+  name: string
+  email: string
+  jobFunction: string
+  role: string
+  username: string
+  password:
+    | 'name'
+    | 'email'
+    | 'job'
+    | 'username'
+    | 'password'
+    | 'confirmPassword'
+  confirmPassword:
+    | 'name'
+    | 'email'
+    | 'job'
+    | 'username'
+    | 'password'
+    | 'confirmPassword'
+}
 
 const Form = () => {
   const validationSchema = yup.object().shape({
@@ -24,11 +46,11 @@ const Form = () => {
     confirmPassword: yup.string().min(4).required('O campo é obrigatório.')
   })
 
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState<UserData>()
 
   useEffect(() => {
     const getUser = async () => {
-      const data = await api.get('/user')
+      const data: UserData = await api.get('/user')
       setUserData(data)
     }
     getUser()
@@ -36,21 +58,13 @@ const Form = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: userData.name,
-      email: userData.email,
-      job: userData.jobFunction,
-      profile: userData.role,
-      username: userData.username,
-      password: userData.password,
-      confirmPassword: userData.password
-
-      // name: '',
-      // email: '',
-      // job: '',
-      // profile: '',
-      // username: '',
-      // password: '',
-      // confirmPassword: ''
+      name: userData?.name,
+      email: userData?.email,
+      job: userData?.jobFunction,
+      profile: userData?.role,
+      username: userData?.username,
+      password: userData?.password,
+      confirmPassword: userData?.password
     },
     validationSchema,
     // onSubmit: (values) => {
@@ -67,9 +81,9 @@ const Form = () => {
           username: values.username,
           password: values.password
         })
-        // toast.success('Usuário criado.')
+        toast.success('Usuário criado.')
       } catch (error) {
-        // toast.error('Aconteceu algum erro.')
+        toast.error('Aconteceu algum erro.')
       }
     }
   })
@@ -87,6 +101,8 @@ const Form = () => {
             type="name"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.name && formik.errors.name}
+            error={formik.touched.name && Boolean(formik.errors.name)}
           />
 
           <BasicTextFields
@@ -98,6 +114,8 @@ const Form = () => {
             type="email"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
           />
 
           <BasicTextFields
@@ -109,6 +127,8 @@ const Form = () => {
             type="username"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.username && formik.errors.username}
+            error={formik.touched.username && Boolean(formik.errors.username)}
           />
 
           <BasicTextFields
@@ -120,6 +140,8 @@ const Form = () => {
             type="job"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.job && formik.errors.job}
+            error={formik.touched.job && Boolean(formik.errors.job)}
           />
 
           <BasicSelect
@@ -130,6 +152,7 @@ const Form = () => {
             value={formik.values.profile}
             label="perfilUsuario"
             onChange={formik.handleChange}
+            error={formik.touched.profile && Boolean(formik.errors.profile)}
           />
 
           <BasicTextFields
@@ -141,6 +164,8 @@ const Form = () => {
             type="password"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.password && formik.errors.password}
+            error={formik.touched.password && Boolean(formik.errors.password)}
           />
 
           <BasicTextFields
@@ -152,6 +177,13 @@ const Form = () => {
             type="confirmPassword"
             onChange={formik.handleChange}
             color="primary"
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
+            error={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
           />
 
           <BasicButton

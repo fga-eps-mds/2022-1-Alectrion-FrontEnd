@@ -19,7 +19,7 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
     paddingBottom: '0px',
     margin: '32px'
   },
-  // marginTop: '283px',
+  marginTop: '283px',
   alignSelf: 'center',
   justifyContent: 'center',
   boxShadow: '0 8px 10px rgba(0,0,0,0.45)',

@@ -5,7 +5,7 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
   '& .MuiSelect-select': {
     backgroundColor: theme.palette.background.default,
     padding: '8.5px',
-    borderRadius: '15px'
+    borderRadius: '15px !important'
   },
   '& .MuiOutlinedInput-root': {
     borderRadius: '15px'

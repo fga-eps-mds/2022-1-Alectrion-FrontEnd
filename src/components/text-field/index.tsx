@@ -2,14 +2,16 @@ import * as React from 'react'
 import { StyledTextField } from './styles'
 
 interface PropTypes {
-  id: string | undefined
+  id?: string
   name: string
   label: 'Nome' | 'Cargo' | 'Email' | 'Username' | 'Senha' | 'Confirmar Senha'
-  variant: 'outlined' | 'standard' | 'filled' | undefined
-  value: string
+  variant?: 'outlined' | 'standard' | 'filled'
+  value?: string
   color: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
   type: 'name' | 'email' | 'job' | 'username' | 'password' | 'confirmPassword'
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+  helperText?: any
+  error?: any
 }
 
 const BasicTextFields: React.FC<PropTypes> = ({
@@ -20,7 +22,9 @@ const BasicTextFields: React.FC<PropTypes> = ({
   value,
   type,
   onChange,
-  color
+  color,
+  helperText,
+  error
 }) => {
   return (
     <StyledTextField
@@ -34,6 +38,8 @@ const BasicTextFields: React.FC<PropTypes> = ({
       type={type}
       onChange={onChange}
       color={color}
+      helperText={helperText}
+      error={error}
     />
   )
 }
