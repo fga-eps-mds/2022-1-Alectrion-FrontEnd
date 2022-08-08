@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react'
+import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -16,9 +16,9 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 const pages = ['Equipamentos', 'Ordem de Serviço', 'Usuários']
 
 const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = useState(null)
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
-  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
   }
 
@@ -120,14 +120,27 @@ const NavBar = () => {
               display: { xs: 'none', md: 'flex' },
               justifyContent: 'flex-end'
             }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}>
-                {page}
-              </Button>
-            ))}
+            <Button
+              key={''}
+              href="/equipaments"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              Equipamentos
+            </Button>
+            <Button
+              key={''}
+              href="/ordemservico"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              Ordem de Serviço
+            </Button>
+            <Button
+              key={''}
+              href="/users"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              Usuários
+            </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
