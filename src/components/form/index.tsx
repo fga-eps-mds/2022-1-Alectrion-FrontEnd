@@ -9,6 +9,7 @@ import { CardContent } from '@mui/material'
 import './styleForm.css'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
+import SelectJob from '../select-job'
 
 interface UserData {
   name: string
@@ -67,10 +68,6 @@ const Form = () => {
       confirmPassword: userData?.password
     },
     validationSchema,
-    // onSubmit: (values) => {
-    //   alert(JSON.stringify(values, null, 2))
-    // }
-
     onSubmit: async (values) => {
       try {
         await api.put('/user/update', {
@@ -131,7 +128,7 @@ const Form = () => {
             error={formik.touched.username && Boolean(formik.errors.username)}
           />
 
-          <BasicTextFields
+          {/* <BasicTextFields
             id="job"
             name="job"
             label="Cargo"
@@ -142,6 +139,17 @@ const Form = () => {
             color="primary"
             helperText={formik.touched.job && formik.errors.job}
             error={formik.touched.job && Boolean(formik.errors.job)}
+          /> */}
+
+          <SelectJob
+            labelId="demo-simple-select-label"
+            name="profile"
+            type="profile"
+            id="demo-simple-select"
+            value={formik.values.profile}
+            label="perfilUsuario"
+            onChange={formik.handleChange}
+            error={formik.touched.profile && Boolean(formik.errors.profile)}
           />
 
           <BasicSelect
