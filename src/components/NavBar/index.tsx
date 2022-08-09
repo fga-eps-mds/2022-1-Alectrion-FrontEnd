@@ -12,6 +12,7 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import img from './assets/AlectrionLogo2.png'
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
@@ -45,11 +46,13 @@ const NavBar = () => {
             <Box
               component="img"
               sx={{
-                height: 25,
-                width: 60
+                height: 60,
+                width: 155,
+                mt: 0.5,
+                mb: 1
               }}
               alt=""
-              src="./../assets/alectrionLogo.png"
+              src={img}
             />
           </Typography>
 
@@ -127,11 +130,13 @@ const NavBar = () => {
             <Box
               component="img"
               sx={{
-                height: 25,
-                width: 60
+                height: 60,
+                width: 155,
+                mb: 1,
+                mt: 0.5
               }}
               alt=""
-              src="./../assets/alectrionLogo.png"
+              src={img}
             />
           </Typography>
           <Box
@@ -166,6 +171,7 @@ const NavBar = () => {
             <Tooltip title="Sair">
               <IconButton
                 onClick={() => {}}
+                href="/logout"
                 sx={{ p: 0, mr: 3, ml: 5, color: 'white' }}>
                 <ExitToAppIcon></ExitToAppIcon>
               </IconButton>
@@ -173,7 +179,7 @@ const NavBar = () => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Usuário">
-              <IconButton onClick={() => {}} sx={{ p: 0 }}>
+              <IconButton onClick={() => {}} href="/user" sx={{ p: 0 }}>
                 <Avatar alt="" src="" />
               </IconButton>
             </Tooltip>
