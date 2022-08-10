@@ -9,12 +9,12 @@ import { ReactNode } from 'react'
 
 interface PropTypes {
   labelId?: string | undefined
-  name: string
-  type: string | undefined
+  name?: string
+  type?: string | undefined
   id?: string | undefined
-  value: string | undefined
+  value?: string | undefined
   label?: 'perfilUsuario'
-  onChange: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
+  onChange?: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
   testid?: string
 }

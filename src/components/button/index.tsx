@@ -5,8 +5,8 @@ import { DivButton } from './styles'
 interface PropTypes {
   id?: string | undefined
   name?: string
-  text: string
-  variant: 'text' | 'contained' | 'outlined'
+  text?: string
+  variant?: 'text' | 'contained' | 'outlined'
   color?:
     | 'inherit'
     | 'primary'
@@ -17,7 +17,7 @@ interface PropTypes {
     | 'warning'
     | undefined
   size?: 'small' | 'medium' | 'large' | undefined
-  classes: any
+  classes?: any
   disabled?: boolean | undefined
   type?: 'button' | 'submit' | 'reset' | undefined
 }

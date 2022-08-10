@@ -3,12 +3,12 @@ import { StyledTextField } from './styles'
 
 interface PropTypes {
   id?: string
-  name: string
-  label: 'Nome' | 'Cargo' | 'Email' | 'Username' | 'Senha' | 'Confirmar Senha'
+  name?: string
+  label?: string
   variant?: 'outlined' | 'standard' | 'filled'
   value?: string
-  color: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
-  type: 'name' | 'email' | 'job' | 'username' | 'password' | 'confirmPassword'
+  color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
+  type?: 'name' | 'email' | 'job' | 'username' | 'password' | 'confirmPassword'
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   helperText?: any
   error?: any

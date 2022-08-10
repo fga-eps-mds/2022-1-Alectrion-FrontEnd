@@ -68,7 +68,7 @@ const Form = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log('teste')
+      // console.log('teste')
       try {
         await api.put('/user/update', {
           name: values.name,
@@ -84,7 +84,7 @@ const Form = () => {
       }
     }
   })
-  console.log(formik.values)
+  // console.log(formik.values)
   return (
     <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
@@ -92,7 +92,7 @@ const Form = () => {
           <BasicTextFields
             id="name"
             name="name"
-            label="Nome"
+            label="Nome completo"
             variant="outlined"
             value={formik.values.name}
             type="name"
@@ -118,7 +118,7 @@ const Form = () => {
           <BasicTextFields
             id="username"
             name="username"
-            label="Username"
+            label="Nome de usuário"
             variant="outlined"
             value={formik.values.username}
             type="username"
