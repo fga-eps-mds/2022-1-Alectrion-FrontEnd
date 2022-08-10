@@ -69,6 +69,7 @@ const Form = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      console.log('teste')
       try {
         await api.put('/user/update', {
           name: values.name,
@@ -78,13 +79,13 @@ const Form = () => {
           username: values.username,
           password: values.password
         })
-        toast.success('Usuário criado.')
+        toast.success('Usuário Editado com sucesso.')
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
     }
   })
-
+  console.log(formik.values)
   return (
     <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
@@ -143,13 +144,13 @@ const Form = () => {
 
           <SelectJob
             labelId="demo-simple-select-label"
-            name="profile"
-            type="profile"
+            name="job"
+            type="text"
             id="demo-simple-select"
-            value={formik.values.profile}
-            label="perfilUsuario"
+            value={formik.values.job}
+            label="cargo"
             onChange={formik.handleChange}
-            error={formik.touched.profile && Boolean(formik.errors.profile)}
+            error={formik.touched.job && Boolean(formik.errors.job)}
           />
 
           <BasicSelect
@@ -198,6 +199,7 @@ const Form = () => {
             id="editar"
             text="editar"
             variant="contained"
+            type="submit"
             color="inherit"
             classes={{ root: 'rootEditar' }}
           />

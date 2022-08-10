@@ -13,7 +13,7 @@ interface PropTypes {
   type: string | undefined
   id?: string | undefined
   value: string | undefined
-  label?: 'perfilUsuario'
+  label?: 'cargo'
   onChange: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
 }

@@ -18,6 +18,7 @@ interface PropTypes {
   size?: 'small' | 'medium' | 'large' | undefined
   classes: any
   disabled?: any
+  type?: 'button' | 'submit' | 'reset' | undefined
 }
 
 const BasicButton: React.FC<PropTypes> = ({
@@ -27,13 +28,14 @@ const BasicButton: React.FC<PropTypes> = ({
   color,
   size,
   classes,
-  disabled
+  disabled,
+  type
 }) => {
   return (
     <DivButton>
       <Button
         disabled={disabled}
-        type="submit"
+        type={type}
         id={id}
         variant={variant}
         color={color}
