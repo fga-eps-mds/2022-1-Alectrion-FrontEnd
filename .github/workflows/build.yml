@@ -2,7 +2,7 @@ name: Build
 on:
  push:
    branches:
-     - main
+     - config/ci-cd
 jobs:
   sonarcloud:
     name: SonarCloud
