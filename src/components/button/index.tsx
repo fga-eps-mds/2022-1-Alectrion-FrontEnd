@@ -4,6 +4,7 @@ import { DivButton } from './styles'
 
 interface PropTypes {
   id?: string | undefined
+  name?: string
   text: string
   variant: 'text' | 'contained' | 'outlined'
   color?:
@@ -17,12 +18,13 @@ interface PropTypes {
     | undefined
   size?: 'small' | 'medium' | 'large' | undefined
   classes: any
-  disabled?: any
+  disabled?: boolean | undefined
   type?: 'button' | 'submit' | 'reset' | undefined
 }
 
 const BasicButton: React.FC<PropTypes> = ({
   id,
+  name,
   text,
   variant,
   color,
@@ -40,7 +42,8 @@ const BasicButton: React.FC<PropTypes> = ({
         variant={variant}
         color={color}
         size={size}
-        classes={classes}>
+        classes={classes}
+        name={name}>
         {text}
       </Button>
     </DivButton>

@@ -16,6 +16,7 @@ interface PropTypes {
   label?: 'cargo'
   onChange: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
+  testid?: string
 }
 
 const SelectJob: React.FC<PropTypes> = ({
@@ -26,7 +27,8 @@ const SelectJob: React.FC<PropTypes> = ({
   value,
   label,
   onChange,
-  error
+  error,
+  testid
 }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -40,7 +42,8 @@ const SelectJob: React.FC<PropTypes> = ({
           value={value}
           label={label}
           onChange={onChange}
-          error={error}>
+          error={error}
+          data-testid={testid}>
           <MenuItem value={'DELEGADO'}>Básico</MenuItem>
           <MenuItem value={'AGENTE_POLICIA'}>Agente de polícia</MenuItem>
           <MenuItem value={'ESCRIVAO'}>Escrivão</MenuItem>

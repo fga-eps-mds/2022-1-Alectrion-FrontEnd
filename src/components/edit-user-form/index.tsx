@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import BasicTextFields from '../text-field'
 import { BasicButton } from '../button'
-import BasicSelect from '../select'
+import SelectProfile from '../select-profile'
 import { FormStyled, StyledCard } from './styles'
 import { CardContent } from '@mui/material'
 import './styleForm.css'
@@ -56,7 +56,6 @@ const Form = () => {
     }
     getUser()
   }, [])
-
   const formik = useFormik({
     initialValues: {
       name: userData?.name,
@@ -79,7 +78,7 @@ const Form = () => {
           username: values.username,
           password: values.password
         })
-        toast.success('Usuário Editado com sucesso.')
+        toast.success('Usuário editado com sucesso.')
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
@@ -129,39 +128,28 @@ const Form = () => {
             error={formik.touched.username && Boolean(formik.errors.username)}
           />
 
-          {/* <BasicTextFields
-            id="job"
-            name="job"
-            label="Cargo"
-            variant="outlined"
-            value={formik.values.job}
-            type="job"
-            onChange={formik.handleChange}
-            color="primary"
-            helperText={formik.touched.job && formik.errors.job}
-            error={formik.touched.job && Boolean(formik.errors.job)}
-          /> */}
-
           <SelectJob
-            labelId="demo-simple-select-label"
+            labelId="demo-simple-select-job-label"
             name="job"
             type="text"
-            id="demo-simple-select"
+            id="demo-simple-select-job"
             value={formik.values.job}
             label="cargo"
             onChange={formik.handleChange}
             error={formik.touched.job && Boolean(formik.errors.job)}
+            testid="jobSelect"
           />
 
-          <BasicSelect
-            labelId="demo-simple-select-label"
+          <SelectProfile
+            labelId="demo-simple-select-profile-label"
             name="profile"
             type="profile"
-            id="demo-simple-select"
+            id="demo-simple-select-profile"
             value={formik.values.profile}
             label="perfilUsuario"
             onChange={formik.handleChange}
             error={formik.touched.profile && Boolean(formik.errors.profile)}
+            testid="profileSelect"
           />
 
           <BasicTextFields
@@ -197,29 +185,32 @@ const Form = () => {
 
           <BasicButton
             id="editar"
+            name="editButton"
             text="editar"
             variant="contained"
             type="submit"
             color="inherit"
-            classes={{ root: 'rootEditar' }}
+            classes={{ root: 'rootEdit' }}
           />
 
           <BasicButton
-            disabled="desabilitar"
+            disabled={true}
+            name="backButton"
             id="voltar"
             text="Voltar"
             variant="contained"
             color="inherit"
-            classes={{ root: 'rootVoltar' }}
+            classes={{ root: 'rootBack' }}
           />
 
           <BasicButton
-            disabled="desabilitar"
+            disabled={true}
+            name="removeButton"
             id="remover"
             text="Remover"
             variant="contained"
             color="inherit"
-            classes={{ root: 'rootRemover' }}
+            classes={{ root: 'rootRemove' }}
           />
         </FormStyled>
       </CardContent>

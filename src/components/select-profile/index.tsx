@@ -16,9 +16,10 @@ interface PropTypes {
   label?: 'perfilUsuario'
   onChange: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
+  testid?: string
 }
 
-const BasicSelect: React.FC<PropTypes> = ({
+const SelectProfile: React.FC<PropTypes> = ({
   labelId,
   name,
   type,
@@ -26,7 +27,8 @@ const BasicSelect: React.FC<PropTypes> = ({
   value,
   label,
   onChange,
-  error
+  error,
+  testid
 }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -40,7 +42,8 @@ const BasicSelect: React.FC<PropTypes> = ({
           value={value}
           label={label}
           onChange={onChange}
-          error={error}>
+          error={error}
+          data-testid={testid}>
           <MenuItem value={'Basico'}>Básico</MenuItem>
           <MenuItem value={'Admin'}>Admin</MenuItem>
           <MenuItem value={'Gerente'}>Gerente</MenuItem>
@@ -50,4 +53,4 @@ const BasicSelect: React.FC<PropTypes> = ({
   )
 }
 
-export default BasicSelect
+export default SelectProfile
