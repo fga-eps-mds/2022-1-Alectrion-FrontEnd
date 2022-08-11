@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material'
 import { theme } from '../styles/theme'
 import { ToastContainer } from 'react-toastify'
 import { AppRoutes } from '../routes/routes'
-
+import { BrowserRouter } from 'react-router-dom'
 interface PropTypes {
   children: ReactNode
 }
@@ -18,7 +18,7 @@ const Providers = ({ children }: PropTypes) => {
     <ThemeProvider theme={theme}>
       <AppRoutes />
       <ToastContainer />
-      {children}
+      <BrowserRouter>{children}</BrowserRouter>
     </ThemeProvider>
   )
 }
