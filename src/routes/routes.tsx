@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import TaskScreen from '../pages/task-screen'
 import UserRegister from '../pages/user-register'
 
 export const AppRoutes = () => {
@@ -6,6 +7,7 @@ export const AppRoutes = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/user-register" element={<UserRegister />} />
+        <Route path="/task-screen" element={<TaskScreen />} />
       </Routes>
     </BrowserRouter>
   )

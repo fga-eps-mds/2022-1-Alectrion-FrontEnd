@@ -111,7 +111,7 @@ const RegisterUserForm = () => {
               onChange={formik.handleChange}
               value={formik.values.job}>
               <MenuItem value="DELEGADO">Básico</MenuItem>
-              <MenuItem value="AGENTE_POLICIA">Agente de policia</MenuItem>
+              <MenuItem value="AGENTE_POLICIA">Agente de polícia</MenuItem>
               <MenuItem value="ESCRIVAO">Escrivão</MenuItem>
               <MenuItem value="COORDENADOR">Coordenador</MenuItem>
               <MenuItem value="CHEFE_SECAO">Chefe de seção</MenuItem>
