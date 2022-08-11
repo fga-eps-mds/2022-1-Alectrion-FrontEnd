@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -15,6 +16,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
 
 const NavBar = () => {
+  const navigate = useNavigate()
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,7 +36,7 @@ const NavBar = () => {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            onClick={() => navigate('/')}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -116,7 +119,7 @@ const NavBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href="/"
+            onClick={() => navigate('/')}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -146,23 +149,19 @@ const NavBar = () => {
               justifyContent: 'flex-end'
             }}>
             <Button
-              key={''}
-              href="/equipaments"
-              onClick={handleCloseNavMenu}
+              onClick={() => navigate('/equipaments')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Equipamentos
             </Button>
             <Button
               key={''}
-              href="/ordemservico"
-              onClick={handleCloseNavMenu}
+              onClick={() => navigate('/orderservice')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
             <Button
               key={''}
-              href="/users"
-              onClick={handleCloseNavMenu}
+              onClick={() => navigate('/users')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Usuários
             </Button>
@@ -170,8 +169,7 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
               <IconButton
-                onClick={() => {}}
-                href="/logout"
+                onClick={() => navigate('/logout')}
                 sx={{ p: 0, mr: 3, ml: 5, color: 'white' }}>
                 <ExitToAppIcon></ExitToAppIcon>
               </IconButton>
@@ -179,7 +177,7 @@ const NavBar = () => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Usuário">
-              <IconButton onClick={() => {}} href="/user" sx={{ p: 0 }}>
+              <IconButton onClick={() => navigate('/user')} sx={{ p: 0 }}>
                 <Avatar alt="" src="" />
               </IconButton>
             </Tooltip>
