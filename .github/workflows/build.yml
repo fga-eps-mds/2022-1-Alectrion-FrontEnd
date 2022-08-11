@@ -2,21 +2,33 @@ name: Build
 on:
  push:
    branches:
+     - main
+     - develop
      - config/ci-cd
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  # sonarcloud:
+  #   name: SonarCloud
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0 
+  #     - name: Install dependencies
+  #       run: yarn
+  #     - name: Test and coverage
+  #       run: yarn test:all
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  #         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+  deploy-heroku:
     runs-on: ubuntu-latest
+    name: heroku deploy
     steps:
       - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
-          fetch-depth: 0 
-      - name: Install dependencies
-        run: yarn
-      - name: Test and coverage
-        run: yarn test:all
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "alectrion-front" #Must be unique in Heroku
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
