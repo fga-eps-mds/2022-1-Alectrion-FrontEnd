@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import NavBar from '.'
 import Providers from './../../utils/test-utils'
 
@@ -8,4 +8,5 @@ test('test NavBar', () => {
       <NavBar />
     </Providers>
   )
+  screen.debug()
 })
