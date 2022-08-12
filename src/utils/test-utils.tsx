@@ -7,6 +7,11 @@ interface PropTypes {
   children: ReactNode
 }
 
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as any),
+  useNavigate: () => jest.fn()
+}))
+
 const Providers = ({ children }: PropTypes) => {
   return (
     <ThemeProvider theme={theme}>

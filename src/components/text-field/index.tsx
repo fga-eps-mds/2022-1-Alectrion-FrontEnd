@@ -12,6 +12,7 @@ interface PropTypes {
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   helperText?: any
   error?: any
+  size?: 'small' | 'medium'
 }
 
 const BasicTextFields: React.FC<PropTypes> = ({
@@ -24,7 +25,8 @@ const BasicTextFields: React.FC<PropTypes> = ({
   onChange,
   color,
   helperText,
-  error
+  error,
+  size
 }) => {
   return (
     <StyledTextField
@@ -40,6 +42,7 @@ const BasicTextFields: React.FC<PropTypes> = ({
       color={color}
       helperText={helperText}
       error={error}
+      size={size}
     />
   )
 }

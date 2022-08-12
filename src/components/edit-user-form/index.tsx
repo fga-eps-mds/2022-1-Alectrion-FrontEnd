@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import BasicTextFields from '../text-field'
-import { BasicButton } from '../button'
+import { Button } from '../button'
 import SelectProfile from '../select-profile'
 import { FormStyled, StyledCard } from './styles'
 import { CardContent } from '@mui/material'
@@ -10,6 +10,7 @@ import './styleForm.css'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 import SelectJob from '../select-job'
+import { theme } from '../../styles/theme'
 
 interface UserData {
   name: string
@@ -90,6 +91,7 @@ const Form = () => {
       <CardContent>
         <FormStyled onSubmit={formik.handleSubmit}>
           <BasicTextFields
+            size="small"
             id="name"
             name="name"
             label="Nome completo"
@@ -103,6 +105,7 @@ const Form = () => {
           />
 
           <BasicTextFields
+            size="small"
             id="email"
             name="email"
             label="Email"
@@ -116,6 +119,7 @@ const Form = () => {
           />
 
           <BasicTextFields
+            size="small"
             id="username"
             name="username"
             label="Nome de usuário"
@@ -153,6 +157,7 @@ const Form = () => {
           />
 
           <BasicTextFields
+            size="small"
             id="password"
             name="password"
             label="Senha"
@@ -166,6 +171,7 @@ const Form = () => {
           />
 
           <BasicTextFields
+            size="small"
             id="confirmPassword"
             name="confirmPassword"
             label="Confirmar Senha"
@@ -183,35 +189,35 @@ const Form = () => {
             }
           />
 
-          <BasicButton
+          <Button
             id="editar"
             name="editButton"
-            text="editar"
             variant="contained"
             type="submit"
-            color="inherit"
-            classes={{ root: 'rootEdit' }}
-          />
-
-          <BasicButton
+            styledColor={theme.palette.primary.main}
+            classes={{ root: 'rootEdit' }}>
+            Editar
+          </Button>
+          <Button
             disabled={true}
             name="backButton"
             id="voltar"
-            text="Voltar"
             variant="contained"
-            color="inherit"
-            classes={{ root: 'rootBack' }}
-          />
-
-          <BasicButton
+            styledColor={theme.palette.grey[300]}
+            textColor="black"
+            classes={{ root: 'rootBack' }}>
+            Voltar
+          </Button>
+          <Button
             disabled={true}
             name="removeButton"
             id="remover"
-            text="Remover"
             variant="contained"
-            color="inherit"
-            classes={{ root: 'rootRemove' }}
-          />
+            styledColor={theme.palette.error.main}
+            textColor="white"
+            classes={{ root: 'rootRemove' }}>
+            Remover
+          </Button>
         </FormStyled>
       </CardContent>
     </StyledCard>

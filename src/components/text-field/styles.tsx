@@ -13,8 +13,7 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
   },
   '& .MuiOutlinedInput-input': {
     backgroundColor: theme.palette.background.default,
-    borderRadius: '15px !important',
-    padding: '8.5px'
+    borderRadius: '15px !important'
   },
   '& .MuiOutlinedInput-notchedOutline': {
     borderRadius: '15px'

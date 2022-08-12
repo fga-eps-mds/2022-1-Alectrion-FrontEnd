@@ -32,8 +32,8 @@
     "eject": "react-scripts eject",
     "lint": "npx eslint --fix src/**/*.ts",
     "test": "react-scripts test ",
-    "test:staged": "npm test --  --env=jsdom --watchAll=false --findRelatedTests src/**/*.test.tsx",
-    "test:all": "CI=true npm test --  --env=jsdom --coverage",
+    "test:staged": "npm test --  --env=jsdom --watchAll=false --silent --findRelatedTests src/**/*.test.tsx",
+    "test:all": "CI=true npm test --  --env=jsdom --watchAll=false --coverage",
     "prepare": "husky install"
   },
   "eslintConfig": {

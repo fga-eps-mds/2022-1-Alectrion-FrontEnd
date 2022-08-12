@@ -35,7 +35,7 @@ test('must edit user', async () => {
   const confirmPasswordInput = screen.getByLabelText('Confirmar Senha')
   userEvent.type(confirmPasswordInput, '1234')
 
-  const RegisterButton = screen.getByRole('button', { name: 'editar' })
+  const RegisterButton = screen.getByRole('button', { name: 'Editar' })
   userEvent.click(RegisterButton)
 
   expect(await screen.findByText('Voltar')).toBeDisabled()

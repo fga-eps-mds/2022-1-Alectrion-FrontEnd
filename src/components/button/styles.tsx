@@ -1,17 +1,15 @@
-import styled from 'styled-components'
+import { Button, ButtonProps, css, styled } from '@mui/material'
 
-export const DivButton = styled.div`
-  margin: 0;
-  Button {
-    margin-bottom: 0px;
-    box-sizing: border-box;
+export type Props = ButtonProps & {
+  styledColor?: string
+  textColor?: string
+}
+
+export const StyledTestButton = styled(Button)<Props>(
+  ({ theme, styledColor, textColor }) => css`
+    background: ${styledColor};
+    color: ${textColor};
     border-radius: 15px;
-    font-weight: 700;
-    font-size: 16px;
-    border: none;
-    width: 100%;
-    max-width: 416px;
-    height: 40px;
-    margin-top: 0;
-  }
-`
+    box-shadow: 0 6px 4px -4px black;
+  `
+)
