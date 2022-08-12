@@ -1,3 +1,3 @@
 export const config = {
-  url: 'http://localhost:4001'
+  url: process.env.GATEWAY_URL
 }
