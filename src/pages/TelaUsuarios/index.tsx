@@ -22,6 +22,7 @@ export default function ScreenUser() {
           />
           <div></div>
           <Button
+            href="/user-register"
             styledColor={theme.palette.background.paper}
             textColor="white">
             Cadastrar usuário
