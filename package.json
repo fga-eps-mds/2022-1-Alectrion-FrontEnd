@@ -1,5 +1,5 @@
 {
-  "name": "sgpti-frontend",
+  "name": "Alectrion-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,11 +24,12 @@
     "react-toastify": "^9.0.7",
     "styled-components": "^5.3.5",
     "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --max_old_space_size=512 start",
+    "build": "react-scripts --max_old_space_size=1024 build",
     "eject": "react-scripts eject",
     "lint": "npx eslint --fix src/**/*.ts",
     "test": "react-scripts test ",
@@ -71,7 +72,6 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "prettier-config-standard": "^5.0.0",
-    "yup": "^0.32.11"
+    "prettier-config-standard": "^5.0.0"
   }
 }
