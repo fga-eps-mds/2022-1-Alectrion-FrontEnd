@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.primary.light,
     color: theme.palette.common.white
   },
   [`&.${tableCellClasses.body}`]: {
@@ -19,7 +19,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover
+    backgroundColor: theme.palette.background.default
+  },
+  '&:nth-child(even)': {
+    backgroundColor: '#D9D9D9'
   },
   // hide last border
   '&:last-child td, &:last-child th': {
@@ -59,8 +62,10 @@ const rows = [
 
 export default function UserTables() {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+    <TableContainer
+      sx={{ margin: '0 auto', maxWidth: '1024px' }}
+      component={Paper}>
+      <Table aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Nome do usuário </StyledTableCell>
