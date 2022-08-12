@@ -19,6 +19,7 @@ export const StyledShortcut = styled.div<Props>(
     justify-content: center;
     display: flex;
     align-items: center;
+    cursor: pointer;
   `
 )
 export const ContainerCard = styled.div`
