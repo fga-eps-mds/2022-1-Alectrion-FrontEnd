@@ -18,20 +18,8 @@ interface UserData {
   jobFunction: string
   role: string
   username: string
-  password:
-    | 'name'
-    | 'email'
-    | 'job'
-    | 'username'
-    | 'password'
-    | 'confirmPassword'
-  confirmPassword:
-    | 'name'
-    | 'email'
-    | 'job'
-    | 'username'
-    | 'password'
-    | 'confirmPassword'
+  password: string
+  confirmPassword: string
 }
 
 const Form = () => {
