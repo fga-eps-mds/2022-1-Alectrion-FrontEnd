@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import NavBar from '../components/NavBar'
 import UserRegister from '../pages/user-register'
 import EditUser from '../pages/EditUser'
+import NavBar from '../components/NavBar'
 
 export const AppRoutes = () => {
   return (
