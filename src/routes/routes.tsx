@@ -7,7 +7,7 @@ export const AppRoutes = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/user-register" element={<UserRegister />} />
-        <Route path="/task-screen" element={<TaskScreen />} />
+        <Route path="/home" element={<TaskScreen />} />
       </Routes>
     </BrowserRouter>
   )
