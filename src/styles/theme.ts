@@ -8,7 +8,8 @@ export const theme = createTheme({
       dark: '#1F3541'
     },
     background: {
-      default: '#FFF'
+      default: '#FFF',
+      paper: '#16878C'
     },
     grey: {
       '500': '#D9D9D9',
