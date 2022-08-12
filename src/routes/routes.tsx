@@ -1,15 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Equipaments from '../pages/Equipaments'
-import Home from '../pages/Home'
+import UserRegister from '../pages/user-register'
 import ScreenUser from '../pages/TelaUsuarios'
 
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/equipaments" element={<Equipaments />} />
-        <Route path="/screen-user" element={<ScreenUser />} />
+        <Route path="/user-register" element={<UserRegister />} />
+        <Route path="/users" element={<ScreenUser />} />
       </Routes>
     </BrowserRouter>
   )
