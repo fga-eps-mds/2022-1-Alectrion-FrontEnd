@@ -6,9 +6,9 @@ import Providers from '../../utils/test-utils'
 test('button unit test', () => {
   render(
     <Providers>
-      <Button />
+      <Button>Test</Button>
     </Providers>
   )
-  const RegisterButton = screen.getByRole('button')
+  const RegisterButton = screen.getByRole('button', { name: 'Test' })
   userEvent.click(RegisterButton)
 })

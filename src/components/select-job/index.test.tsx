@@ -1,15 +1,16 @@
 import SelectJob from './index'
-import { render, screen } from '@testing-library/react'
+import { render, screen, getByRole, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Providers from '../../utils/test-utils'
 
-test('Select job unit test', () => {
+test('Select job unit test', async () => {
   render(
     <Providers>
-      <SelectJob />
+      <SelectJob testid="job-select-id" />
     </Providers>
   )
-  const jobSelect = screen.getByRole('button')
-  userEvent.click(jobSelect)
-  userEvent.click(screen.getByText(/Escrivão/i))
+
+  const profileInput = getByRole(screen.getByTestId('job-select-id'), 'button')
+  userEvent.click(profileInput)
+  await waitFor(() => userEvent.click(screen.getByText(/Coordenador/i)))
 })
