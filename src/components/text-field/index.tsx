@@ -8,7 +8,7 @@ interface PropTypes {
   variant?: 'outlined' | 'standard' | 'filled'
   value?: string
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
-  type?: 'name' | 'email' | 'job' | 'username' | 'password' | 'confirmPassword'
+  type?: string
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   helperText?: any
   error?: any

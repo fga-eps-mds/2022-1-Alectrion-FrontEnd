@@ -2,8 +2,8 @@ import { styled as styledSystem } from '@mui/system'
 import { TextField } from '@mui/material'
 
 export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
-  maxWidth: '416px',
-  height: '40px',
+  // maxWidth: '416px',
+  // height: '40px',
   marginTop: '0px',
   marginBottom: '0px',
 
