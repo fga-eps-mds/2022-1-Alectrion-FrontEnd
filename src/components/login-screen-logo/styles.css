@@ -1,0 +1,15 @@
+.logo {
+    width: 150px;
+    height: 150px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    text-align: center; 
+    margin: auto;
+    margin-bottom: 64px;
+    margin-top: 59px;
+}
+
+.texto {
+    margin-top: 65px;
+    margin-bottom: 65px;
+}
