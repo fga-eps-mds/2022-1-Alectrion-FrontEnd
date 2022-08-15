@@ -7,7 +7,7 @@ import {
   StyledComputerIcon,
   StyledPersonIcon,
   StyledShortcut
-} from '../../components/task-screen/styles'
+} from './styles'
 
 export const Task = () => {
   const navigate = useNavigate()
