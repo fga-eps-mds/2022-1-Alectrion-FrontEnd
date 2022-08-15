@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom'
+import { Typography } from '@mui/material'
 import {
   Container,
   ContainerCard,
+  StyledBuildIcon,
   StyledComputerIcon,
   StyledPersonIcon,
-  StyledShortcut,
-  StyledBuildIcon
-} from './styles'
-import { Typography } from '@mui/material'
+  StyledShortcut
+} from '../../components/task-screen/styles'
 
-export const TaskCards = () => {
+export const Task = () => {
   const navigate = useNavigate()
   return (
     <Container>

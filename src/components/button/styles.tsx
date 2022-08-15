@@ -1,7 +1,7 @@
 import { Button, ButtonProps, css, styled } from '@mui/material'
 
 export type Props = ButtonProps & {
-  styledColor: string
+  styledColor?: string
   textColor?: string
 }
 

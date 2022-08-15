@@ -12,6 +12,7 @@ export const theme = createTheme({
     },
     grey: {
       '500': '#D9D9D9',
+      '300': '#F2F2F2',
       '100': '#F6F6F6',
       '900': '#000000'
     },
