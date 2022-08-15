@@ -16,7 +16,7 @@ export const Task = () => {
       <ContainerCard>
         <StyledShortcut
           color="#50FF4DB2"
-          onClick={() => navigate('/user-register')}
+          onClick={() => navigate('/equipaments')}
           className="Equipment">
           <StyledComputerIcon style={{ fontSize: 100 }} />
         </StyledShortcut>
@@ -28,7 +28,7 @@ export const Task = () => {
         <StyledShortcut
           color="#EFCA45"
           className="Service Order"
-          onClick={() => navigate('/user-register')}>
+          onClick={() => navigate('/orderservice')}>
           <StyledBuildIcon style={{ fontSize: 100 }} />
         </StyledShortcut>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
@@ -39,7 +39,7 @@ export const Task = () => {
         <StyledShortcut
           color="#71ABDA"
           className="User"
-          onClick={() => navigate('/user-register')}>
+          onClick={() => navigate('/users')}>
           <StyledPersonIcon style={{ fontSize: 100 }} />
         </StyledShortcut>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
