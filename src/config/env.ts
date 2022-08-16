@@ -1,3 +1,3 @@
 export const config = {
-  url: process.env.GATEWAY_URL
+  url: 'https://alectrion-user-api.herokuapp.com'
 }
