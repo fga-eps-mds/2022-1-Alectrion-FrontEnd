@@ -6,8 +6,12 @@ import { theme } from '../../styles/theme'
 import BasicTextFields from '../text-field'
 import { Button } from '../button'
 import LoginLogo from '../login-screen-logo'
+import api from '../../api/config'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const LoginScreenForm = () => {
+  const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -22,8 +26,17 @@ const LoginScreenForm = () => {
       password: ''
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values) => {
+      try {
+        await api.post('/user', {
+          email: values.email,
+          password: values.password
+        })
+        toast.success('Usuário encontrado.')
+        navigate('/Home')
+      } catch (error) {
+        toast.error('Usuário não encontrado.')
+      }
     }
   })
 
@@ -42,6 +55,8 @@ const LoginScreenForm = () => {
             type="email"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
           />
           <BasicTextFields
             size="small"
@@ -53,6 +68,8 @@ const LoginScreenForm = () => {
             type="password"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.password && formik.errors.password}
+            error={formik.touched.password && Boolean(formik.errors.password)}
           />
 
           <Button
