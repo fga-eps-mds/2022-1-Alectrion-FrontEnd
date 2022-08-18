@@ -5,10 +5,12 @@ import * as yup from 'yup'
 import { theme } from '../../styles/theme'
 import BasicTextFields from '../text-field'
 import { Button } from '../button'
-import LoginLogo from '../login-screen-logo'
+// import LoginLogo from '../login-screen-logo'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import img from './assets/AlectrionLogo2.png'
+import Box from '@mui/material/Box'
 
 const LoginScreenForm = () => {
   const navigate = useNavigate()
@@ -44,7 +46,18 @@ const LoginScreenForm = () => {
     <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
         <FormStyled onSubmit={formik.handleSubmit}>
-          <LoginLogo />
+          <Box
+            component="img"
+            sx={{
+              height: 60,
+              width: 155,
+              mt: 0.5,
+              mb: 8,
+              ml: 10
+            }}
+            alt=""
+            src={img}
+          />
           <BasicTextFields
             size="small"
             id="email"
