@@ -6,34 +6,41 @@ import { theme } from '../../styles/theme'
 import BasicTextFields from '../text-field'
 import { Button } from '../button'
 // import LoginLogo from '../login-screen-logo'
-import api from '../../api/config'
+// import api from '../../api/config'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import img from './assets/AlectrionLogo2.png'
 import Box from '@mui/material/Box'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../contexts/auth'
 
 const LoginScreenForm = () => {
+  const { Login } = useContext(AuthContext)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const data = {
+    username,
+    password
+  }
+
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email('E-mail inválido.')
-      .required('O campo é obrigatório.'),
+    username: yup.string().required('O campo é obrigatório.'),
     password: yup.string().min(4).required('O campo é obrigatório.')
   })
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      username: '',
       password: ''
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await api.post('/user', {
-          email: values.email,
-          password: values.password
-        })
+        setUsername(values.username)
+        setPassword(values.password)
+        await Login(data)
         toast.success('Usuário encontrado.')
         navigate('/Home')
       } catch (error) {
@@ -60,16 +67,16 @@ const LoginScreenForm = () => {
           />
           <BasicTextFields
             size="small"
-            id="email"
-            name="email"
-            label="E-Mail"
+            id="username"
+            name="username"
+            label="Username"
             variant="outlined"
-            value={formik.values.email}
+            value={formik.values.username}
             type="email"
             onChange={formik.handleChange}
             color="primary"
-            helperText={formik.touched.email && formik.errors.email}
-            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.username && formik.errors.username}
+            error={formik.touched.username && Boolean(formik.errors.username)}
           />
           <BasicTextFields
             size="small"
