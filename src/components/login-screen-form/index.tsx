@@ -5,8 +5,6 @@ import * as yup from 'yup'
 import { theme } from '../../styles/theme'
 import BasicTextFields from '../text-field'
 import { Button } from '../button'
-// import LoginLogo from '../login-screen-logo'
-// import api from '../../api/config'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import img from './assets/AlectrionLogo2.png'
@@ -72,7 +70,7 @@ const LoginScreenForm = () => {
             label="Username"
             variant="outlined"
             value={formik.values.username}
-            type="email"
+            type="username"
             onChange={formik.handleChange}
             color="primary"
             helperText={formik.touched.username && formik.errors.username}
