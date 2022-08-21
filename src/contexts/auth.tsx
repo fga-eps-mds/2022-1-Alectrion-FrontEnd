@@ -3,10 +3,10 @@ import api from '../api/config'
 
 // tipagem
 type UserProps = {
-  id: string
   name: string
   email: string
   expireIn: string
+  token: string
 }
 
 type SignInProps = {
@@ -29,7 +29,7 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>()
-  const isAuthenticated = !!user
+  const isAuthenticated = !!user // boolean
 
   useEffect(() => {
     const storagedUser = sessionStorage.getItem('@App:user')

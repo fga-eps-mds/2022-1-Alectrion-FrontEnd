@@ -9,7 +9,7 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
 
   '& .MuiFormLabel-root': {
     // Color: theme.palette.background.default,
-    borderRadius: '15px'
+    // borderRadius: '15px'
   },
   '& .MuiOutlinedInput-input': {
     backgroundColor: theme.palette.background.default,
