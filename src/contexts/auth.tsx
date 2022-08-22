@@ -1,21 +1,13 @@
 import { createContext, ReactNode, useState, useEffect } from 'react'
 import api from '../api/config'
 
-// tipagem
-type UserProps = {
-  name: string
-  email: string
-  expireIn: string
-  token: string
-}
-
 type SignInProps = {
   username: string
   password: string
 }
 
 type AuthContextData = {
-  user?: UserProps
+  user: object | null
   isAuthenticated: boolean
   Login: (credentials: SignInProps) => Promise<void>
   Logout(): void
@@ -28,8 +20,8 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<UserProps>()
-  const isAuthenticated = !!user // boolean
+  const [user, setUser] = useState<object | null>(null)
+  const isAuthenticated = !!user
 
   useEffect(() => {
     const storagedUser = sessionStorage.getItem('@App:user')
@@ -56,7 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function Logout() {
-    setUser(undefined)
+    setUser(null)
   }
 
   return (

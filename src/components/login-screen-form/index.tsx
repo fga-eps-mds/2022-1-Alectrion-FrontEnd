@@ -6,7 +6,7 @@ import { theme } from '../../styles/theme'
 import BasicTextFields from '../text-field'
 import { Button } from '../button'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import img from './assets/AlectrionLogo2.png'
 import Box from '@mui/material/Box'
 import { useContext, useState } from 'react'
@@ -22,7 +22,7 @@ const LoginScreenForm = () => {
     password
   }
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     username: yup.string().required('O campo é obrigatório.'),
     password: yup.string().min(4).required('O campo é obrigatório.')
@@ -39,8 +39,8 @@ const LoginScreenForm = () => {
         setUsername(values.username)
         setPassword(values.password)
         await Login(data)
-        toast.success('Usuário encontrado.')
-        navigate('/Home')
+        // toast.success('Usuário encontrado.')
+        // navigate('/Home')
       } catch (error) {
         toast.error('Usuário não encontrado.')
       }

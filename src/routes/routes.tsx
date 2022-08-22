@@ -18,3 +18,13 @@ export const AppRoutes = () => {
     </BrowserRouter>
   )
 }
+
+// import { SignRoutes } from './sign-routes'
+// import { OtherRoutes } from './other-routes'
+// import { useContext } from 'react'
+// import { AuthContext } from '../contexts/auth'
+
+// export const AppRoutes = () => {
+//   const { isAuthenticated } = useContext(AuthContext)
+//   return isAuthenticated ? <OtherRoutes /> : <SignRoutes />
+// }
