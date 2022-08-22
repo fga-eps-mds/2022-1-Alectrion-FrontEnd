@@ -30,6 +30,7 @@ const NavBar = () => {
 
   function logOut() {
     localStorage.clear()
+    sessionStorage.clear()
     // Usar o context
     navigate('/user-login-screen')
   }
