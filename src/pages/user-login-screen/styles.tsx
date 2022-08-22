@@ -8,4 +8,5 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 64px;
   padding-top: 32px;
+  background: #1f3541;
 `

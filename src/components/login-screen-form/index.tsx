@@ -5,25 +5,45 @@ import * as yup from 'yup'
 import { theme } from '../../styles/theme'
 import BasicTextFields from '../text-field'
 import { Button } from '../button'
-import LoginLogo from '../login-screen-logo'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import img from './assets/AlectrionLogo2.png'
+import Box from '@mui/material/Box'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../contexts/auth'
 
 const LoginScreenForm = () => {
+  const { Login } = useContext(AuthContext)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const data = {
+    username,
+    password
+  }
+
+  const navigate = useNavigate()
   const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email('E-mail inválido.')
-      .required('O campo é obrigatório.'),
+    username: yup.string().required('O campo é obrigatório.'),
     password: yup.string().min(4).required('O campo é obrigatório.')
   })
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      username: '',
       password: ''
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values) => {
+      try {
+        setUsername(values.username)
+        setPassword(values.password)
+        await Login(data)
+        toast.success('Usuário encontrado.')
+        navigate('/Home')
+      } catch (error) {
+        toast.error('Usuário não encontrado.')
+      }
     }
   })
 
@@ -31,17 +51,30 @@ const LoginScreenForm = () => {
     <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
         <FormStyled onSubmit={formik.handleSubmit}>
-          <LoginLogo />
+          <Box
+            component="img"
+            sx={{
+              height: 60,
+              width: 155,
+              mt: 0.5,
+              mb: 8,
+              ml: 10
+            }}
+            alt=""
+            src={img}
+          />
           <BasicTextFields
             size="small"
-            id="email"
-            name="email"
-            label="E-Mail"
+            id="username"
+            name="username"
+            label="Username"
             variant="outlined"
-            value={formik.values.email}
-            type="email"
+            value={formik.values.username}
+            type="username"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.username && formik.errors.username}
+            error={formik.touched.username && Boolean(formik.errors.username)}
           />
           <BasicTextFields
             size="small"
@@ -53,6 +86,8 @@ const LoginScreenForm = () => {
             type="password"
             onChange={formik.handleChange}
             color="primary"
+            helperText={formik.touched.password && formik.errors.password}
+            error={formik.touched.password && Boolean(formik.errors.password)}
           />
 
           <Button

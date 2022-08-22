@@ -8,11 +8,11 @@ import { StyledSelect } from './styles'
 import { ReactNode } from 'react'
 
 interface PropTypes {
-  labelId?: string | undefined
+  labelId?: string
   name?: string
-  type?: string | undefined
-  id?: string | undefined
-  value?: string | undefined
+  type?: string
+  id?: string
+  value?: string
   label?: 'cargo'
   onChange?: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
