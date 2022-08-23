@@ -14,9 +14,11 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
+import { AuthContext } from '../../contexts/auth'
 
 const NavBar = () => {
   const navigate = useNavigate()
+  const { Logout } = React.useContext(AuthContext)
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
@@ -26,13 +28,6 @@ const NavBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
-  }
-
-  function logOut() {
-    localStorage.clear()
-    sessionStorage.clear()
-    // Usar o context
-    navigate('/user-login-screen')
   }
 
   return (
@@ -165,7 +160,7 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
               <IconButton
-                onClick={logOut}
+                onClick={Logout}
                 sx={{ p: 0, mr: 3, ml: 5, color: 'white' }}>
                 <ExitToAppIcon></ExitToAppIcon>
               </IconButton>
