@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState, useEffect } from 'react'
+import { createContext, useState, ReactNode, useEffect } from 'react'
 import api from '../api/config'
 
 type SignInProps = {
@@ -21,7 +21,7 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<object | null>(null)
-  const isAuthenticated = !!user
+  // const isAuthenticated = !!user
 
   useEffect(() => {
     const storagedUser = sessionStorage.getItem('@App:user')
@@ -34,17 +34,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [])
 
   async function Login({ username, password }: SignInProps) {
-    const response = await api.post('/login', {
+    const response = await api.post('/user/login', {
       username,
       password
     })
+    console.log('a requisição foi feita!')
 
-    setUser(response.data.user)
+    const { token, expireIn, email, name, role } = response.data
 
-    sessionStorage.setItem('@App:user', JSON.stringify(response.data.user))
-    sessionStorage.setItem('@App:token', response.data.token)
+    setUser({ token, expireIn, email, name, role })
 
-    api.defaults.headers.common.Authorization = 'Bearer ' + response.data.token
+    sessionStorage.setItem(
+      '@App:user',
+      JSON.stringify({ token, expireIn, email, name, role })
+    )
+    sessionStorage.setItem('@App:token', token)
+
+    api.defaults.headers.common.Authorization = 'Bearer ' + token
   }
 
   function Logout() {
@@ -52,7 +58,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, Login, Logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated: Boolean(user), user, Login, Logout }}>
       {children}
     </AuthContext.Provider>
   )

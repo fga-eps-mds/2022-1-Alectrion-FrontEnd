@@ -6,23 +6,15 @@ import { theme } from '../../styles/theme'
 import BasicTextFields from '../text-field'
 import { Button } from '../button'
 import { toast } from 'react-toastify'
-// import { useNavigate } from 'react-router-dom'
 import img from './assets/AlectrionLogo2.png'
 import Box from '@mui/material/Box'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../../contexts/auth'
 
 const LoginScreenForm = () => {
-  const { Login } = useContext(AuthContext)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const { Login, isAuthenticated } = useContext(AuthContext)
+  console.log(isAuthenticated)
 
-  const data = {
-    username,
-    password
-  }
-
-  // const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     username: yup.string().required('O campo é obrigatório.'),
     password: yup.string().min(4).required('O campo é obrigatório.')
@@ -36,11 +28,12 @@ const LoginScreenForm = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        setUsername(values.username)
-        setPassword(values.password)
+        const data = {
+          username: values.username,
+          password: values.password
+        }
         await Login(data)
-        // toast.success('Usuário encontrado.')
-        // navigate('/Home')
+        toast.success('Usuário encontrado.')
       } catch (error) {
         toast.error('Usuário não encontrado.')
       }
