@@ -28,8 +28,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts --max_old_space_size=512 start",
-    "build": "react-scripts --max_old_space_size=1024 build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "npx eslint --fix src/**/*.ts",
     "test": "react-scripts test ",
