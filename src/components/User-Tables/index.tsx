@@ -30,61 +30,76 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }))
 
-function createData(
-  nameUser: string,
-  name: string,
-  email: string,
-  perfil: string,
-  cargo: string
-) {
-  return { nameUser, name, email, perfil, cargo }
+interface user {
+  createdAt: string
+  updatedAt: string
+  username: string
+  name: string
+  email: string
+  role: string
+  job: string
 }
 
-const rows = [
-  createData('JoãoPaulo', 'João', 'joao@joAo.com.br', 'ADMIN', 'CARGO1'),
-  createData('Marialurdes', 'Maria', 'maria@maria.com.br', 'ADMIN', 'CARGO2'),
-  createData(
-    'RicardoPaulo',
-    'Ricardo',
-    'ricardo@gmail.com.br',
-    'GERENTE',
-    'CARGO3'
-  ),
-  createData('Rosedasilva', 'Rose', 'rose@hotmail.com.br', 'PADRAO', 'CARGO4'),
-  createData(
-    'GuilhermeOliveira',
-    'Guilherme',
-    'gui@gmail.com.br',
-    'ADMIN',
-    'CARGO5'
-  )
-]
+interface propType {
+  users: user[]
+}
 
-export default function UserTables() {
+// function createData(
+//   nameUser: string,
+//   name: string,
+//   email: string,
+//   perfil: string,
+//   cargo: string
+// ) {
+//   return { nameUser, name, email, perfil, cargo }
+// }
+
+// const rows = [
+//   createData('JoãoPaulo', 'João', 'joao@joAo.com.br', 'ADMIN', 'CARGO1'),
+//   createData('Marialurdes', 'Maria', 'maria@maria.com.br', 'ADMIN', 'CARGO2'),
+//   createData(
+//     'RicardoPaulo',
+//     'Ricardo',
+//     'ricardo@gmail.com.br',
+//     'GERENTE',
+//     'CARGO3'
+//   ),
+//   createData('Rosedasilva', 'Rose', 'rose@hotmail.com.br', 'PADRAO', 'CARGO4'),
+//   createData(
+//     'GuilhermeOliveira',
+//     'Guilherme',
+//     'gui@gmail.com.br',
+//     'ADMIN',
+//     'CARGO5'
+//   )
+// ]
+
+export default function UserTables({ users }: propType) {
+  console.log({ users })
   return (
     <TableContainer
-      sx={{ margin: '0 auto', maxWidth: '1024px' }}
+      sx={{ margin: '0 auto', maxWidth: '1024px', textAlign: 'center' }}
       component={Paper}>
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Nome do usuário </StyledTableCell>
-            <StyledTableCell align="right">Nome</StyledTableCell>
-            <StyledTableCell align="right">Email</StyledTableCell>
-            <StyledTableCell align="right">Perfil</StyledTableCell>
-            <StyledTableCell align="right">Cargo</StyledTableCell>
+            <StyledTableCell align="center">Nome do usuário </StyledTableCell>
+            <StyledTableCell align="center">Nome</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="center">Perfil</StyledTableCell>
+            <StyledTableCell align="center">Cargo</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.nameUser}
+          {users.map((user) => (
+            <StyledTableRow key={user.name}>
+              <StyledTableCell align="center" component="th" scope="user">
+                {user.username}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.name}</StyledTableCell>
-              <StyledTableCell align="right">{row.email}</StyledTableCell>
-              <StyledTableCell align="right">{row.perfil}</StyledTableCell>
-              <StyledTableCell align="right">{row.cargo}</StyledTableCell>
+              <StyledTableCell align="center">{user.name}</StyledTableCell>
+              <StyledTableCell align="center">{user.email}</StyledTableCell>
+              <StyledTableCell align="center">{user.role}</StyledTableCell>
+              <StyledTableCell align="center">{user.job}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
