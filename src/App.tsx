@@ -1,5 +1,5 @@
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import { AppRoutes } from './routes/routes'
+import { SignRoutes } from './routes/routes'
 import { theme } from './styles/theme'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -37,15 +37,6 @@ function App() {
 
     function resetTimer() {
       clearTimeout(time)
-      toast.success('Reconectado!', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined
-      })
       time = setTimeout(doSomething, 1800000)
     }
   })
@@ -54,7 +45,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AuthProvider>
-        <AppRoutes />
+        <SignRoutes />
       </AuthProvider>
       <ToastContainer />
     </ThemeProvider>
