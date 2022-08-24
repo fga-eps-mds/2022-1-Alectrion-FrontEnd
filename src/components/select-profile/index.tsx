@@ -47,6 +47,7 @@ const SelectProfile: React.FC<PropTypes> = ({
           <MenuItem value={'Basico'}>Básico</MenuItem>
           <MenuItem value={'Admin'}>Admin</MenuItem>
           <MenuItem value={'Gerente'}>Gerente</MenuItem>
+          <MenuItem value={'Gerente'}>Consulta</MenuItem>
         </StyledSelect>
       </FormControl>
     </Box>

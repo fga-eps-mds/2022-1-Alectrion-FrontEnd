@@ -18,10 +18,7 @@ import { useNavigate } from 'react-router-dom'
 const RegisterUserForm = () => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .required('Esse campo é obrigatório')
-      .email('Insira um email válido'),
+    email: yup.string().email('Insira um email válido'),
     name: yup.string().required('Esse campo é obrigatório'),
     username: yup.string().required('Esse campo é obrigatório'),
     job: yup.string().required('Esse campo é obrigatório'),
@@ -75,17 +72,7 @@ const RegisterUserForm = () => {
             helperText={formik.touched.name && formik.errors.name}
             error={formik.touched.name && Boolean(formik.errors.name)}
           />
-          <StyledTextField
-            size="small"
-            id="email-input"
-            label="Email"
-            name="email"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            helperText={formik.touched.email && formik.errors.email}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-          />
+
           <StyledTextField
             size="small"
             id="username-input"
@@ -97,6 +84,18 @@ const RegisterUserForm = () => {
             value={formik.values.username}
             helperText={formik.touched.username && formik.errors.username}
             error={formik.touched.username && Boolean(formik.errors.username)}
+          />
+
+          <StyledTextField
+            size="small"
+            id="email-input"
+            label="Email"
+            name="email"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={null}
+            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
           />
           <FormControl fullWidth>
             <StyledInputLabel id="job-select-label">Cargo</StyledInputLabel>
@@ -135,6 +134,7 @@ const RegisterUserForm = () => {
               <MenuItem value="BASICO">Básico</MenuItem>
               <MenuItem value="ADMIN">Admin</MenuItem>
               <MenuItem value="GERENTE">Gerente</MenuItem>
+              <MenuItem value="CONSULTA">Consulta</MenuItem>
             </StyledSelect>
           </FormControl>
           <StyledTextField
