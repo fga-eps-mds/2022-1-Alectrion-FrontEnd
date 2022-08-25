@@ -1,6 +1,12 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation
+} from 'react-router-dom'
 import UserLoginScreen from '../pages/user-login-screen'
-import React, { ReactNode, useContext } from 'react'
+import { ReactNode, useContext } from 'react'
 import { AuthContext } from '../contexts/auth'
 import Home from '../pages/Home'
 import UserRegister from '../pages/user-register'
@@ -16,7 +22,6 @@ export const SignRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={UserLoginScreen} />
         <Route
           path="/"
           element={
@@ -41,24 +46,24 @@ export const SignRoutes = () => {
             </AuthRoutes>
           }
         />
+        <Route path="/login" element={<UserLoginScreen />} />
       </Routes>
     </BrowserRouter>
   )
 }
 
-function AuthRoutes({ children }: AuthRouteProps): any {
+export function AuthRoutes({ children }: AuthRouteProps): any {
   const { isAuthenticated } = useContext(AuthContext)
+  const location = useLocation()
+  console.log(isAuthenticated)
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} />
-  }
-  return children
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/login" state={{ from: location }} />
+  // }
+  // return children
+  return isAuthenticated === true ? (
+    children
+  ) : (
+    <Navigate to="/login" replace state={{ path: location.pathname }} />
+  )
 }
-
-// function AuthRoutes({ children }: AuthRouteProps): any {
-//   const { isAuthenticated } = useContext(AuthContext)
-//   if (!isAuthenticated) {
-//     return <Navigate to="/login" state={{ from: location }} />
-//   }
-//   return <Navigate to="/" state={{ from: location }} />
-// }

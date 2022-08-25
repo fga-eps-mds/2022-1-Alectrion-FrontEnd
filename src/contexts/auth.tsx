@@ -21,7 +21,6 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<object | null>(null)
-  // const isAuthenticated = !!user
 
   useEffect(() => {
     const storagedUser = sessionStorage.getItem('@App:user')
@@ -33,18 +32,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [])
 
-  async function Login({ username, password }: SignInProps) {
-    const response = await api.post('/user/login', {
-      username,
-      password
-    })
+  async function Login(userData: object) {
+    const response = await api.post('/user/login', userData)
     console.log('a requisição foi feita!')
     console.log(response.data)
 
     const { token, expireIn, email, name, role } = response.data
 
     setUser({ token, expireIn, email, name, role })
-
     sessionStorage.setItem(
       '@App:user',
       JSON.stringify({ token, expireIn, email, name, role })
@@ -62,7 +57,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: Boolean(user), user, Login, Logout }}>
+      value={{ isAuthenticated: !!user, user, Login, Logout }}>
       {children}
     </AuthContext.Provider>
   )

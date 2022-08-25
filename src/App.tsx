@@ -3,7 +3,7 @@ import { SignRoutes } from './routes/routes'
 import { theme } from './styles/theme'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
-import { AuthProvider, AuthContext } from './contexts/auth'
+import { AuthContext, AuthProvider } from './contexts/auth'
 import * as React from 'react'
 
 function App() {
