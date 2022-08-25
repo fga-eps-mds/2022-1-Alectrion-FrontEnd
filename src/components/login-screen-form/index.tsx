@@ -10,10 +10,10 @@ import img from './assets/AlectrionLogo2.png'
 import Box from '@mui/material/Box'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/auth'
+// import { Navigate } from 'react-router-dom'
 
 const LoginScreenForm = () => {
-  const { Login, isAuthenticated } = useContext(AuthContext)
-  console.log(isAuthenticated)
+  const { Login } = useContext(AuthContext)
 
   const validationSchema = yup.object().shape({
     username: yup.string().required('O campo é obrigatório.'),
@@ -32,8 +32,10 @@ const LoginScreenForm = () => {
           username: values.username,
           password: values.password
         }
+
         await Login(data)
         toast.success('Usuário encontrado.')
+        // Navigate({ to: '/' })
       } catch (error) {
         toast.error('Usuário não encontrado.')
       }

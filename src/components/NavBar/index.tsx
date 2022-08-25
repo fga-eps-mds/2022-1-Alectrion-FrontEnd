@@ -14,9 +14,11 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
+import { AuthContext } from '../../contexts/auth'
 
 const NavBar = () => {
   const navigate = useNavigate()
+  const { Logout } = React.useContext(AuthContext)
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
@@ -32,20 +34,9 @@ const NavBar = () => {
     <AppBar position="static" sx={{ backgroundColor: '#1F3541' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
+          <Button
             onClick={() => navigate('/')}
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none'
-            }}>
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             <Box
               component="img"
               sx={{
@@ -57,7 +48,7 @@ const NavBar = () => {
               alt=""
               src={img}
             />
-          </Typography>
+          </Button>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -169,7 +160,7 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
               <IconButton
-                onClick={() => navigate('/logout')}
+                onClick={Logout}
                 sx={{ p: 0, mr: 3, ml: 5, color: 'white' }}>
                 <ExitToAppIcon></ExitToAppIcon>
               </IconButton>

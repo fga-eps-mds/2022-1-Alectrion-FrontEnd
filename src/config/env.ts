@@ -1,7 +1,7 @@
 // export const config = {
-//   url: process.env.API_URL ?? 'http://localhost:4001'
+//   url: 'https://alectrion-user-api.herokuapp.com'
 // }
 
 export const config = {
-  url: process.env.GATEWAY_URL
+  url: process.env.API_URL ?? 'http://localhost:4001'
 }

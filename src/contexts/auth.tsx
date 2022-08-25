@@ -39,6 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       password
     })
     console.log('a requisição foi feita!')
+    console.log(response.data)
 
     const { token, expireIn, email, name, role } = response.data
 
@@ -55,6 +56,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   function Logout() {
     setUser(null)
+    localStorage.clear()
+    sessionStorage.clear()
   }
 
   return (

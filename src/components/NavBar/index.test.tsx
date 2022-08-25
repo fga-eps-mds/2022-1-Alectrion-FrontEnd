@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import NavBar from '.'
+import NavBar from './index'
 import Providers from './../../utils/test-utils'
 
 test('test NavBar', () => {

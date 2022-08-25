@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { ThemeProvider } from '@mui/material'
 import { theme } from '../styles/theme'
 import { ToastContainer } from 'react-toastify'
-import { AppRoutes } from '../routes/routes'
+import { SignRoutes } from '../routes/routes'
 import { BrowserRouter } from 'react-router-dom'
 interface PropTypes {
   children: ReactNode
@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => ({
 const Providers = ({ children }: PropTypes) => {
   return (
     <ThemeProvider theme={theme}>
-      <AppRoutes />
+      <SignRoutes />
       <ToastContainer />
       <BrowserRouter>{children}</BrowserRouter>
     </ThemeProvider>
