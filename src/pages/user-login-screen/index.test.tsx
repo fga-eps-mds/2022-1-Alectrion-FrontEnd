@@ -1,12 +1,13 @@
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import LoginScreenForm from '../../components/login-screen-form'
+import UserLoginScreen from './index'
 import Providers from '../../utils/test-utils'
 
-test('login to the application', async () => {
+test('login to the application', () => {
   render(
     <Providers>
-      <LoginScreenForm />
+      <UserLoginScreen />
     </Providers>
   )
 
@@ -16,6 +17,6 @@ test('login to the application', async () => {
   const passwordInput = screen.getByLabelText('Senha')
   userEvent.type(passwordInput, '123456')
 
-  // const loginButton = screen.getByRole('button', { name: 'Login' })
+  // const loginButton = screen.getByRole('button', { name: 'LOGIN' })
   // userEvent.click(loginButton)
 })
