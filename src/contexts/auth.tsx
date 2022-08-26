@@ -34,9 +34,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function Login(userData: object) {
     const response = await api.post('/user/login', userData)
-    console.log('a requisição foi feita!')
-    console.log(response.data)
-
     const { token, expireIn, email, name, role } = response.data
 
     setUser({ token, expireIn, email, name, role })

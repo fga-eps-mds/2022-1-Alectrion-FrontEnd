@@ -35,8 +35,6 @@ const LoginScreenForm = () => {
         }
 
         await Login(data)
-        toast.success('Usuário encontrado.')
-
         navigate('/')
       } catch (error) {
         toast.error('Usuário não encontrado.')
