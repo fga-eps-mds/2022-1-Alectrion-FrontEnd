@@ -3,7 +3,7 @@ import { SignRoutes } from './routes/routes'
 import { theme } from './styles/theme'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
-import { AuthContext, AuthProvider } from './contexts/auth'
+import { AuthProvider, AuthContext } from './contexts/auth'
 import * as React from 'react'
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     document.onmousemove = resetTimer
     document.onkeydown = resetTimer
 
-    if (time > 1500000) {
+    if (time > 1000) {
       toast.warn(
         'Você será desconectado por inatividade em 5 minutos, clique aqui para parar!',
         {
@@ -37,7 +37,8 @@ function App() {
 
     function resetTimer() {
       clearTimeout(time)
-      time = setTimeout(doSomething, 1800000)
+      time = setTimeout(doSomething, 5000)
+      console.log('resetou')
     }
   })
 
