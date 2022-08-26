@@ -46,9 +46,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     api.defaults.headers.common.Authorization = 'Bearer ' + token
   }
 
-  function Logout() {
-    setUser(null)
-    localStorage.clear()
+  export default function Logout() {
+    return () => {
+      setUser(null)
+      localStorage.clear()
+    }
   }
 
   return (
