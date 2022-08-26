@@ -23,8 +23,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<object | null>(null)
 
   useEffect(() => {
-    const storagedUser = sessionStorage.getItem('@App:user')
-    const storagedToken = sessionStorage.getItem('@App:token')
+    const storagedUser = localStorage.getItem('@App:user')
+    const storagedToken = localStorage.getItem('@App:token')
 
     if (storagedToken && storagedUser) {
       setUser(JSON.parse(storagedUser))
@@ -40,11 +40,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const { token, expireIn, email, name, role } = response.data
 
     setUser({ token, expireIn, email, name, role })
-    sessionStorage.setItem(
+    localStorage.setItem(
       '@App:user',
       JSON.stringify({ token, expireIn, email, name, role })
     )
-    sessionStorage.setItem('@App:token', token)
+    localStorage.setItem('@App:token', token)
 
     api.defaults.headers.common.Authorization = 'Bearer ' + token
   }
@@ -52,7 +52,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function Logout() {
     setUser(null)
     localStorage.clear()
-    sessionStorage.clear()
   }
 
   return (

@@ -8,11 +8,10 @@ import {
 import UserLoginScreen from '../pages/user-login-screen'
 import { ReactNode, useContext } from 'react'
 import { AuthContext } from '../contexts/auth'
-import Home from '../pages/Home'
+import { Task } from '../pages/task/index'
 import UserRegister from '../pages/user-register'
 import EditUser from '../pages/EditUser'
-
-// import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar'
 
 type AuthRouteProps = {
   children: ReactNode
@@ -26,7 +25,8 @@ export const SignRoutes = () => {
           path="/"
           element={
             <AuthRoutes>
-              <Home />
+              <NavBar />
+              <Task />
             </AuthRoutes>
           }
         />
@@ -34,6 +34,7 @@ export const SignRoutes = () => {
           path="/user-register"
           element={
             <AuthRoutes>
+              <NavBar />
               <UserRegister />
             </AuthRoutes>
           }
@@ -42,6 +43,7 @@ export const SignRoutes = () => {
           path="/edit-user"
           element={
             <AuthRoutes>
+              <NavBar />
               <EditUser />
             </AuthRoutes>
           }
@@ -57,10 +59,6 @@ export function AuthRoutes({ children }: AuthRouteProps): any {
   const location = useLocation()
   console.log(isAuthenticated)
 
-  // if (!isAuthenticated) {
-  //   return <Navigate to="/login" state={{ from: location }} />
-  // }
-  // return children
   return isAuthenticated === true ? (
     children
   ) : (
