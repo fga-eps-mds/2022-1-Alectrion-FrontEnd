@@ -53,7 +53,7 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     height: '10px'
   },
-  width: '324px',
+  maxWidth: '324px',
   '& .MuiFormControl-root': {
     marginTop: '-7px',
     color: theme.palette.background.default,
@@ -70,7 +70,7 @@ export const StyledDescTextField = styledSystem(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     height: '110px'
   },
-  width: '1126px',
+  maxWidth: '1126px',
   '& .MuiFormControl-root': {
     marginTop: '-7px',
     color: theme.palette.background.default,

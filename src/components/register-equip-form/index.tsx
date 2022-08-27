@@ -116,9 +116,15 @@ const RegisterEquipForm = () => {
                 <MenuItem onClick={() => setState(3)} value="Nobreak">
                   Nobreak
                 </MenuItem>
-                <MenuItem value="Scanner">Scanner</MenuItem>
-                <MenuItem value="Estabilizador">Estabilizador</MenuItem>
-                <MenuItem value="Webcam">Webcam</MenuItem>
+                <MenuItem onClick={() => setState(0)} value="Scanner">
+                  Scanner
+                </MenuItem>
+                <MenuItem onClick={() => setState(0)} value="Estabilizador">
+                  Estabilizador
+                </MenuItem>
+                <MenuItem onClick={() => setState(0)} value="Webcam">
+                  Webcam
+                </MenuItem>
               </StyledSelect>
             </FormControl>
             <StyledTextField
