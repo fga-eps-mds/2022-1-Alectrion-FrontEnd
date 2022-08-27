@@ -1,12 +1,12 @@
 import * as React from 'react'
-import LoginScreenForm from '../../components/login-screen-form'
+import LoginForm from '../../components/login-form'
 import { Container } from '../user-login-screen/styles'
 
 const UserLoginScreen = () => {
   return (
     <>
       <Container>
-        <LoginScreenForm />
+        <LoginForm />
       </Container>
     </>
   )
