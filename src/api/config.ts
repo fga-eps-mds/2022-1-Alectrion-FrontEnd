@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { config } from '../config/env'
 
-const api = axios.create({
+const api = axios({
   baseURL: config.url
 })
 
