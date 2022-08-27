@@ -35,8 +35,7 @@
     "lint": "npx eslint --fix src/**/*.ts",
     "test": "react-scripts test ",
     "test:staged": "npm test --  --env=jsdom --watchAll=false --silent --findRelatedTests src/**/*.test.tsx",
-    "test:all": "CI=true npm test --  --env=jsdom --silent --watchAll=false --coverage",
-    "prepare": "husky install"
+    "test:all": "CI=true npm test --  --env=jsdom --silent --watchAll=false --coverage"
   },
   "eslintConfig": {
     "extends": [
@@ -70,8 +69,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.1",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "prettier-config-standard": "^5.0.0"
   }
