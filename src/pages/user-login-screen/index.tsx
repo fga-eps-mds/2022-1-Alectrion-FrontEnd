@@ -1,3 +1,4 @@
+import * as React from 'react'
 import LoginScreenForm from '../../components/login-screen-form'
 import { Container } from '../user-login-screen/styles'
 

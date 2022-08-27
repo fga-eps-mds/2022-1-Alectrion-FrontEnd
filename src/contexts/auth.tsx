@@ -47,10 +47,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function Logout() {
-    return () => {
-      setUser(null)
-      localStorage.clear()
-    }
+    setUser(null)
+    localStorage.clear()
+    sessionStorage.clear()
   }
 
   return (

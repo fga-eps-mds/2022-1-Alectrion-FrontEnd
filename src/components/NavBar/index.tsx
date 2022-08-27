@@ -15,10 +15,45 @@ import MenuItem from '@mui/material/MenuItem'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
 import { AuthContext } from '../../contexts/auth'
+import { toast } from 'react-toastify'
 
 const NavBar = () => {
   const navigate = useNavigate()
   const { Logout } = React.useContext(AuthContext)
+
+  React.useEffect(() => {
+    let time: any
+
+    window.onload = resetTimer
+    document.onmousemove = resetTimer
+    document.onkeydown = resetTimer
+
+    if (time > 1000) {
+      toast.warn(
+        'Você será desconectado por inatividade em 5 minutos, clique aqui para parar!',
+        {
+          position: 'top-right',
+          autoClose: 5000000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined
+        }
+      )
+    }
+
+    function doSomething() {
+      Logout()
+      window.location.reload()
+    }
+
+    function resetTimer() {
+      clearTimeout(time)
+      time = setTimeout(doSomething, 5000)
+      console.log('resetou')
+    }
+  })
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
