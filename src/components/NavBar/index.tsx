@@ -28,12 +28,12 @@ const NavBar = () => {
     document.onmousemove = resetTimer
     document.onkeydown = resetTimer
 
-    if (time > 1000) {
+    if (time > 1500000) {
       toast.warn(
         'Você será desconectado por inatividade em 5 minutos, clique aqui para parar!',
         {
           position: 'top-right',
-          autoClose: 5000000,
+          autoClose: 300000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -50,8 +50,7 @@ const NavBar = () => {
 
     function resetTimer() {
       clearTimeout(time)
-      time = setTimeout(doSomething, 5000)
-      console.log('resetou')
+      time = setTimeout(doSomething, 1800000)
     }
   })
 
