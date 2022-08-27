@@ -1,21 +1,24 @@
 import { FormControl, MenuItem } from '@mui/material'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   Container,
   StyledCard,
   StyledForm,
   StyledSelect,
   StyledTextField,
-  FormContainer
+  FormContainer,
+  StyledDescTextField
 } from './styles'
 import * as yup from 'yup'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { useFormik } from 'formik'
+import { Button } from '../button'
+import { theme } from '../../styles/theme'
 
 const RegisterEquipForm = () => {
-  //   const navigate = useNavigate()
+  const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     productType: yup.string().required('Esse campo é obrigatório'),
     tippingNumber: yup.string().required('Esse campo é obrigatório'),
@@ -37,7 +40,7 @@ const RegisterEquipForm = () => {
   })
   const formik = useFormik({
     initialValues: {
-      productType: 'Tipo produto',
+      productType: '',
       tippingNumber: '',
       brand: '',
       serialNumber: '',
@@ -347,22 +350,33 @@ const RegisterEquipForm = () => {
                 error={formik.touched.potency && Boolean(formik.errors.potency)}
               />
             )}
-            <StyledTextField
-              id="description-input"
-              label="Descrição"
-              type="text"
-              name="description"
-              variant="outlined"
-              onChange={formik.handleChange}
-              value={formik.values.description}
-              helperText={
-                formik.touched.description && formik.errors.description
-              }
-              error={
-                formik.touched.description && Boolean(formik.errors.description)
-              }
-            />
           </FormContainer>
+          <StyledDescTextField
+            id="description-input"
+            label="Descrição"
+            type="text"
+            name="description"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={formik.values.description}
+            helperText={formik.touched.description && formik.errors.description}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+          />
+          <Button
+            variant="contained"
+            type="submit"
+            styledColor={theme.palette.primary.main}>
+            Cadastrar
+          </Button>
+          <Button
+            variant="contained"
+            styledColor={theme.palette.grey[100]}
+            textColor={theme.palette.grey[900]}
+            onClick={() => navigate('/users')}>
+            Voltar
+          </Button>
         </StyledForm>
       </StyledCard>
     </Container>

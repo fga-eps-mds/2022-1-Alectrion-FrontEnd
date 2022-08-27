@@ -28,6 +28,8 @@ export const FormContainer = styled.div`
 
 export const StyledForm = styled.form`
   display: flex;
+  flex-direction: column;
+  gap: 3rem;
   flex: 1;
   width: 100%;
   padding: 2rem;
@@ -43,6 +45,23 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
     height: '10px'
   },
   width: '324px',
+  '& .MuiFormControl-root': {
+    marginTop: '-7px',
+    color: theme.palette.background.default,
+    textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+  }
+}))
+
+export const StyledDescTextField = styledSystem(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px !important'
+  },
+  '& .MuiOutlinedInput-input': {
+    borderRadius: '15px !important',
+    backgroundColor: theme.palette.background.default,
+    height: '110px'
+  },
+  width: '1126px',
   '& .MuiFormControl-root': {
     marginTop: '-7px',
     color: theme.palette.background.default,
