@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import UserLoginScreen from './index'
 import Providers from '../../utils/test-utils'
 
-test.only('login to the application', () => {
+test('login to the application', () => {
   render(
     <Providers>
       <UserLoginScreen />

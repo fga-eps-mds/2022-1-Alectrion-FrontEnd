@@ -70,6 +70,7 @@ const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Button
+            data-testid="buttonAlectrion"
             onClick={() => navigate('/')}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             <Box
@@ -114,6 +115,7 @@ const NavBar = () => {
               }}>
               <MenuItem key={''} onClick={handleCloseNavMenu}>
                 <Button
+                  data-testid="buttonEquipaments"
                   key={''}
                   href="/equipaments"
                   onClick={handleCloseNavMenu}
@@ -123,6 +125,7 @@ const NavBar = () => {
               </MenuItem>
               <MenuItem key={''} onClick={handleCloseNavMenu}>
                 <Button
+                  data-testid="buttonOrderService"
                   key={''}
                   href="/orderservice"
                   onClick={handleCloseNavMenu}
@@ -132,6 +135,7 @@ const NavBar = () => {
               </MenuItem>
               <MenuItem key={''} onClick={handleCloseNavMenu}>
                 <Button
+                  data-testid="buttonUsers"
                   key={''}
                   href="/users"
                   onClick={handleCloseNavMenu}
@@ -175,17 +179,20 @@ const NavBar = () => {
               justifyContent: 'flex-end'
             }}>
             <Button
+              data-testid="buttonEquipamentsPC"
               onClick={() => navigate('/equipaments')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Equipamentos
             </Button>
             <Button
+              data-testid="buttonOrderServicePC"
               key={''}
               onClick={() => navigate('/orderservice')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
             <Button
+              data-testid="buttonUsersPC"
               key={''}
               onClick={() => navigate('/users')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
@@ -195,6 +202,7 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
               <IconButton
+                data-testid="buttonExit"
                 onClick={Logout}
                 sx={{ p: 0, mr: 3, ml: 5, color: 'white' }}>
                 <ExitToAppIcon></ExitToAppIcon>
@@ -203,7 +211,10 @@ const NavBar = () => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Usuário">
-              <IconButton onClick={() => navigate('/user')} sx={{ p: 0 }}>
+              <IconButton
+                data-testid="buttonUser"
+                onClick={() => navigate('/user')}
+                sx={{ p: 0 }}>
                 <Avatar alt="" src="" />
               </IconButton>
             </Tooltip>
