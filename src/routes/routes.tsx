@@ -57,7 +57,7 @@ export const SignRoutes = () => {
 export function AuthRoutes({ children }: AuthRouteProps): any {
   const { isAuthenticated } = useContext(AuthContext)
   const location = useLocation()
-
+  console.log(isAuthenticated)
   return isAuthenticated === true ? (
     children
   ) : (

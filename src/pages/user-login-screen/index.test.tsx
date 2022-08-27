@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import UserLoginScreen from './index'
 import Providers from '../../utils/test-utils'
 
-test('login to the application', () => {
+test.only('login to the application', () => {
   render(
     <Providers>
       <UserLoginScreen />
@@ -17,6 +17,6 @@ test('login to the application', () => {
   const passwordInput = screen.getByLabelText('Senha')
   userEvent.type(passwordInput, '123456')
 
-  // const loginButton = screen.getByRole('button', { name: 'LOGIN' })
-  // userEvent.click(loginButton)
+  const loginButton = screen.getByRole('button', { name: 'Login' })
+  userEvent.click(loginButton)
 })

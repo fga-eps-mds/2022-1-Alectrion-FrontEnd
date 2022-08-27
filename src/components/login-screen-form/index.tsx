@@ -95,7 +95,8 @@ const LoginScreenForm = () => {
             styledColor={theme.palette.primary.main}
             classes={{ root: 'rootLogin' }}
             marginTop={'37.88px'}
-            marginBottom={'94px'}>
+            marginBottom={'94px'}
+            data-testid="button-id">
             Login
           </Button>
         </FormStyled>
