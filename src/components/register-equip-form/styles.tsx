@@ -2,25 +2,35 @@ import { styled as styledSystem } from '@mui/system'
 import { Card, InputLabel, Select, TextField } from '@mui/material'
 import styled from 'styled-components'
 
+export const Container = styled.div`
+  display: flex;
+  min-height: 100vh;
+`
+
 export const StyledCard = styledSystem(Card)(({ theme }) => ({
   '& .MuiCardContent-root': {
     alignSelf: 'center'
   },
   boxShadow: '0 8px 10px rgba(0,0,0,0.45)',
+  backgroundColor: theme.palette.primary.light,
+  display: 'flex',
   maxWidth: '1200px',
-  maxHeight: '626px',
-  borderRadius: '10px',
-  marginLeft: '160px',
-  marginTop: '338px',
-  backgroundColor: theme.palette.primary.light
+  margin: 'auto',
+  height: 'max-content'
 }))
 
-export const StyledForm = styled.form`
+export const FormContainer = styled.div`
   display: grid;
-  grid-template-columns: 118px 118px 118px;
-  row-gap: 35px;
-  grid-row-gap: 75px;
-  align-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  height: max-content;
+  gap: 3rem;
+`
+
+export const StyledForm = styled.form`
+  display: flex;
+  flex: 1;
+  width: 100%;
+  padding: 2rem;
 `
 
 export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
@@ -44,9 +54,7 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   borderRadius: '15px !important',
   width: '324px',
-  height: '40px',
-  marginLeft: '16px',
-  marginTop: '60px'
+  height: '40px'
 }))
 
 export const StyledInputLabel = styledSystem(InputLabel)(({ theme }) => ({
