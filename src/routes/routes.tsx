@@ -3,7 +3,7 @@ import { Task } from '../pages/task'
 import UserRegister from '../pages/user-register'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
-import RegisterEquipForm from '../components/register-equip-form'
+import EquipRegister from '../pages/equipment-register'
 
 export const AppRoutes = () => {
   return (
@@ -12,7 +12,7 @@ export const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Task />} />
         <Route path="/user-register" element={<UserRegister />} />
-        <Route path="/equipment-register" element={<RegisterEquipForm />} />
+        <Route path="/equipment-register" element={<EquipRegister />} />
         <Route path="/edit-user" element={<EditUser />} />
       </Routes>
     </BrowserRouter>

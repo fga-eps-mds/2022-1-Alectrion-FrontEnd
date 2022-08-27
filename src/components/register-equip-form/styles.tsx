@@ -1,5 +1,5 @@
 import { styled as styledSystem } from '@mui/system'
-import { Card, InputLabel, Select, TextField } from '@mui/material'
+import { Card, InputLabel, Select, TextField, Typography } from '@mui/material'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -24,6 +24,15 @@ export const FormContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   height: max-content;
   gap: 3rem;
+`
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  margin: 0 auto;
+  gap: 2rem;
+  > button {
+    min-width: 320px;
+  }
 `
 
 export const StyledForm = styled.form`
@@ -79,5 +88,9 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
 export const StyledInputLabel = styledSystem(InputLabel)(({ theme }) => ({
   marginTop: '-7px',
   color: theme.palette.background.default,
+  textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+}))
+
+export const StyledTypography = styledSystem(Typography)(({ theme }) => ({
   textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
 }))

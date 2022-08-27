@@ -7,7 +7,8 @@ import {
   StyledSelect,
   StyledTextField,
   FormContainer,
-  StyledDescTextField
+  StyledDescTextField,
+  ButtonContainer
 } from './styles'
 import * as yup from 'yup'
 import { useState } from 'react'
@@ -364,19 +365,21 @@ const RegisterEquipForm = () => {
               formik.touched.description && Boolean(formik.errors.description)
             }
           />
-          <Button
-            variant="contained"
-            type="submit"
-            styledColor={theme.palette.primary.main}>
-            Cadastrar
-          </Button>
-          <Button
-            variant="contained"
-            styledColor={theme.palette.grey[100]}
-            textColor={theme.palette.grey[900]}
-            onClick={() => navigate('/users')}>
-            Voltar
-          </Button>
+          <ButtonContainer>
+            <Button
+              variant="contained"
+              styledColor={theme.palette.grey[100]}
+              textColor={theme.palette.grey[900]}
+              onClick={() => navigate('/equipaments')}>
+              Voltar
+            </Button>{' '}
+            <Button
+              variant="contained"
+              type="submit"
+              styledColor={theme.palette.primary.main}>
+              Cadastrar
+            </Button>
+          </ButtonContainer>
         </StyledForm>
       </StyledCard>
     </Container>
