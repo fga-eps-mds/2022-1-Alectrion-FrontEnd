@@ -1,6 +1,6 @@
 import { CardContent, FormControl, MenuItem } from '@mui/material'
 // import { useNavigate } from 'react-router-dom'
-import { StyledCard, StyledForm, StyledSelect } from './styles'
+import { StyledCard, StyledForm, StyledSelect, StyledTextField } from './styles'
 import * as yup from 'yup'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -31,7 +31,7 @@ const RegisterEquipForm = () => {
   const formik = useFormik({
     initialValues: {
       productType: 'Tipo de produto',
-      tippingNumber: 'N° Tombamento',
+      tippingNumber: '',
       brand: '',
       serialNumber: '',
       model: '',
@@ -108,6 +108,22 @@ const RegisterEquipForm = () => {
               <MenuItem value="Webcam">Webcam</MenuItem>
             </StyledSelect>
           </FormControl>
+          <StyledTextField
+            id="tippingNumber-input"
+            label="N° Tombamento"
+            type="text"
+            name="tippingNumber"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={formik.values.tippingNumber}
+            helperText={
+              formik.touched.tippingNumber && formik.errors.tippingNumber
+            }
+            error={
+              formik.touched.tippingNumber &&
+              Boolean(formik.errors.tippingNumber)
+            }
+          />
           {state === 1 && <h1>teste2</h1>}
         </StyledForm>
       </CardContent>
