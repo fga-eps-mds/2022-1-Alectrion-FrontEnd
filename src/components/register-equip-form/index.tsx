@@ -1,6 +1,6 @@
-import { CardContent } from '@mui/material'
+import { CardContent, FormControl, MenuItem } from '@mui/material'
 // import { useNavigate } from 'react-router-dom'
-import { StyledCard } from './styles'
+import { StyledCard, StyledForm, StyledSelect } from './styles'
 import * as yup from 'yup'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -68,7 +68,7 @@ const RegisterEquipForm = () => {
           monitorSize: values.monitorSize,
           equipmentYear: values.equipmentYear,
           potency: values.potency,
-          description: formik
+          description: values.description
         })
         toast.success('Equipamento cadastrado.')
       } catch (error) {
@@ -80,9 +80,36 @@ const RegisterEquipForm = () => {
   return (
     <StyledCard>
       <CardContent>
-        <button onClick={() => setState(1)}>teste</button>
-        <h1>teste1</h1>
-        {state === 1 && <h1>teste2</h1>}
+        <StyledForm onSubmit={formik.handleSubmit}>
+          <FormControl fullWidth>
+            <StyledSelect
+              id="productType-select-label"
+              data-testid="productType-select"
+              label="Tipo de produto"
+              type="text"
+              name="productType"
+              variant="outlined"
+              error={
+                formik.touched.productType && Boolean(formik.errors.productType)
+              }
+              onChange={formik.handleChange}
+              value={formik.values.productType}>
+              <MenuItem onClick={() => setState(1)} value="CPU">
+                CPU
+              </MenuItem>
+              <MenuItem onClick={() => setState(2)} value="Monitor">
+                Monitor
+              </MenuItem>
+              <MenuItem onClick={() => setState(3)} value="Nobreak">
+                Nobreak
+              </MenuItem>
+              <MenuItem value="Scanner">Scanner</MenuItem>
+              <MenuItem value="Estabilizador">Estabilizador</MenuItem>
+              <MenuItem value="Webcam">Webcam</MenuItem>
+            </StyledSelect>
+          </FormControl>
+          {state === 1 && <h1>teste2</h1>}
+        </StyledForm>
       </CardContent>
     </StyledCard>
   )
