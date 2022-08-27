@@ -1,3 +1,3 @@
 export const config = {
-  url: process.env.API_URL ?? 'http://localhost:4000'
+  url: 'https://alectrion-user-api.herokuapp.com'
 }
