@@ -145,6 +145,7 @@ const NavBar = () => {
             </Menu>
           </Box>
           <Typography
+            data-testeid="logoAlectrion"
             variant="h5"
             noWrap
             component="a"

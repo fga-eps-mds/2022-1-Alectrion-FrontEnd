@@ -13,8 +13,9 @@ export const Task = () => {
   const navigate = useNavigate()
   return (
     <Container>
-      <ContainerCard>
+      <ContainerCard data-testid="cardEquipament">
         <StyledShortcut
+          data-testid="buttonEquipaments"
           color="#50FF4DB2"
           onClick={() => navigate('/equipaments')}
           className="Equipment">
@@ -24,8 +25,9 @@ export const Task = () => {
           Equipamento
         </Typography>
       </ContainerCard>
-      <ContainerCard>
+      <ContainerCard data-testid="cardOrderService">
         <StyledShortcut
+          data-testid="buttonOrderService"
           color="#EFCA45"
           className="Service Order"
           onClick={() => navigate('/orderservice')}>
@@ -35,8 +37,9 @@ export const Task = () => {
           Ordem de serviço
         </Typography>
       </ContainerCard>
-      <ContainerCard>
+      <ContainerCard data-testid="cardUsers">
         <StyledShortcut
+          data-testid="buttonUsers"
           color="#71ABDA"
           className="User"
           onClick={() => navigate('/users')}>
