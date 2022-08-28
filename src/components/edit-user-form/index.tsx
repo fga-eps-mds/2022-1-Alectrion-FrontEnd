@@ -25,10 +25,7 @@ interface UserData {
 const Form = () => {
   const validationSchema = yup.object().shape({
     name: yup.string().required('O campo é obrigatório.'),
-    email: yup
-      .string()
-      .email('E-mail inválido.')
-      .required('O campo é obrigatório.'),
+    email: yup.string().email('E-mail inválido.'),
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
     username: yup.string().required('O campo é obrigatório.'),
@@ -94,20 +91,6 @@ const Form = () => {
 
           <BasicTextFields
             size="small"
-            id="email"
-            name="email"
-            label="Email"
-            variant="outlined"
-            value={formik.values.email}
-            type="email"
-            onChange={formik.handleChange}
-            color="primary"
-            helperText={formik.touched.email && formik.errors.email}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-          />
-
-          <BasicTextFields
-            size="small"
             id="username"
             name="username"
             label="Nome de usuário"
@@ -118,6 +101,20 @@ const Form = () => {
             color="primary"
             helperText={formik.touched.username && formik.errors.username}
             error={formik.touched.username && Boolean(formik.errors.username)}
+          />
+
+          <BasicTextFields
+            size="small"
+            id="email"
+            name="email"
+            label="Email"
+            variant="outlined"
+            value={formik.values.email}
+            type="email"
+            onChange={formik.handleChange}
+            color="primary"
+            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
           />
 
           <SelectJob
