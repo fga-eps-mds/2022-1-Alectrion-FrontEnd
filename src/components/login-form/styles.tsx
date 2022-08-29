@@ -21,9 +21,5 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
   borderRadius: '10px',
   marginTop: '121px',
   marginBottom: '50px',
-  // boxShadow: '0px 6px 4px rgba(0, 0, 0, 0.3)',
-
-  // backgroundColor: theme.palette.primary.light
-  // backgroundColor: 'rgba(128, 128, 128, 0.3)'
   backgroundColor: '#3c4b54'
 }))

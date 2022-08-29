@@ -4,11 +4,9 @@ import { Container } from '../user-login-screen/styles'
 
 const UserLoginScreen = () => {
   return (
-    <>
-      <Container>
-        <LoginForm />
-      </Container>
-    </>
+    <Container>
+      <LoginForm />
+    </Container>
   )
 }
 
