@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import UserRegister from '../pages/user-register'
-import ScreenUser from '../pages/TelaUsuarios'
+import ScreenUser from '../pages/UserScreen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
 

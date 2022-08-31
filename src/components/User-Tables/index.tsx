@@ -6,14 +6,18 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { useNavigate } from 'react-router-dom'
+import img from './assets/Editar_button_TeladeUsuarios.png'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.primary.light,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    fontSize: 22
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14
+    fontSize: 14,
+    fontWeight: 700
   }
 }))
 
@@ -22,16 +26,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.background.default
   },
   '&:nth-child(even)': {
-    backgroundColor: '#D9D9D9'
+    backgroundColor: '#F5F5F5'
   },
   // hide last border
   '&:last-child td, &:last-child th': {
     border: 0
-  }
+  },
+  cursor: 'pointer'
 }))
 
 interface user {
   createdAt: string
+  id: string
   updatedAt: string
   username: string
   name: string
@@ -44,41 +50,16 @@ interface propType {
   users: user[]
 }
 
-// function createData(
-//   nameUser: string,
-//   name: string,
-//   email: string,
-//   perfil: string,
-//   cargo: string
-// ) {
-//   return { nameUser, name, email, perfil, cargo }
-// }
-
-// const rows = [
-//   createData('JoãoPaulo', 'João', 'joao@joAo.com.br', 'ADMIN', 'CARGO1'),
-//   createData('Marialurdes', 'Maria', 'maria@maria.com.br', 'ADMIN', 'CARGO2'),
-//   createData(
-//     'RicardoPaulo',
-//     'Ricardo',
-//     'ricardo@gmail.com.br',
-//     'GERENTE',
-//     'CARGO3'
-//   ),
-//   createData('Rosedasilva', 'Rose', 'rose@hotmail.com.br', 'PADRAO', 'CARGO4'),
-//   createData(
-//     'GuilhermeOliveira',
-//     'Guilherme',
-//     'gui@gmail.com.br',
-//     'ADMIN',
-//     'CARGO5'
-//   )
-// ]
-
 export default function UserTables({ users }: propType) {
-  console.log({ users })
+  const navigate = useNavigate()
+
   return (
     <TableContainer
-      sx={{ margin: '0 auto', maxWidth: '1024px', textAlign: 'center' }}
+      sx={{
+        margin: '0 auto',
+        maxWidth: '1024px',
+        textAlign: 'center'
+      }}
       component={Paper}>
       <Table aria-label="customized table">
         <TableHead>
@@ -88,11 +69,16 @@ export default function UserTables({ users }: propType) {
             <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">Perfil</StyledTableCell>
             <StyledTableCell align="center">Cargo</StyledTableCell>
+            <StyledTableCell></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <StyledTableRow key={user.name}>
+            <StyledTableRow
+              onClick={() =>
+                navigate('/edit-user', { state: { userId: user.id } })
+              }
+              key={user.name}>
               <StyledTableCell align="center" component="th" scope="user">
                 {user.username}
               </StyledTableCell>
@@ -100,6 +86,12 @@ export default function UserTables({ users }: propType) {
               <StyledTableCell align="center">{user.email}</StyledTableCell>
               <StyledTableCell align="center">{user.role}</StyledTableCell>
               <StyledTableCell align="center">{user.job}</StyledTableCell>
+              <StyledTableCell align="center">
+                <img
+                  style={{ maxWidth: '50px', maxHeight: '50px' }}
+                  src={img}
+                />
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

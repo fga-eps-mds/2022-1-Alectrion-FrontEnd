@@ -11,6 +11,7 @@ import { AxiosResponse } from 'axios'
 interface user {
   createdAt: string
   updatedAt: string
+  id: string
   username: string
   name: string
   email: string

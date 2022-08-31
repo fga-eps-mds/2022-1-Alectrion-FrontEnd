@@ -41,7 +41,8 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "testPathIgnorePatterns": "./src/pages/EditUser/index.test.tsx"
   },
   "browserslist": {
     "production": [

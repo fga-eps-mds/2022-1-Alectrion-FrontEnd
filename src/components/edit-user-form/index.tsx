@@ -11,18 +11,26 @@ import api from '../../api/config'
 import { toast } from 'react-toastify'
 import SelectJob from '../select-job'
 import { theme } from '../../styles/theme'
+import { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 interface UserData {
   name: string
   email: string
   jobFunction: string
+  id: string
   role: string
   username: string
   password: string
   confirmPassword: string
 }
 
-const Form = () => {
+interface formProps {
+  userId: string
+}
+
+const Form = ({ userId }: formProps) => {
+  const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     name: yup.string().required('O campo é obrigatório.'),
     email: yup
@@ -40,12 +48,15 @@ const Form = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const data: UserData = await api.get('/user')
+      const { data }: AxiosResponse<UserData> = await api.get(
+        `/user/get?userId=${userId}`
+      )
       setUserData(data)
     }
     getUser()
   }, [])
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: userData?.name,
       email: userData?.email,
@@ -84,7 +95,7 @@ const Form = () => {
             name="name"
             label="Nome completo"
             variant="outlined"
-            value={formik.values.name}
+            value={formik.values.name || ''}
             type="name"
             onChange={formik.handleChange}
             color="primary"
@@ -98,7 +109,7 @@ const Form = () => {
             name="email"
             label="Email"
             variant="outlined"
-            value={formik.values.email}
+            value={formik.values.email || ''}
             type="email"
             onChange={formik.handleChange}
             color="primary"
@@ -112,7 +123,7 @@ const Form = () => {
             name="username"
             label="Nome de usuário"
             variant="outlined"
-            value={formik.values.username}
+            value={formik.values.username || ''}
             type="username"
             onChange={formik.handleChange}
             color="primary"
@@ -187,17 +198,16 @@ const Form = () => {
             Editar
           </Button>
           <Button
-            disabled={true}
             name="backButton"
             id="voltar"
             variant="contained"
             styledColor={theme.palette.grey[300]}
             textColor="black"
-            classes={{ root: 'rootBack' }}>
+            classes={{ root: 'rootBack' }}
+            onClick={() => navigate('/users')}>
             Voltar
           </Button>
           <Button
-            disabled={true}
             name="removeButton"
             id="remover"
             variant="contained"

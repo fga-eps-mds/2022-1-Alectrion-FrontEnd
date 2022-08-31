@@ -18,5 +18,8 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
   height: '40px',
   '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input': {
     marginLeft: '2px'
+  },
+  '& .MuiSelect-nativeInput': {
+    textAlign: 'center'
   }
 }))
