@@ -5,10 +5,11 @@ export const theme = createTheme({
     primary: {
       main: '#5289B5',
       light: '#1F3541',
-      dark: '#1F3541'
+      dark: '#16878C'
     },
     background: {
-      default: '#FFF'
+      default: '#FFF',
+      paper: '#FFF'
     },
     grey: {
       '500': '#D9D9D9',

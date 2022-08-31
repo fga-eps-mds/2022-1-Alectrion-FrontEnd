@@ -49,6 +49,7 @@ const RegisterUserForm = () => {
           password: values.newPassword
         })
         toast.success('Usuário criado.')
+        navigate('/users')
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
