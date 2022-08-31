@@ -8,11 +8,11 @@ import { StyledSelect } from './styles'
 import { ReactNode } from 'react'
 
 interface PropTypes {
-  labelId?: string | undefined
+  labelId?: string
   name?: string
-  type?: string | undefined
-  id?: string | undefined
-  value?: string | undefined
+  type?: string
+  id?: string
+  value?: string
   label?: 'perfilUsuario'
   onChange?: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
@@ -47,6 +47,7 @@ const SelectProfile: React.FC<PropTypes> = ({
           <MenuItem value={'Basico'}>Básico</MenuItem>
           <MenuItem value={'Admin'}>Admin</MenuItem>
           <MenuItem value={'Gerente'}>Gerente</MenuItem>
+          <MenuItem value={'Gerente'}>Consulta</MenuItem>
         </StyledSelect>
       </FormControl>
     </Box>
