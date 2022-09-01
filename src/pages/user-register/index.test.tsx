@@ -40,7 +40,7 @@ test('should register new user', async () => {
   userEvent.click(profileInput)
   await waitFor(() => userEvent.click(screen.getByText(/Admin/i)))
 
-  const passwordInput = screen.getByLabelText('Senha')
+  const passwordInput = screen.getByTestId('password-input')
   userEvent.type(passwordInput, 'eler123')
 
   const confirmPasswordInput = screen.getByLabelText('Confirmar senha')

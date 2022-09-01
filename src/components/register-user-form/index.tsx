@@ -140,7 +140,7 @@ const RegisterUserForm = () => {
           </FormControl>
           <StyledTextField
             size="small"
-            id="password-input"
+            data-testid="password-input"
             label="Senha"
             type="password"
             name="newPassword"
