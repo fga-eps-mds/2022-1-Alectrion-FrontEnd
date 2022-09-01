@@ -1,20 +1,75 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from '../pages/Home'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation
+} from 'react-router-dom'
+import UserLoginScreen from '../pages/user-login-screen'
+import { ReactNode, useContext } from 'react'
+import { AuthContext } from '../contexts/auth'
+import { Task } from '../pages/task/index'
 import UserRegister from '../pages/user-register'
 import ScreenUser from '../pages/UserScreen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
 
-export const AppRoutes = () => {
+type AuthRouteProps = {
+  children: ReactNode
+}
+
+export const SignRoutes = () => {
   return (
     <BrowserRouter>
-      <NavBar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/user-register" element={<UserRegister />} />
-        <Route path="/users" element={<ScreenUser />} />
-        <Route path="/edit-user" element={<EditUser />} />
+        <Route
+          path="/"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <Task />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/user-register"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <UserRegister />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <ScreenUser />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/edit-user"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <EditUser />
+            </AuthRoutes>
+          }
+        />
+        <Route path="/login" element={<UserLoginScreen />} />
       </Routes>
     </BrowserRouter>
+  )
+}
+
+export function AuthRoutes({ children }: AuthRouteProps): any {
+  const { isAuthenticated } = useContext(AuthContext)
+  const location = useLocation()
+  return isAuthenticated === true ? (
+    children
+  ) : (
+    <Navigate to="/login" replace state={{ path: location.pathname }} />
   )
 }

@@ -14,9 +14,45 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
+import { AuthContext } from '../../contexts/auth'
+import { toast } from 'react-toastify'
 
 const NavBar = () => {
   const navigate = useNavigate()
+  const { Logout } = React.useContext(AuthContext)
+
+  React.useEffect(() => {
+    let time: any
+
+    window.onload = resetTimer
+    document.onmousemove = resetTimer
+    document.onkeydown = resetTimer
+
+    if (time > 1500000) {
+      toast.warn(
+        'Você será desconectado por inatividade em 5 minutos, clique aqui para parar!',
+        {
+          position: 'top-right',
+          autoClose: 300000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined
+        }
+      )
+    }
+
+    function doSomething() {
+      Logout()
+      window.location.reload()
+    }
+
+    function resetTimer() {
+      clearTimeout(time)
+      time = setTimeout(doSomething, 1800000)
+    }
+  })
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
@@ -32,20 +68,10 @@ const NavBar = () => {
     <AppBar position="static" sx={{ backgroundColor: '#1F3541' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
+          <Button
+            data-testid="buttonAlectrion"
             onClick={() => navigate('/')}
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none'
-            }}>
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             <Box
               component="img"
               sx={{
@@ -57,7 +83,7 @@ const NavBar = () => {
               alt=""
               src={img}
             />
-          </Typography>
+          </Button>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -88,6 +114,7 @@ const NavBar = () => {
               }}>
               <MenuItem key={''} onClick={handleCloseNavMenu}>
                 <Button
+                  data-testid="buttonEquipaments"
                   key={''}
                   href="/equipaments"
                   onClick={handleCloseNavMenu}
@@ -97,6 +124,7 @@ const NavBar = () => {
               </MenuItem>
               <MenuItem key={''} onClick={handleCloseNavMenu}>
                 <Button
+                  data-testid="buttonOrderService"
                   key={''}
                   href="/orderservice"
                   onClick={handleCloseNavMenu}
@@ -106,6 +134,7 @@ const NavBar = () => {
               </MenuItem>
               <MenuItem key={''} onClick={handleCloseNavMenu}>
                 <Button
+                  data-testid="buttonUsers"
                   key={''}
                   href="/users"
                   onClick={handleCloseNavMenu}
@@ -116,6 +145,7 @@ const NavBar = () => {
             </Menu>
           </Box>
           <Typography
+            data-testeid="logoAlectrion"
             variant="h5"
             noWrap
             component="a"
@@ -149,17 +179,20 @@ const NavBar = () => {
               justifyContent: 'flex-end'
             }}>
             <Button
+              data-testid="buttonEquipamentsPC"
               onClick={() => navigate('/equipaments')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Equipamentos
             </Button>
             <Button
+              data-testid="buttonOrderServicePC"
               key={''}
               onClick={() => navigate('/orderservice')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
             <Button
+              data-testid="buttonUsersPC"
               key={''}
               onClick={() => navigate('/users')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
@@ -169,7 +202,8 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
               <IconButton
-                onClick={() => navigate('/logout')}
+                data-testid="buttonExit"
+                onClick={Logout}
                 sx={{ p: 0, mr: 3, ml: 5, color: 'white' }}>
                 <ExitToAppIcon></ExitToAppIcon>
               </IconButton>
@@ -177,7 +211,10 @@ const NavBar = () => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Usuário">
-              <IconButton onClick={() => navigate('/user')} sx={{ p: 0 }}>
+              <IconButton
+                data-testid="buttonUser"
+                onClick={() => navigate('/user')}
+                sx={{ p: 0 }}>
                 <Avatar alt="" src="" />
               </IconButton>
             </Tooltip>

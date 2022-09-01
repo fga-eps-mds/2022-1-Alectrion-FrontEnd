@@ -33,10 +33,7 @@ const Form = ({ userId }: formProps) => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     name: yup.string().required('O campo é obrigatório.'),
-    email: yup
-      .string()
-      .email('E-mail inválido.')
-      .required('O campo é obrigatório.'),
+    email: yup.string().email('E-mail inválido.'),
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
     username: yup.string().required('O campo é obrigatório.'),
@@ -105,6 +102,21 @@ const Form = ({ userId }: formProps) => {
 
           <BasicTextFields
             size="small"
+            id="username"
+            name="username"
+            label="Nome de usuário"
+            variant="outlined"
+            value={formik.values.username}
+            type="username"
+            onChange={formik.handleChange}
+            color="primary"
+            helperText={formik.touched.username && formik.errors.username}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+          />
+
+          <BasicTextFields
+            size="small"
+<<<<<<< HEAD
             id="email"
             name="email"
             label="Email"
