@@ -13,7 +13,7 @@ interface PropTypes {
   type?: string
   id?: string
   value?: string
-  label?: 'cargo'
+  label?: string
   onChange?: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
   testid?: string
@@ -44,15 +44,15 @@ const SelectJob: React.FC<PropTypes> = ({
           onChange={onChange}
           error={error}
           data-testid={testid}>
-          <MenuItem value={'DELEGADO'}>Básico</MenuItem>
-          <MenuItem value={'AGENTE_POLICIA'}>Agente de polícia</MenuItem>
-          <MenuItem value={'ESCRIVAO'}>Escrivão</MenuItem>
-          <MenuItem value={'COORDENADOR'}>Coordenador</MenuItem>
-          <MenuItem value={'CHEFE_SECAO'}>Chefe de seção</MenuItem>
-          <MenuItem value={'GENERICO'}>Genérico</MenuItem>
-          <MenuItem value={'COMISSIONADO'}>Comissionado</MenuItem>
-          <MenuItem value={'ESTAGIARIO'}>Estagiário</MenuItem>
-          <MenuItem value={'SUPERINTENDENTE'}>Superintendente</MenuItem>
+          <MenuItem value={'delegado'}>Básico</MenuItem>
+          <MenuItem value={'agente_policia'}>Agente de polícia</MenuItem>
+          <MenuItem value={'escrivao'}>Escrivão</MenuItem>
+          <MenuItem value={'coordenador'}>Coordenador</MenuItem>
+          <MenuItem value={'chefe de secao'}>Chefe de seção</MenuItem>
+          <MenuItem value={'generico'}>Genérico</MenuItem>
+          <MenuItem value={'comissionado'}>Comissionado</MenuItem>
+          <MenuItem value={'estagiario'}>Estagiário</MenuItem>
+          <MenuItem value={'superintendente'}>Superintendente</MenuItem>
         </StyledSelect>
       </FormControl>
     </Box>

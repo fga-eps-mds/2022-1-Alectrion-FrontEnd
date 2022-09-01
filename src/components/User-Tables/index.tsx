@@ -74,11 +74,7 @@ export default function UserTables({ users }: propType) {
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <StyledTableRow
-              onClick={() =>
-                navigate('/edit-user', { state: { userId: user.id } })
-              }
-              key={user.name}>
+            <StyledTableRow key={user.name}>
               <StyledTableCell align="center" component="th" scope="user">
                 {user.username}
               </StyledTableCell>
@@ -86,7 +82,11 @@ export default function UserTables({ users }: propType) {
               <StyledTableCell align="center">{user.email}</StyledTableCell>
               <StyledTableCell align="center">{user.role}</StyledTableCell>
               <StyledTableCell align="center">{user.job}</StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell
+                align="center"
+                onClick={() =>
+                  navigate('/edit-user', { state: { userId: user.id } })
+                }>
                 <img
                   style={{ maxWidth: '50px', maxHeight: '50px' }}
                   src={img}

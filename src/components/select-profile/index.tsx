@@ -13,7 +13,7 @@ interface PropTypes {
   type?: string
   id?: string
   value?: string
-  label?: 'perfilUsuario'
+  label?: string
   onChange?: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
   testid?: string
@@ -44,10 +44,10 @@ const SelectProfile: React.FC<PropTypes> = ({
           onChange={onChange}
           error={error}
           data-testid={testid}>
-          <MenuItem value={'Basico'}>Básico</MenuItem>
-          <MenuItem value={'Admin'}>Admin</MenuItem>
-          <MenuItem value={'Gerente'}>Gerente</MenuItem>
-          <MenuItem value={'Gerente'}>Consulta</MenuItem>
+          <MenuItem value={'basico'}>Básico</MenuItem>
+          <MenuItem value={'admin'}>Admin</MenuItem>
+          <MenuItem value={'gerente'}>Gerente</MenuItem>
+          <MenuItem value={'consulta'}>Consulta</MenuItem>
         </StyledSelect>
       </FormControl>
     </Box>

@@ -15,16 +15,15 @@ import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 interface UserData {
+  createdAt: string
+  id: string
+  updatedAt: string
+  username: string
   name: string
   email: string
-  jobFunction: string
-  id: string
   role: string
-  username: string
-  password: string
-  confirmPassword: string
+  job: string
 }
-
 interface formProps {
   userId: string
 }
@@ -52,25 +51,26 @@ const Form = ({ userId }: formProps) => {
     }
     getUser()
   }, [])
+  console.log(userData?.job)
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       name: userData?.name,
       email: userData?.email,
-      job: userData?.jobFunction,
-      profile: userData?.role,
+      job: userData?.job || '',
+      profile: userData?.role || '',
       username: userData?.username,
-      password: userData?.password,
-      confirmPassword: userData?.password
+      password: '',
+      confirmPassword: ''
     },
     validationSchema,
     onSubmit: async (values) => {
-      // console.log('teste')
       try {
         await api.put('/user/update', {
           name: values.name,
           email: values.email,
-          jobFunction: values.job,
+          job: values.job,
           role: values.profile,
           username: values.username,
           password: values.password
@@ -81,7 +81,7 @@ const Form = ({ userId }: formProps) => {
       }
     }
   })
-  // console.log(formik.values)
+  console.log(formik.values)
   return (
     <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
@@ -102,21 +102,6 @@ const Form = ({ userId }: formProps) => {
 
           <BasicTextFields
             size="small"
-            id="username"
-            name="username"
-            label="Nome de usuário"
-            variant="outlined"
-            value={formik.values.username}
-            type="username"
-            onChange={formik.handleChange}
-            color="primary"
-            helperText={formik.touched.username && formik.errors.username}
-            error={formik.touched.username && Boolean(formik.errors.username)}
-          />
-
-          <BasicTextFields
-            size="small"
-<<<<<<< HEAD
             id="email"
             name="email"
             label="Email"
