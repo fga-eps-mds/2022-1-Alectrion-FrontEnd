@@ -8,11 +8,11 @@ import { StyledSelect } from './styles'
 import { ReactNode } from 'react'
 
 interface PropTypes {
-  labelId?: string | undefined
+  labelId?: string
   name?: string
-  type?: string | undefined
-  id?: string | undefined
-  value?: string | undefined
+  type?: string
+  id?: string
+  value?: string
   label?: 'cargo'
   onChange?: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
@@ -48,8 +48,11 @@ const SelectJob: React.FC<PropTypes> = ({
           <MenuItem value={'AGENTE_POLICIA'}>Agente de polícia</MenuItem>
           <MenuItem value={'ESCRIVAO'}>Escrivão</MenuItem>
           <MenuItem value={'COORDENADOR'}>Coordenador</MenuItem>
-          <MenuItem value="CHEFE_SECAO">Chefe de seção</MenuItem>
-          <MenuItem value="GENERICO">Genérico</MenuItem>
+          <MenuItem value={'CHEFE_SECAO'}>Chefe de seção</MenuItem>
+          <MenuItem value={'GENERICO'}>Genérico</MenuItem>
+          <MenuItem value={'COMISSIONADO'}>Comissionado</MenuItem>
+          <MenuItem value={'ESTAGIARIO'}>Estagiário</MenuItem>
+          <MenuItem value={'SUPERINTENDENTE'}>Superintendente</MenuItem>
         </StyledSelect>
       </FormControl>
     </Box>

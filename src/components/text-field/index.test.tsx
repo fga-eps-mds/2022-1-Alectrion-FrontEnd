@@ -6,10 +6,10 @@ import Providers from '../../utils/test-utils'
 test('Text field unit test', () => {
   render(
     <Providers>
-      <BasicTextFields />
+      <BasicTextFields testid="testFields" />
     </Providers>
   )
 
-  const inputText = screen.getByRole('textbox')
+  const inputText = screen.getByTestId('testFields')
   userEvent.type(inputText, 'test')
 })

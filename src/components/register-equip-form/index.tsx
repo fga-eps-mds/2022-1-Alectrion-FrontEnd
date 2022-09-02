@@ -8,7 +8,8 @@ import {
   StyledTextField,
   FormContainer,
   StyledDescTextField,
-  ButtonContainer
+  ButtonContainer,
+  StyledInputLabel
 } from './styles'
 import * as yup from 'yup'
 import { useState } from 'react'
@@ -37,7 +38,7 @@ const RegisterEquipForm = () => {
     monitorSize: yup.string(),
     equipmentYear: yup.string(),
     potency: yup.string(),
-    description: yup.string()
+    description: yup.string().length(250)
   })
   const formik = useFormik({
     initialValues: {
@@ -94,6 +95,9 @@ const RegisterEquipForm = () => {
         <StyledForm onSubmit={formik.handleSubmit}>
           <FormContainer>
             <FormControl fullWidth>
+              <StyledInputLabel id="productType-select-label">
+                Tipo produto
+              </StyledInputLabel>
               <StyledSelect
                 id="productType-select-label"
                 data-testid="productType-select"

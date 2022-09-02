@@ -54,10 +54,8 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
     height: '10px'
   },
   maxWidth: '324px',
-  '& .MuiFormControl-root': {
-    marginTop: '-7px',
-    color: theme.palette.background.default,
-    textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+  '& .MuiInputLabel-root': {
+    marginTop: '-7px'
   }
 }))
 
@@ -75,20 +73,34 @@ export const StyledDescTextField = styledSystem(TextField)(({ theme }) => ({
     marginTop: '-7px',
     color: theme.palette.background.default,
     textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+  },
+  '& .MuiInputLabel-root': {
+    marginTop: '40px',
+    marginLeft: '40px'
   }
 }))
 
 export const StyledSelect = styledSystem(Select)(({ theme }) => ({
+  '& .MuiSelect-select': {
+    backgroundColor: theme.palette.background.default,
+    padding: '8.5px',
+    borderRadius: '15px !important',
+    color: '#666666'
+  },
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '15px'
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px'
+  },
   backgroundColor: theme.palette.background.default,
   borderRadius: '15px !important',
-  width: '324px',
-  height: '40px'
+  height: '40px',
+  width: '320px'
 }))
 
 export const StyledInputLabel = styledSystem(InputLabel)(({ theme }) => ({
-  marginTop: '-7px',
-  color: theme.palette.background.default,
-  textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+  marginTop: '-7px'
 }))
 
 export const StyledTypography = styledSystem(Typography)(({ theme }) => ({
