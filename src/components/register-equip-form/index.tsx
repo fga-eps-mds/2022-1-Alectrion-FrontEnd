@@ -64,22 +64,22 @@ const RegisterEquipForm = () => {
     onSubmit: async (values) => {
       try {
         await api.post('/equipment/create', {
-          productType: values.productType,
+          type: values.productType,
           tippingNumber: values.tippingNumber,
           brand: values.brand,
           serialNumber: values.serialNumber,
           model: values.model,
-          acquisitionType: values.acquisitionType,
+          acquisition: values.acquisitionType,
           acquisitionDate: values.acquisitionDate,
-          fiscalNote: values.fiscalNote,
+          invoiceNumber: values.fiscalNote,
           processor: values.processor,
           ramMemory: values.ramMemory,
           storageType: values.storageType,
           storageAmount: values.storageAmount,
-          monitorType: values.monitorType,
-          monitorSize: values.monitorSize,
-          equipmentYear: values.equipmentYear,
-          potency: values.potency,
+          screenType: values.monitorType,
+          screenSize: values.monitorSize,
+          initialUseDate: values.equipmentYear,
+          power: values.potency,
           description: values.description
         })
         toast.success('Equipamento cadastrado.')
@@ -299,7 +299,7 @@ const RegisterEquipForm = () => {
             )}
             {state === 1 && (
               <StyledTextField
-                id="storageType-input"
+                id="processor-input"
                 label="Processador"
                 type="text"
                 name="processor"
