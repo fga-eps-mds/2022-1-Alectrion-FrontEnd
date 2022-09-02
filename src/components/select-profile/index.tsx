@@ -45,7 +45,7 @@ const SelectProfile: React.FC<PropTypes> = ({
           error={error}
           data-testid={testid}>
           <MenuItem value={'basico'}>Básico</MenuItem>
-          <MenuItem value={'admin'}>Admin</MenuItem>
+          <MenuItem value={'administrador'}>Admin</MenuItem>
           <MenuItem value={'gerente'}>Gerente</MenuItem>
           <MenuItem value={'consulta'}>Consulta</MenuItem>
         </StyledSelect>

@@ -73,7 +73,8 @@ const Form = ({ userId }: formProps) => {
           job: values.job,
           role: values.profile,
           username: values.username,
-          password: values.password
+          password: values.password,
+          userId
         })
         toast.success('Usuário editado com sucesso.')
       } catch (error) {
