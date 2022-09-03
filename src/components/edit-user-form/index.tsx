@@ -36,8 +36,7 @@ const Form = ({ userId }: formProps) => {
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
     username: yup.string().required('O campo é obrigatório.'),
-    password: yup.string().min(4).required('O campo é obrigatório.'),
-    confirmPassword: yup.string().min(4).required('O campo é obrigatório.')
+    password: yup.string().min(4).notRequired()
   })
 
   const [userData, setUserData] = useState<UserData>()
@@ -61,8 +60,7 @@ const Form = ({ userId }: formProps) => {
       job: userData?.job || '',
       profile: userData?.role || '',
       username: userData?.username,
-      password: '',
-      confirmPassword: ''
+      password: ''
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -130,6 +128,7 @@ const Form = ({ userId }: formProps) => {
           />
 
           <SelectJob
+            size="small"
             labelId="demo-simple-select-job-label"
             name="job"
             type="text"
@@ -142,6 +141,7 @@ const Form = ({ userId }: formProps) => {
           />
 
           <SelectProfile
+            size="small"
             labelId="demo-simple-select-profile-label"
             name="profile"
             type="profile"
@@ -157,7 +157,7 @@ const Form = ({ userId }: formProps) => {
             size="small"
             id="password"
             name="password"
-            label="Senha"
+            label="Digite uma nova senha"
             variant="outlined"
             value={formik.values.password}
             type="password"
@@ -165,25 +165,6 @@ const Form = ({ userId }: formProps) => {
             color="primary"
             helperText={formik.touched.password && formik.errors.password}
             error={formik.touched.password && Boolean(formik.errors.password)}
-          />
-
-          <BasicTextFields
-            size="small"
-            id="confirmPassword"
-            name="confirmPassword"
-            label="Confirmar Senha"
-            variant="outlined"
-            value={formik.values.confirmPassword}
-            type="confirmPassword"
-            onChange={formik.handleChange}
-            color="primary"
-            helperText={
-              formik.touched.confirmPassword && formik.errors.confirmPassword
-            }
-            error={
-              formik.touched.confirmPassword &&
-              Boolean(formik.errors.confirmPassword)
-            }
           />
 
           <Button

@@ -17,6 +17,7 @@ interface PropTypes {
   onChange?: (event: SelectChangeEvent<unknown>, child: ReactNode) => void
   error?: any
   testid?: string
+  size?: 'small' | 'medium'
 }
 
 const SelectProfile: React.FC<PropTypes> = ({
@@ -28,12 +29,18 @@ const SelectProfile: React.FC<PropTypes> = ({
   label,
   onChange,
   error,
-  testid
+  testid,
+  size
 }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Perfil do Usuário</InputLabel>
+        <InputLabel
+          id="demo-simple-select-label"
+          shrink={true}
+          sx={{ marginTop: '-7px', color: '#FFF' }}>
+          Perfil do Usuário
+        </InputLabel>
         <StyledSelect
           labelId={labelId}
           name={name}
@@ -43,7 +50,8 @@ const SelectProfile: React.FC<PropTypes> = ({
           label={label}
           onChange={onChange}
           error={error}
-          data-testid={testid}>
+          data-testid={testid}
+          size={size}>
           <MenuItem value={'basico'}>Básico</MenuItem>
           <MenuItem value={'administrador'}>Admin</MenuItem>
           <MenuItem value={'gerente'}>Gerente</MenuItem>
