@@ -44,7 +44,7 @@ export default function ScreenUser() {
           <StyledTextField
             size="small"
             id="username-input"
-            label="Nome do usuário"
+            label="Pesquisar usuário"
             data-testId="username-input"
             type="text"
             name="name"
@@ -54,6 +54,7 @@ export default function ScreenUser() {
           <div></div>
           <Button
             href="/user-register"
+            data-testid="userRegister"
             styledColor={theme.palette.primary.dark}
             textColor="white">
             Cadastrar usuário
