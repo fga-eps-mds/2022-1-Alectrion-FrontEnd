@@ -7,6 +7,7 @@ import { theme } from '../../styles/theme'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 import { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 interface user {
   createdAt: string
@@ -20,6 +21,7 @@ interface user {
 }
 
 export default function ScreenUser() {
+  const navigate = useNavigate()
   const [users, setUsers] = useState<user[]>([])
   useEffect(() => {
     const getUsers = async () => {
@@ -53,7 +55,7 @@ export default function ScreenUser() {
           />
           <div></div>
           <Button
-            href="/user-register"
+            onClick={() => navigate('/user-register')}
             data-testid="userRegister"
             styledColor={theme.palette.primary.dark}
             textColor="white">
