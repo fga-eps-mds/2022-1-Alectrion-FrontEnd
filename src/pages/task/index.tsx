@@ -10,15 +10,15 @@ import {
 } from './styles'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/auth'
-
-interface RoleType {
-  [role: string]: any
+interface AuthContextType {
+  user: {
+    role: string
+  }
 }
 
-const { user } = useContext(AuthContext)
-const { role }: RoleType = user!
-
 export const Task = () => {
+  const { user } = useContext(AuthContext) as AuthContextType
+  const role = user?.role
   const navigate = useNavigate()
   return (
     <Container>
@@ -60,18 +60,6 @@ export const Task = () => {
           </Typography>
         </ContainerCard>
       )}
-      {/* <ContainerCard data-testid="cardUsers">
-        <StyledShortcut
-          data-testid="buttonUsers"
-          color="#71ABDA"
-          className="User"
-          onClick={() => navigate('/users')}>
-          <StyledPersonIcon style={{ fontSize: 100 }} />
-        </StyledShortcut>
-        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-          Usuário
-        </Typography>
-      </ContainerCard> */}
     </Container>
   )
 }
