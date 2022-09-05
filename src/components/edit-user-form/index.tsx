@@ -186,7 +186,7 @@ const Form = ({ userId }: formProps) => {
             onClick={() => navigate('/users')}>
             Voltar
           </Button>
-          <Button
+          {/* <Button
             name="removeButton"
             id="remover"
             variant="contained"
@@ -194,7 +194,7 @@ const Form = ({ userId }: formProps) => {
             textColor="white"
             classes={{ root: 'rootRemove' }}>
             Remover
-          </Button>
+          </Button> */}
         </FormStyled>
       </CardContent>
     </StyledCard>
