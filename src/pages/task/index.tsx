@@ -8,6 +8,15 @@ import {
   StyledPersonIcon,
   StyledShortcut
 } from './styles'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/auth'
+
+interface RoleType {
+  [role: string]: any
+}
+
+const { user } = useContext(AuthContext)
+const { role }: RoleType = user!
 
 export const Task = () => {
   const navigate = useNavigate()
@@ -37,7 +46,21 @@ export const Task = () => {
           Ordem de serviço
         </Typography>
       </ContainerCard>
-      <ContainerCard data-testid="cardUsers">
+      {role === 'administrador' && (
+        <ContainerCard data-testid="cardUsers">
+          <StyledShortcut
+            data-testid="buttonUsers"
+            color="#71ABDA"
+            className="User"
+            onClick={() => navigate('/users')}>
+            <StyledPersonIcon style={{ fontSize: 100 }} />
+          </StyledShortcut>
+          <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+            Usuário
+          </Typography>
+        </ContainerCard>
+      )}
+      {/* <ContainerCard data-testid="cardUsers">
         <StyledShortcut
           data-testid="buttonUsers"
           color="#71ABDA"
@@ -48,7 +71,7 @@ export const Task = () => {
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           Usuário
         </Typography>
-      </ContainerCard>
+      </ContainerCard> */}
     </Container>
   )
 }
