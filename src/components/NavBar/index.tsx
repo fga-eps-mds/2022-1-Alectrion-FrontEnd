@@ -23,17 +23,18 @@ const NavBar = () => {
 
   React.useEffect(() => {
     let time: any
+    let time2: any
 
     window.onload = resetTimer
     document.onmousemove = resetTimer
     document.onkeydown = resetTimer
 
-    if (time > 1500000) {
+    const alertTimer = () => {
       toast.warn(
-        'Você será desconectado por inatividade em 5 minutos, clique aqui para parar!',
+        'Você será desconectado por inatividade em 1 minuto, clique aqui para continuar logado!',
         {
           position: 'top-right',
-          autoClose: 300000,
+          autoClose: 60000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -41,16 +42,19 @@ const NavBar = () => {
           progress: undefined
         }
       )
+      clearTimeout(time2)
+      time2 = setTimeout(disconnect, 60000)
     }
 
-    function doSomething() {
+    function disconnect() {
       Logout()
       window.location.reload()
     }
 
     function resetTimer() {
       clearTimeout(time)
-      time = setTimeout(doSomething, 1800000)
+      clearTimeout(time2)
+      time = setTimeout(alertTimer, 60000)
     }
   })
 
