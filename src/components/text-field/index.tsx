@@ -8,11 +8,12 @@ interface PropTypes {
   variant?: 'outlined' | 'standard' | 'filled'
   value?: string
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
-  type?: 'name' | 'email' | 'job' | 'username' | 'password' | 'confirmPassword'
+  type?: string
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   helperText?: any
   error?: any
   size?: 'small' | 'medium'
+  testid?: string
 }
 
 const BasicTextFields: React.FC<PropTypes> = ({
@@ -26,7 +27,8 @@ const BasicTextFields: React.FC<PropTypes> = ({
   color,
   helperText,
   error,
-  size
+  size,
+  testid
 }) => {
   return (
     <StyledTextField
@@ -43,6 +45,7 @@ const BasicTextFields: React.FC<PropTypes> = ({
       helperText={helperText}
       error={error}
       size={size}
+      data-testid={testid}
     />
   )
 }
