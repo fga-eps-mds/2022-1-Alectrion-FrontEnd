@@ -12,6 +12,7 @@ import { Task } from '../pages/task/index'
 import UserRegister from '../pages/user-register'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
+import OrderRegister from '../pages/order-service'
 
 type AuthRouteProps = {
   children: ReactNode
@@ -46,6 +47,15 @@ export const SignRoutes = () => {
               <NavBar />
               <EditUser />
             </AuthRoutes>
+          }
+        />
+        <Route
+          path="/order-service-register"
+          element={
+            <>
+              <NavBar />
+              <OrderRegister />
+            </>
           }
         />
         <Route path="/login" element={<UserLoginScreen />} />
