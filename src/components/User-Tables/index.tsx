@@ -48,9 +48,10 @@ interface user {
 
 interface propType {
   users: user[]
+  isAdmin: boolean
 }
 
-export default function UserTables({ users }: propType) {
+export default function UserTables({ users, isAdmin }: propType) {
   const navigate = useNavigate()
 
   return (
@@ -82,16 +83,18 @@ export default function UserTables({ users }: propType) {
               <StyledTableCell align="center">{user.email}</StyledTableCell>
               <StyledTableCell align="center">{user.role}</StyledTableCell>
               <StyledTableCell align="center">{user.job}</StyledTableCell>
-              <StyledTableCell
-                align="center"
-                onClick={() =>
-                  navigate('/edit-user', { state: { userId: user.id } })
-                }>
-                <img
-                  style={{ maxWidth: '50px', maxHeight: '50px' }}
-                  src={img}
-                />
-              </StyledTableCell>
+              {isAdmin && (
+                <StyledTableCell
+                  align="center"
+                  onClick={() =>
+                    navigate('/edit-user', { state: { userId: user.id } })
+                  }>
+                  <img
+                    style={{ maxWidth: '50px', maxHeight: '50px' }}
+                    src={img}
+                  />
+                </StyledTableCell>
+              )}
             </StyledTableRow>
           ))}
         </TableBody>
