@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { useNavigate } from 'react-router-dom'
-import img from './assets/Editar_button_TeladeUsuarios.png'
+import { EditButton } from '../edit-button/index'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,8 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // hide last border
   '&:last-child td, &:last-child th': {
     border: 0
-  },
-  cursor: 'pointer'
+  }
 }))
 
 interface user {
@@ -89,10 +88,8 @@ export default function UserTables({ users, isAdmin }: propType) {
                   onClick={() =>
                     navigate('/edit-user', { state: { userId: user.id } })
                   }>
-                  <img
-                    style={{ maxWidth: '50px', maxHeight: '50px' }}
-                    src={img}
-                  />
+                  <EditButton />
+                  Editar
                 </StyledTableCell>
               )}
             </StyledTableRow>
