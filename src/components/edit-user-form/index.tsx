@@ -79,7 +79,7 @@ const Form = ({ userId }: formProps) => {
       }
     }
   })
-  console.log(formik.values)
+
   return (
     <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
@@ -154,7 +154,7 @@ const Form = ({ userId }: formProps) => {
 
           <BasicTextFields
             size="small"
-            id="password"
+            data-testid="password"
             name="password"
             label="Digite uma nova senha"
             variant="outlined"
