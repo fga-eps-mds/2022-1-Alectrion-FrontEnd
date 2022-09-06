@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import { MemoryRouter } from 'react-router-dom'
 interface PropTypes {
   children: ReactNode
-  location: any
+  location?: any
 }
 
 jest.mock('react-router-dom', () => ({
