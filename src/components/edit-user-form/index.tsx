@@ -50,7 +50,6 @@ const Form = ({ userId }: formProps) => {
     }
     getUser()
   }, [])
-  console.log(userData?.job)
 
   const formik = useFormik({
     enableReinitialize: true,
