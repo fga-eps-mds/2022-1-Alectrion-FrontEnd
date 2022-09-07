@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { StyledTextField, Container, FindContainer } from './styles'
 import UserTables from '../../components/User-Tables'
 import { Typography } from '@mui/material'
@@ -7,10 +7,17 @@ import { theme } from '../../styles/theme'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 import { AxiosResponse } from 'axios'
-
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/auth'
+interface AuthContextType {
+  user: {
+    role: string
+  }
+}
 interface user {
   createdAt: string
   updatedAt: string
+  id: string
   username: string
   name: string
   email: string
@@ -19,6 +26,10 @@ interface user {
 }
 
 export default function ScreenUser() {
+  const { user } = useContext(AuthContext) as AuthContextType
+  const isAdmin = user.role === 'administrador'
+
+  const navigate = useNavigate()
   const [users, setUsers] = useState<user[]>([])
   useEffect(() => {
     const getUsers = async () => {
@@ -34,7 +45,7 @@ export default function ScreenUser() {
     }
     getUsers()
   }, [])
-  console.log({ users })
+
   return (
     <div>
       <Container>
@@ -43,7 +54,7 @@ export default function ScreenUser() {
           <StyledTextField
             size="small"
             id="username-input"
-            label="Nome do usuário"
+            label="Pesquisar usuário"
             data-testId="username-input"
             type="text"
             name="name"
@@ -52,14 +63,16 @@ export default function ScreenUser() {
           />
           <div></div>
           <Button
-            href="/user-register"
+            onClick={() => navigate('/user-register')}
+            data-testid="userRegister"
             styledColor={theme.palette.primary.dark}
+            disabled={!isAdmin}
             textColor="white">
             Cadastrar usuário
           </Button>
         </FindContainer>
         <div></div>
-        <UserTables users={users} />
+        <UserTables users={users} isAdmin={isAdmin} />
       </Container>
     </div>
   )

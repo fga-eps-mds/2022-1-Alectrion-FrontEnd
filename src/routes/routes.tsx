@@ -10,7 +10,7 @@ import { ReactNode, useContext } from 'react'
 import { AuthContext } from '../contexts/auth'
 import { Task } from '../pages/task/index'
 import UserRegister from '../pages/user-register'
-import ScreenUser from '../pages/TelaUsuarios'
+import ScreenUser from '../pages/user-screen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
 import ScreenEquipaments from '../pages/ScreenEquipaments'
@@ -38,6 +38,15 @@ export const SignRoutes = () => {
             <AuthRoutes>
               <NavBar />
               <UserRegister />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <ScreenUser />
             </AuthRoutes>
           }
         />

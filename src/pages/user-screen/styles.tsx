@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { styled as styledSystem } from '@mui/system'
-import { Button, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 
 export const Container = styled.div`
   display: flex;
@@ -38,17 +38,5 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
     marginTop: '-7px',
     color: theme.palette.background.default,
     textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
-  }
-}))
-
-export const StyledButton = styledSystem(Button)(({ theme }) => ({
-  maxWidth: '261px',
-  height: '62px',
-  textColor: 'white',
-  '& .MuiButtonBase-root': {
-    backgroundColor: 'black'
-  },
-  '& .MuiButton-text': {
-    color: theme.palette.background.default
   }
 }))

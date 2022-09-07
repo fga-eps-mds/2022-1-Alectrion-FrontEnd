@@ -1,7 +1,5 @@
-import { Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import TableCell, { tableCellClasses } from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
+import { TableCell, tableCellClasses, TableRow } from '@mui/material'
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -20,18 +18,10 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.background.default
   },
   '&:nth-child(even)': {
-    backgroundColor: '#D9D9D9'
+    backgroundColor: '#F5F5F5'
   },
   // hide last border
   '&:last-child td, &:last-child th': {
     border: 0
   }
-}))
-
-export const ButtonDownloadEquipament = styled(Button)(({ theme }) => ({
-  backgroundColor: '#5289B5',
-  color: '#ffff',
-  border: '10px',
-  fontSize: '14',
-  fontWeight: 'bold'
 }))

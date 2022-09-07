@@ -14,13 +14,14 @@ import EquipamentsTables from '../../components/Equipament-Tables'
 interface equipament {
   id: string
   tippingNumber: string
+  serialNumber: string
   acquision: string
   type: string
   status: string
   model: string
-  unitId: string
+  unit?: string
   description?: string
-  brand: string
+  brand?: string
   initialUseDate: string
   screenSize?: string
   invoiceNumber?: string
@@ -37,6 +38,7 @@ export default function ScreenEquipaments() {
   const [equipaments] = React.useState<equipament[]>([])
 
   const [busca, setBusca] = React.useState('')
+
   const filterEquipaments = React.useMemo(() => {
     const lowerBusca = busca.toLowerCase()
     return equipaments.filter((equip) =>
@@ -49,6 +51,7 @@ export default function ScreenEquipaments() {
       <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'black' }}>
         Consultar Equipamentos
       </Typography>
+
       <FindContainer>
         <BoxInput>
           <SearchIcon sx={{ marginBottom: '3px' }} />
@@ -59,8 +62,9 @@ export default function ScreenEquipaments() {
             onChange={(ev) => setBusca(ev.target.value)}
           />
         </BoxInput>
+
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <ButtonFilters variant="contained">
+          <ButtonFilters onClick={() => {}} variant="contained">
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>

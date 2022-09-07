@@ -4,18 +4,25 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { StyledTableCell, StyledTableRow } from './style'
+import DeleteIcon from '@mui/icons-material/Delete'
+import {
+  ButtonDownloadEquipament,
+  StyledTableCell,
+  StyledTableRow
+} from './style'
+import { EditButton } from './../edit-button/index'
 
 interface equipament {
   id: string
   tippingNumber: string
+  serialNumber: string
   acquision: string
   type: string
   status: string
   model: string
-  unitId: string
+  unit?: string
   description?: string
-  brand: string
+  brand?: string
   initialUseDate: string
   screenSize?: string
   invoiceNumber?: string
@@ -33,7 +40,6 @@ interface propType {
 }
 
 export default function EquipamentsTables({ equipaments }: propType) {
-  console.log({ equipaments })
   return (
     <TableContainer
       sx={{ margin: '0 auto', maxWidth: '1024px', textAlign: 'center' }}
@@ -51,11 +57,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
         <TableBody>
           {equipaments.map((equipaments) => (
             <StyledTableRow key={equipaments.acquision}>
-              <StyledTableCell align="center" component="th" scope="user">
+              <StyledTableCell align="center" component="th" scope="equipament">
                 {equipaments.tippingNumber}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {equipaments.invoiceNumber}
+                {equipaments.serialNumber}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {equipaments.status}
@@ -65,6 +71,17 @@ export default function EquipamentsTables({ equipaments }: propType) {
               </StyledTableCell>
               <StyledTableCell align="center">
                 {equipaments.brand}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <EditButton />
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <DeleteIcon />
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <ButtonDownloadEquipament>
+                  Baixar Equipamento
+                </ButtonDownloadEquipament>
               </StyledTableCell>
             </StyledTableRow>
           ))}
