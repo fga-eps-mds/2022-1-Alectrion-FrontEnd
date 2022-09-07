@@ -32,7 +32,7 @@ interface objProps {
   name?: string
   email?: string
   job?: string
-  profile?: string
+  role?: string
   password?: string
   userId?: string
 }
@@ -105,7 +105,7 @@ const Form = ({ userId }: formProps) => {
         values.profile !== formik.initialValues.profile &&
         values.profile !== ''
       ) {
-        bodyVerif.profile = values.profile
+        bodyVerif.role = values.profile
         flag = true
       }
       if (values.username !== formik.initialValues.username) {
@@ -119,10 +119,10 @@ const Form = ({ userId }: formProps) => {
       if (flag === true) {
         bodyVerif.userId = userId
       }
-      // console.log(bodyVerif)
+      console.log(bodyVerif)
       try {
         if (flag === true) {
-          // console.log('a flag vale true!')
+          console.log('a flag vale true!')
           await api.put('/user/update', bodyVerif)
           toast.success('Usuário editado com sucesso.')
           flag = false
