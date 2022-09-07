@@ -27,6 +27,15 @@ interface UserData {
 interface formProps {
   userId: string
 }
+interface objProps {
+  username?: string
+  name?: string
+  email?: string
+  job?: string
+  profile?: string
+  password?: string
+  userId?: string
+}
 
 const Form = ({ userId }: formProps) => {
   const navigate = useNavigate()
@@ -75,17 +84,53 @@ const Form = ({ userId }: formProps) => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      let flag = false
+      const bodyVerif: objProps = {}
+      if (values.name !== formik.initialValues.name) {
+        bodyVerif.name = values.name
+        flag = true
+      }
+      if (values.email !== formik.initialValues.email) {
+        bodyVerif.email = values.email
+        flag = true
+      }
+      if (
+        values.job !== formik.initialValues.job &&
+        formik.initialValues.job !== ''
+      ) {
+        bodyVerif.job = values.job
+        flag = true
+      }
+      if (
+        values.profile !== formik.initialValues.profile &&
+        values.profile !== ''
+      ) {
+        bodyVerif.profile = values.profile
+        flag = true
+      }
+      if (values.username !== formik.initialValues.username) {
+        bodyVerif.username = values.username
+        flag = true
+      }
+      if (values.password !== formik.initialValues.password) {
+        bodyVerif.password = values.password
+        flag = true
+      }
+      if (flag === true) {
+        bodyVerif.userId = userId
+      }
+      // console.log(bodyVerif)
       try {
-        await api.put('/user/update', {
-          name: values.name,
-          email: values.email,
-          job: values.job,
-          role: values.profile,
-          username: values.username,
-          password: values.password,
-          userId
-        })
-        toast.success('Usuário editado com sucesso.')
+        if (flag === true) {
+          // console.log('a flag vale true!')
+          await api.put('/user/update', bodyVerif)
+          toast.success('Usuário editado com sucesso.')
+          flag = false
+          navigate('/users')
+        } else {
+          toast.success('Dados do usuário atualizados com sucesso.')
+          navigate('/users')
+        }
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
