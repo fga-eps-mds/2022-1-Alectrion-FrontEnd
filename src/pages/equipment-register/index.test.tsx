@@ -25,7 +25,7 @@ test('should register new equipment', async () => {
   ).toBeInTheDocument()
 
   const typeInput = getByRole(
-    screen.getByTestId('productType-select-label'),
+    screen.getByTestId('productType-select'),
     'button'
   )
   userEvent.click(typeInput)
@@ -40,7 +40,7 @@ test('should register new equipment', async () => {
   const serialNumberInput = screen.getByLabelText('N° Série')
   userEvent.type(serialNumberInput, '52385238')
 
-  const modelInput = screen.getByTestId('model-input')
+  const modelInput = screen.getByLabelText('Modelo')
   userEvent.type(modelInput, 'MacBook')
 
   const acquisitionInput = screen.getByLabelText('Tipo aquisição')
@@ -55,7 +55,7 @@ test('should register new equipment', async () => {
   const fiscalNoteInput = screen.getByLabelText('N° da nota fiscal')
   userEvent.type(fiscalNoteInput, '192802')
 
-  const memoryInput = screen.getByLabelText('ramMemory-input')
+  const memoryInput = screen.getByLabelText('Memória RAM')
   userEvent.type(memoryInput, '8gb')
 
   const storageAmountInput = screen.getByLabelText('Armazenamento')

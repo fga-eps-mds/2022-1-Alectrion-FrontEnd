@@ -11,58 +11,67 @@ import api from '../../api/config'
 import { toast } from 'react-toastify'
 import SelectJob from '../select-job'
 import { theme } from '../../styles/theme'
+import { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 interface UserData {
+  createdAt: string
+  id: string
+  updatedAt: string
+  username: string
   name: string
   email: string
-  jobFunction: string
   role: string
-  username: string
-  password: string
-  confirmPassword: string
+  job: string
+}
+interface formProps {
+  userId: string
 }
 
-const Form = () => {
+const Form = ({ userId }: formProps) => {
+  const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     name: yup.string().required('O campo é obrigatório.'),
     email: yup.string().email('E-mail inválido.'),
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
     username: yup.string().required('O campo é obrigatório.'),
-    password: yup.string().min(4).required('O campo é obrigatório.'),
-    confirmPassword: yup.string().min(4).required('O campo é obrigatório.')
+    password: yup.string().min(4).notRequired()
   })
 
   const [userData, setUserData] = useState<UserData>()
 
   useEffect(() => {
     const getUser = async () => {
-      const data: UserData = await api.get('/user')
+      const { data }: AxiosResponse<UserData> = await api.get(
+        `/user/get?userId=${userId}`
+      )
       setUserData(data)
     }
     getUser()
   }, [])
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: userData?.name,
       email: userData?.email,
-      job: userData?.jobFunction,
-      profile: userData?.role,
+      job: userData?.job || '',
+      profile: userData?.role || '',
       username: userData?.username,
-      password: userData?.password,
-      confirmPassword: userData?.password
+      password: ''
     },
     validationSchema,
     onSubmit: async (values) => {
-      // console.log('teste')
       try {
         await api.put('/user/update', {
           name: values.name,
           email: values.email,
-          jobFunction: values.job,
+          job: values.job,
           role: values.profile,
           username: values.username,
-          password: values.password
+          password: values.password,
+          userId
         })
         toast.success('Usuário editado com sucesso.')
       } catch (error) {
@@ -70,7 +79,7 @@ const Form = () => {
       }
     }
   })
-  // console.log(formik.values)
+
   return (
     <StyledCard classes={{ root: 'rootCard' }}>
       <CardContent>
@@ -81,7 +90,7 @@ const Form = () => {
             name="name"
             label="Nome completo"
             variant="outlined"
-            value={formik.values.name}
+            value={formik.values.name || ''}
             type="name"
             onChange={formik.handleChange}
             color="primary"
@@ -91,25 +100,11 @@ const Form = () => {
 
           <BasicTextFields
             size="small"
-            id="username"
-            name="username"
-            label="Nome de usuário"
-            variant="outlined"
-            value={formik.values.username}
-            type="username"
-            onChange={formik.handleChange}
-            color="primary"
-            helperText={formik.touched.username && formik.errors.username}
-            error={formik.touched.username && Boolean(formik.errors.username)}
-          />
-
-          <BasicTextFields
-            size="small"
             id="email"
             name="email"
             label="Email"
             variant="outlined"
-            value={formik.values.email}
+            value={formik.values.email || ''}
             type="email"
             onChange={formik.handleChange}
             color="primary"
@@ -117,7 +112,22 @@ const Form = () => {
             error={formik.touched.email && Boolean(formik.errors.email)}
           />
 
+          <BasicTextFields
+            size="small"
+            id="username"
+            name="username"
+            label="Nome de usuário"
+            variant="outlined"
+            value={formik.values.username || ''}
+            type="username"
+            onChange={formik.handleChange}
+            color="primary"
+            helperText={formik.touched.username && formik.errors.username}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+          />
+
           <SelectJob
+            size="small"
             labelId="demo-simple-select-job-label"
             name="job"
             type="text"
@@ -130,6 +140,7 @@ const Form = () => {
           />
 
           <SelectProfile
+            size="small"
             labelId="demo-simple-select-profile-label"
             name="profile"
             type="profile"
@@ -143,9 +154,9 @@ const Form = () => {
 
           <BasicTextFields
             size="small"
-            id="password"
+            data-testid="password"
             name="password"
-            label="Senha"
+            label="Digite uma nova senha"
             variant="outlined"
             value={formik.values.password}
             type="password"
@@ -153,25 +164,6 @@ const Form = () => {
             color="primary"
             helperText={formik.touched.password && formik.errors.password}
             error={formik.touched.password && Boolean(formik.errors.password)}
-          />
-
-          <BasicTextFields
-            size="small"
-            id="confirmPassword"
-            name="confirmPassword"
-            label="Confirmar Senha"
-            variant="outlined"
-            value={formik.values.confirmPassword}
-            type="confirmPassword"
-            onChange={formik.handleChange}
-            color="primary"
-            helperText={
-              formik.touched.confirmPassword && formik.errors.confirmPassword
-            }
-            error={
-              formik.touched.confirmPassword &&
-              Boolean(formik.errors.confirmPassword)
-            }
           />
 
           <Button
@@ -184,17 +176,16 @@ const Form = () => {
             Editar
           </Button>
           <Button
-            disabled={true}
             name="backButton"
             id="voltar"
             variant="contained"
             styledColor={theme.palette.grey[300]}
             textColor="black"
-            classes={{ root: 'rootBack' }}>
+            classes={{ root: 'rootBack' }}
+            onClick={() => navigate('/users')}>
             Voltar
           </Button>
-          <Button
-            disabled={true}
+          {/* <Button
             name="removeButton"
             id="remover"
             variant="contained"
@@ -202,7 +193,7 @@ const Form = () => {
             textColor="white"
             classes={{ root: 'rootRemove' }}>
             Remover
-          </Button>
+          </Button> */}
         </FormStyled>
       </CardContent>
     </StyledCard>
