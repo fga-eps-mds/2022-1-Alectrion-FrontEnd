@@ -31,12 +31,24 @@ interface formProps {
 const Form = ({ userId }: formProps) => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
-    name: yup.string().required('O campo é obrigatório.'),
-    email: yup.string().email('E-mail inválido.'),
+    name: yup
+      .string()
+      .required('O campo é obrigatório.')
+      .min(3, 'Digite pelo menos 3 caracteres')
+      .trim(),
+    email: yup.string().email('E-mail inválido.').trim().required(),
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
-    username: yup.string().required('O campo é obrigatório.'),
-    password: yup.string().min(4).notRequired()
+    username: yup
+      .string()
+      .required('O campo é obrigatório.')
+      .min(3, 'Digite pelo menos 3 caracteres')
+      .trim(),
+    password: yup
+      .string()
+      .min(4, 'A senha deve conter ao menos 4 caracteres')
+      .notRequired()
+      .trim()
   })
 
   const [userData, setUserData] = useState<UserData>()
