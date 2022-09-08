@@ -10,23 +10,52 @@ import {
   StyledForm,
   StyledTextField,
   FormContainer,
-  StyledDescTextField,
   ButtonContainer
 } from './styles'
 import { theme } from '../../styles/theme'
-import { FormControl } from '@mui/material'
+import { Autocomplete, FormControl, TextField } from '@mui/material'
+import { Equipment } from '../../pages/order-service'
 
-const RegisterOrderServiceForm = () => {
+type Props = {
+  userName: string
+  initialData: Equipment | undefined
+  handleTippingNumberChange: (data: string) => void
+  units: { id: string; name: string; localization: string }[] | undefined
+}
+
+const RegisterOrderServiceForm = ({
+  initialData,
+  userName,
+  handleTippingNumberChange,
+  units
+}: Props) => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
-    authorFunctionalNumber: yup.string().required('Esse campo é obrigatório'),
-    senderName: yup.string().required('Esse campo é obrigatório'),
-    senderFunctionalNumber: yup.string().required('Esse campo é obrigatório'),
-    date: yup.date(),
-    tippingNumber: yup.string().required('Esse campo é obrigatório'),
-    status: yup.string(),
-    productType: yup.string().required('Esse campo é obrigatório'),
-    description: yup.string().length(250)
+    authorFunctionalNumber: yup
+      .string()
+      .trim()
+      .required('Esse campo é obrigatório'),
+    senderName: yup.string().trim().required('Esse campo é obrigatório'),
+    senderFunctionalNumber: yup
+      .string()
+      .trim()
+      .required('Esse campo é obrigatório'),
+    date: yup
+      .date()
+      .required('Esse campo é obrigatório')
+      .test('teste', 'Data inválida', (value) => {
+        if (value) {
+          const date = new Date(value)
+          if (date > new Date()) {
+            return false
+          } else return true
+        } else return false
+      }),
+    tippingNumber: yup.string().trim().required('Esse campo é obrigatório'),
+    status: yup.string().trim(),
+    destination: yup.string().trim().required('Esse campo é obrigatório'),
+    productType: yup.string().trim(),
+    description: yup.string().trim().max(250)
   })
   const formik = useFormik({
     initialValues: {
@@ -34,23 +63,24 @@ const RegisterOrderServiceForm = () => {
       senderName: '',
       senderFunctionalNumber: '',
       date: '',
-      tippingNumber: '',
-      status: '',
-      productType: '',
+      tippingNumber: initialData?.tippingNumber,
+      status: initialData?.formattedStatus,
+      productType: initialData?.type,
       description: '',
-      userName: ''
+      userName,
+      destination: ''
     },
     validationSchema,
+    enableReinitialize: true,
     onSubmit: async (values) => {
       try {
-        await api.post('/create-order-service/', {
-          type: values.productType,
-          tippingNumber: values.tippingNumber,
-          description: values.description,
-          date: values.date,
-          authorFunctionalNumber: values.authorFunctionalNumber,
-          senderName: values.senderName,
-          senderFunctionalNumber: values.senderFunctionalNumber
+        await api.post(`equipment/create-order-service/${initialData?.id}`, {
+          authorId: 'a6a72f19-ba96-4ad6-852a-f17a6a1b2b6d',
+          authorFunctionalNumber: formik.values.authorFunctionalNumber,
+          destination: formik.values.destination,
+          senderName: formik.values.senderName,
+          senderFunctionalNumber: formik.values.senderFunctionalNumber,
+          date: formik.values.date
         })
         toast.success('Ordem de serviço criada.')
       } catch (error) {
@@ -58,6 +88,9 @@ const RegisterOrderServiceForm = () => {
       }
     }
   })
+
+  console.log(formik.errors)
+
   return (
     <Container>
       <StyledCard>
@@ -78,7 +111,8 @@ const RegisterOrderServiceForm = () => {
                 }
                 error={
                   formik.touched.senderName && Boolean(formik.errors.senderName)
-                }></StyledTextField>
+                }
+              />
             </FormControl>
             <StyledTextField
               id="tippingNumber-input"
@@ -87,7 +121,10 @@ const RegisterOrderServiceForm = () => {
               type="text"
               name="tippingNumber"
               variant="outlined"
-              onChange={formik.handleChange}
+              onChange={(ev) => {
+                formik.setFieldValue('tippingNumber', ev.target.value)
+                handleTippingNumberChange(ev.target.value)
+              }}
               value={formik.values.tippingNumber}
               helperText={
                 formik.touched.tippingNumber && formik.errors.tippingNumber
@@ -98,6 +135,7 @@ const RegisterOrderServiceForm = () => {
               }
             />
             <StyledTextField
+              aria-readonly
               id="brand-input"
               label="Nome do recebedor"
               type="text"
@@ -109,6 +147,24 @@ const RegisterOrderServiceForm = () => {
               error={formik.touched.userName && Boolean(formik.errors.userName)}
             />
             <StyledTextField
+              aria-aria-readonly
+              label="N° funcional do autor"
+              type="text"
+              name="authorFunctionalNumber"
+              variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.authorFunctionalNumber}
+              helperText={
+                formik.touched.authorFunctionalNumber &&
+                formik.errors.authorFunctionalNumber
+              }
+              error={
+                formik.touched.authorFunctionalNumber &&
+                Boolean(formik.errors.authorFunctionalNumber)
+              }
+            />
+            <StyledTextField
+              aria-readonly
               id="senderFunctionalNumber-input"
               label="N° funcional"
               type="text"
@@ -128,6 +184,8 @@ const RegisterOrderServiceForm = () => {
             <StyledTextField
               id="status-input"
               label="Status"
+              disabled
+              InputLabelProps={{ shrink: true }}
               type="text"
               name="status"
               variant="outlined"
@@ -137,9 +195,11 @@ const RegisterOrderServiceForm = () => {
               error={formik.touched.status && Boolean(formik.errors.status)}
             />
             <StyledTextField
+              InputLabelProps={{ shrink: true }}
               id="productType-input"
               label="Tipo de equipamento"
               type="text"
+              disabled
               name="productType"
               variant="outlined"
               onChange={formik.handleChange}
@@ -152,9 +212,10 @@ const RegisterOrderServiceForm = () => {
               }
             />
             <StyledTextField
+              InputLabelProps={{ shrink: true }}
               id="data-input"
-              label="DD/MM/AAAA"
-              type="text"
+              label="Data"
+              type="date"
               name="date"
               variant="outlined"
               onChange={formik.handleChange}
@@ -163,18 +224,42 @@ const RegisterOrderServiceForm = () => {
               error={formik.touched.date && Boolean(formik.errors.date)}
             />
           </FormContainer>
-          <StyledDescTextField
-            id="description-input"
+
+          <TextField
             label="Descrição"
-            type="text"
             name="description"
-            variant="outlined"
+            multiline
+            rows={2}
+            maxRows={4}
             onChange={formik.handleChange}
             value={formik.values.description}
             helperText={formik.touched.description && formik.errors.description}
             error={
               formik.touched.description && Boolean(formik.errors.description)
             }
+          />
+          <Autocomplete
+            disablePortal
+            options={units ?? []}
+            getOptionLabel={(option) =>
+              `${option.name} - ${option.localization}`
+            }
+            onChange={(_, value) =>
+              formik.setFieldValue('destination', value?.id)
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Destino"
+                helperText={
+                  formik.touched.destination && formik.errors.destination
+                }
+                error={
+                  formik.touched.destination &&
+                  Boolean(formik.errors.destination)
+                }
+              />
+            )}
           />
           <ButtonContainer>
             <Button
