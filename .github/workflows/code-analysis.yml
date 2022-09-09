@@ -5,24 +5,24 @@ on:
      - main
      - develop
 jobs:
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 
-      - name: Install dependencies
-        run: yarn
-      - name: Test and coverage
-        run: yarn test:all
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+  # sonarcloud:
+  #   name: SonarCloud
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0 
+  #     - name: Install dependencies
+  #       run: yarn
+  #     - name: Test and coverage
+  #       run: yarn test:all
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  #         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
   get_metrics:
-    needs: sonarcloud
+    # needs: sonarcloud
     runs-on: ubuntu-latest
     steps:
     - name: checkout
@@ -30,7 +30,9 @@ jobs:
     - name: Get metrics and commit
       run: |
         mkdir analytics-raw-data
-        curl "https://sonarcloud.io/api/measures/component?component=${{secrets.PROJECT_KEY}}&metricKeys=files,functions,complexity,comment_lines_density,duplicated_lines_density,coverage,ncloc,tests,test_errors,test_failures,test_execution_time,security_rating&pullRequest=${{github.event.pull_request.number}}" > analytics-raw-data/fga-eps-mds-2022-1-Alectrion-FrontEnd-$(date +'%m-%d-%Y-%H-%M-%S')-${{github.event.pull_request.number}}.json
+        url="https://sonarcloud.io/api/measures/component?component=${{secrets.PROJECT_KEY}}&metricKeys=files,functions,complexity,comment_lines_density,duplicated_lines_density,coverage,ncloc,tests,test_errors,test_failures,test_execution_time,security_rating&pullRequest=${{github.event.pull_request.number}}"
+        echo $url
+        curl $(echo $url | tr -d \') > analytics-raw-data/fga-eps-mds-2022-1-Alectrion-FrontEnd-$(date +'%m-%d-%Y-%H-%M-%S')-${{github.event.pull_request.number}}.json
     - name: push metrics
       run: |
         git config --global user.email "${{secrets.GIT_USER_EMAIL}}"
