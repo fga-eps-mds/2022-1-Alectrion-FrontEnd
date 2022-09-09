@@ -18,13 +18,29 @@ import { useNavigate } from 'react-router-dom'
 const RegisterUserForm = () => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
-    email: yup.string().email('Insira um email válido'),
-    name: yup.string().required('Esse campo é obrigatório'),
-    username: yup.string().required('Esse campo é obrigatório'),
+    email: yup.string().email('Insira um email válido').trim().required(),
+    name: yup
+      .string()
+      .required('Esse campo é obrigatório')
+      .min(3, 'Digite pelo menos 3 caracteres')
+      .trim(),
+    username: yup
+      .string()
+      .required('Esse campo é obrigatório')
+      .min(3, 'Digite pelo menos 3 caracteres')
+      .trim(),
     job: yup.string().required('Esse campo é obrigatório'),
     profile: yup.string().required('Esse campo é obrigatório'),
-    newPassword: yup.string().min(4).required('Esse campo é obrigatório'),
-    confirmPassword: yup.string().min(4).required('Esse campo é obrigatório')
+    newPassword: yup
+      .string()
+      .min(4, 'A senha deve conter ao menos 4 caracteres')
+      .required('Esse campo é obrigatório')
+      .trim(),
+    confirmPassword: yup
+      .string()
+      .min(4, 'A senha deve conter ao menos 4 caracteres')
+      .required('Esse campo é obrigatório')
+      .trim()
   })
 
   const formik = useFormik({

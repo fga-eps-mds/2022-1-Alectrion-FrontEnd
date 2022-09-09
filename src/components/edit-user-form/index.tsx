@@ -27,16 +27,37 @@ interface UserData {
 interface formProps {
   userId: string
 }
+interface objProps {
+  username?: string
+  name?: string
+  email?: string
+  job?: string
+  role?: string
+  password?: string
+  userId?: string
+}
 
 const Form = ({ userId }: formProps) => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
-    name: yup.string().required('O campo é obrigatório.'),
-    email: yup.string().email('E-mail inválido.'),
+    name: yup
+      .string()
+      .required('O campo é obrigatório.')
+      .min(3, 'Digite pelo menos 3 caracteres')
+      .trim(),
+    email: yup.string().email('E-mail inválido.').trim().required(),
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
-    username: yup.string().required('O campo é obrigatório.'),
-    password: yup.string().min(4).notRequired()
+    username: yup
+      .string()
+      .required('O campo é obrigatório.')
+      .min(3, 'Digite pelo menos 3 caracteres')
+      .trim(),
+    password: yup
+      .string()
+      .min(4, 'A senha deve conter ao menos 4 caracteres')
+      .notRequired()
+      .trim()
   })
 
   const [userData, setUserData] = useState<UserData>()
@@ -63,17 +84,53 @@ const Form = ({ userId }: formProps) => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      let flag = false
+      const bodyVerif: objProps = {}
+      if (values.name !== formik.initialValues.name) {
+        bodyVerif.name = values.name
+        flag = true
+      }
+      if (values.email !== formik.initialValues.email) {
+        bodyVerif.email = values.email
+        flag = true
+      }
+      if (
+        values.job !== formik.initialValues.job &&
+        formik.initialValues.job !== ''
+      ) {
+        bodyVerif.job = values.job
+        flag = true
+      }
+      if (
+        values.profile !== formik.initialValues.profile &&
+        values.profile !== ''
+      ) {
+        bodyVerif.role = values.profile
+        flag = true
+      }
+      if (values.username !== formik.initialValues.username) {
+        bodyVerif.username = values.username
+        flag = true
+      }
+      if (values.password !== formik.initialValues.password) {
+        bodyVerif.password = values.password
+        flag = true
+      }
+      if (flag === true) {
+        bodyVerif.userId = userId
+      }
+      console.log(bodyVerif)
       try {
-        await api.put('/user/update', {
-          name: values.name,
-          email: values.email,
-          job: values.job,
-          role: values.profile,
-          username: values.username,
-          password: values.password,
-          userId
-        })
-        toast.success('Usuário editado com sucesso.')
+        if (flag === true) {
+          console.log('a flag vale true!')
+          await api.put('/user/update', bodyVerif)
+          toast.success('Usuário editado com sucesso.')
+          flag = false
+          navigate('/users')
+        } else {
+          toast.success('Dados do usuário atualizados com sucesso.')
+          navigate('/users')
+        }
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
