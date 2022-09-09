@@ -1,6 +1,6 @@
 name: Build
 on:
- push:
+ pull_request:
    branches:
      - main
      - develop
@@ -21,3 +21,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+  get_metrics:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Get metrics and commit
+      run: |
+        mkdir analytics-raw-data
+        curl "https://sonarcloud.io/api/measures/component?component=${{secrets.PROJECT_KEY}}&metricKeys=files,functions,complexity,comment_lines_density,duplicated_lines_density,coverage,ncloc,tests,test_errors,test_failures,test_execution_time,security_rating&pullRequest=${{github.event.pull_request.number}}" > analytics-raw-data/fga-eps-mds-2022-1-Alectrion-FrontEnd-$(date +'%m-%d-%Y-%H-%M-%S')-${{github.event.pull_request.number}}.json
+    - name: push metrics
+      run: |
+        git config --global user.email "${{secrets.GIT_USER_EMAIL}}"
+        git config --global user.name "${{secrets.GIT_USER_NAME}}"
+        git clone --single-branch --branch main "https://x-access-token:${{secrets.API_TOKEN_GITHUB}}@github.com/fga-eps-mds/2022-1-Alectrion-DOC" 2022-1-Alectrion-DOC
+        cp -R analytics-raw-data/*.json 2022-1-Alectrion-DOC/analytics-raw-data/
+        cd 2022-1-Alectrion-DOC
+        git add .
+        git commit -m "doc: adiciona metricas do ${{ github.event.repository.name }} PR #${{github.event.pull_request.number}}"
+        git push
