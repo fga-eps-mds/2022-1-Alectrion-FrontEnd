@@ -31,10 +31,10 @@ const NavBar = () => {
 
     const alertTimer = () => {
       toast.warn(
-        'Você será desconectado por inatividade em 1 minuto, clique aqui para continuar logado!',
+        'Você será desconectado por inatividade em 5 minutos, clique aqui para continuar logado!',
         {
           position: 'top-right',
-          autoClose: 60000,
+          autoClose: 300000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -43,7 +43,7 @@ const NavBar = () => {
         }
       )
       clearTimeout(time2)
-      time2 = setTimeout(disconnect, 60000)
+      time2 = setTimeout(disconnect, 300000)
     }
 
     function disconnect() {
@@ -54,7 +54,7 @@ const NavBar = () => {
     function resetTimer() {
       clearTimeout(time)
       clearTimeout(time2)
-      time = setTimeout(alertTimer, 60000)
+      time = setTimeout(alertTimer, 1500000)
     }
   })
 
