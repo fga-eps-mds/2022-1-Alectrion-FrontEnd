@@ -1,6 +1,13 @@
 import styled from 'styled-components'
 import { styled as styledSystem } from '@mui/system'
-import { Box, Button } from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  InputLabel,
+  Select
+} from '@mui/material'
 
 export const Container = styled.div`
   display: flex;
@@ -58,5 +65,47 @@ export const ButtonCad = styledSystem(Button)(({ theme }) => ({
   marginLeft: '15px',
   '&:hover': {
     backgroundColor: '#16878C'
+  }
+}))
+
+export const FilterScrenn = styledSystem(Dialog)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    maxWidth: '790px !important',
+    borderRadius: '14px',
+    height: '850px'
+  }
+}))
+
+export const FilterScrennContent = styledSystem(DialogContent)(({ theme }) => ({
+  width: '790px',
+  backgroundColor: '#3C4B54'
+}))
+
+export const StyledInputLabel = styledSystem(InputLabel)(({ theme }) => ({
+  color: theme.palette.background.default,
+  textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+}))
+
+export const StyledSelect = styledSystem(Select)(({ theme }) => ({
+  '& .MuiSelect-select': {
+    backgroundColor: theme.palette.background.default,
+    padding: '8.5px',
+    borderRadius: '15px !important',
+    color: '#666666',
+    width: '324px'
+  },
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '15px'
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px'
+  },
+  maxWidth: '416px',
+  height: '40px',
+  '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input': {
+    marginLeft: '2px'
+  },
+  '& .MuiPopover-paper': {
+    backgroundColor: theme.palette.background.default
   }
 }))

@@ -3,10 +3,13 @@ import {
   FindContainer,
   BoxInput,
   ButtonFilters,
-  ButtonCad
+  ButtonCad,
+  FilterScrenn,
+  FilterScrennContent,
+  StyledSelect
 } from './style'
 import * as React from 'react'
-import { Typography, Input, Box } from '@mui/material'
+import { Typography, Input, Box, FormControl, MenuItem } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
 import EquipamentsTables from '../../components/Equipament-Tables'
@@ -37,6 +40,16 @@ interface equipament {
 export default function ScreenEquipaments() {
   const [equipaments] = React.useState<equipament[]>([])
 
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  // const handleClose = () => {
+  // setOpen(false)
+  // }
+
   const [busca, setBusca] = React.useState('')
 
   const filterEquipaments = React.useMemo(() => {
@@ -64,7 +77,7 @@ export default function ScreenEquipaments() {
         </BoxInput>
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <ButtonFilters onClick={() => {}} variant="contained">
+          <ButtonFilters onClick={handleClickOpen} variant="contained">
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>
@@ -73,6 +86,14 @@ export default function ScreenEquipaments() {
       </FindContainer>
 
       <EquipamentsTables equipaments={filterEquipaments} />
+
+      <FilterScrenn open={open}>
+        <FilterScrennContent>
+          <FormControl variant="filled">
+            <StyledSelect></StyledSelect>
+          </FormControl>
+        </FilterScrennContent>
+      </FilterScrenn>
     </Container>
   )
 }
