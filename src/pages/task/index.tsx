@@ -26,7 +26,7 @@ export const Task = () => {
         <StyledShortcut
           data-testid="buttonEquipaments"
           color="#50FF4DB2"
-          onClick={() => navigate('/equipaments')}
+          onClick={() => navigate('/edit-equipment')}
           className="Equipment">
           <StyledComputerIcon style={{ fontSize: 100 }} />
         </StyledShortcut>
