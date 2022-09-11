@@ -2,15 +2,20 @@ import { createContext, useState, ReactNode, useEffect } from 'react'
 import api from '../api/config'
 
 type SignInProps = {
-  username: string
-  password: string
+  username?: string
+  password?: string
 }
+
+// type ProfileType = {
+//   newRole: string
+// }
 
 type AuthContextData = {
   user: object | null
   isAuthenticated: boolean
   Login: (credentials: SignInProps) => Promise<void>
   Logout(): void
+  ProfileChanged(arg?: string): void
 }
 
 type AuthProviderProps = {
@@ -52,9 +57,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     sessionStorage.clear()
   }
 
+  function ProfileChanged(newRole: string) {
+    setUser({ role: newRole })
+    console.log(user)
+  }
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!user, user, Login, Logout }}>
+      value={{ isAuthenticated: !!user, user, Login, ProfileChanged, Logout }}>
       {children}
     </AuthContext.Provider>
   )

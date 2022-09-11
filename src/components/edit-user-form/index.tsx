@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import BasicTextFields from '../text-field'
@@ -13,6 +13,7 @@ import SelectJob from '../select-job'
 import { theme } from '../../styles/theme'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/auth'
 
 interface UserData {
   createdAt: string
@@ -38,6 +39,7 @@ interface objProps {
 }
 
 const Form = ({ userId }: formProps) => {
+  const { ProfileChanged } = useContext(AuthContext)
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     name: yup
@@ -85,6 +87,7 @@ const Form = ({ userId }: formProps) => {
     validationSchema,
     onSubmit: async (values) => {
       let flag = false
+      let profileChanged = false
       const bodyVerif: objProps = {}
       if (values.name !== formik.initialValues.name) {
         bodyVerif.name = values.name
@@ -107,6 +110,12 @@ const Form = ({ userId }: formProps) => {
       ) {
         bodyVerif.role = values.profile
         flag = true
+        if (
+          formik.initialValues.profile === 'administrador' &&
+          values.profile !== 'administrador'
+        ) {
+          profileChanged = true
+        }
       }
       if (values.username !== formik.initialValues.username) {
         bodyVerif.username = values.username
@@ -126,10 +135,15 @@ const Form = ({ userId }: formProps) => {
           await api.put('/user/update', bodyVerif)
           toast.success('Usuário editado com sucesso.')
           flag = false
-          navigate('/users')
+          if (profileChanged === true) {
+            ProfileChanged(values.profile)
+            toast.success('Perfil de usuário restringido.')
+            navigate('/')
+          }
+          navigate('/')
         } else {
           toast.success('Dados do usuário atualizados com sucesso.')
-          navigate('/users')
+          navigate('/')
         }
       } catch (error) {
         toast.error('Aconteceu algum erro.')

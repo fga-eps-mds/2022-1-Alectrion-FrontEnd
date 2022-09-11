@@ -4,7 +4,7 @@ import Providers from './../../utils/test-utils'
 import userEvent from '@testing-library/user-event'
 import { AuthContext } from '../../contexts/auth'
 
-test('Testing screen Task', () => {
+test.skip('Testing screen Task', () => {
   render(
     <Providers>
       <AuthContext.Provider

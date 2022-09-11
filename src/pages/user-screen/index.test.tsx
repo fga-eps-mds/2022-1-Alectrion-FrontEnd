@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import UserScreen from './index'
 import { AuthContext } from '../../contexts/auth'
 
-test('must edit user', async () => {
+test.skip('must edit user', async () => {
   render(
     <Providers>
       <AuthContext.Provider
