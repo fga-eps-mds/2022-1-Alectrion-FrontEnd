@@ -9,7 +9,15 @@ import {
   StyledSelect
 } from './style'
 import * as React from 'react'
-import { Typography, Input, Box, FormControl, MenuItem } from '@mui/material'
+import { useFormik } from 'formik'
+import {
+  Typography,
+  Input,
+  Box,
+  FormControl,
+  MenuItem,
+  Button
+} from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
 import EquipamentsTables from '../../components/Equipament-Tables'
@@ -46,9 +54,9 @@ export default function ScreenEquipaments() {
     setOpen(true)
   }
 
-  // const handleClose = () => {
-  // setOpen(false)
-  // }
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const [busca, setBusca] = React.useState('')
 
@@ -58,6 +66,19 @@ export default function ScreenEquipaments() {
       equip.tippingNumber.toLowerCase().includes(lowerBusca)
     )
   }, [busca])
+
+  const formik = useFormik({
+    initialValues: {
+      typeEquipament: '',
+      status: '',
+      marca: '',
+      modelo: '',
+      tipoAquisicao: ''
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2))
+    }
+  })
 
   return (
     <Container>
@@ -89,9 +110,78 @@ export default function ScreenEquipaments() {
 
       <FilterScrenn open={open}>
         <FilterScrennContent>
-          <FormControl variant="filled">
-            <StyledSelect></StyledSelect>
-          </FormControl>
+          <form onSubmit={formik.handleSubmit}>
+            <FormControl>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <StyledSelect
+                  id="typeEquipament"
+                  name="typeEquipament"
+                  value={formik.values.typeEquipament}
+                  onChange={formik.handleChange}
+                  displayEmpty
+                  sx={{
+                    marginLeft: '20px'
+                  }}
+                  inputProps={{ 'aria-label': 'Without label' }}>
+                  <MenuItem value="">
+                    <em>Tipo de Equipamento</em>
+                  </MenuItem>
+                  <MenuItem value="CPU">CPU</MenuItem>
+                  <MenuItem value="WEBCAM">WebCam</MenuItem>
+                  <MenuItem value="MONITOR">Monitor</MenuItem>
+                  <MenuItem value="NOBREAK">Nobreak</MenuItem>
+                  <MenuItem value="SCANNER">Scanner</MenuItem>
+                  <MenuItem value="ESTABILIZADOR">Estabilizador</MenuItem>
+                </StyledSelect>
+                <StyledSelect
+                  id="status"
+                  name="status"
+                  value={formik.values.status}
+                  onChange={formik.handleChange}
+                  displayEmpty
+                  sx={{
+                    marginLeft: '100px'
+                  }}
+                  inputProps={{ 'aria-label': 'Without label' }}>
+                  <MenuItem value="">
+                    <em>Status</em>
+                  </MenuItem>
+                  <MenuItem value="ATIVO">Ativo</MenuItem>
+                  <MenuItem value="BAIXADO">Baixado</MenuItem>
+                </StyledSelect>
+              </Box>
+            </FormControl>
+            <Box
+              sx={{
+                marginTop: '100px',
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
+              <Button
+                variant="contained"
+                onClick={handleClose}
+                sx={{
+                  backgroundColor: 'white',
+                  color: '#666666',
+                  width: '224px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px'
+                }}>
+                Voltar
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{
+                  marginLeft: '100px',
+                  width: '224px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px'
+                }}>
+                Buscar
+              </Button>
+            </Box>
+          </form>
         </FilterScrennContent>
       </FilterScrenn>
     </Container>

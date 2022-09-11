@@ -92,7 +92,7 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
     padding: '8.5px',
     borderRadius: '15px !important',
     color: '#666666',
-    width: '324px'
+    width: '250px'
   },
   '& .MuiOutlinedInput-root': {
     borderRadius: '15px'
