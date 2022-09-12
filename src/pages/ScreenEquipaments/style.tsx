@@ -6,7 +6,8 @@ import {
   Dialog,
   DialogContent,
   InputLabel,
-  Select
+  Select,
+  TextField
 } from '@mui/material'
 
 export const Container = styled.div`
@@ -107,5 +108,23 @@ export const StyledSelect = styledSystem(Select)(({ theme }) => ({
   },
   '& .MuiPopover-paper': {
     backgroundColor: theme.palette.background.default
+  }
+}))
+
+export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px'
+  },
+  '& .MuiOutlinedInput-input': {
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '15px !important',
+    width: '270px'
+  },
+  maxWidth: '300px',
+  height: '40px',
+  '& .MuiInputLabel-shrink': {
+    marginTop: '-7px',
+    color: theme.palette.background.default,
+    textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
   }
 }))

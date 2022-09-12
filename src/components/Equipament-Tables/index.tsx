@@ -14,25 +14,52 @@ import { EditButton } from './../edit-button/index'
 
 interface equipament {
   id: string
+
   tippingNumber: string
+
   serialNumber: string
+
   acquision: string
+
   type: string
+
   status: string
+
   model: string
-  unit?: string
-  description?: string
-  brand?: string
-  initialUseDate: string
+
+  description: string
+
+  initialUseDate: Date
+
   screenSize?: string
-  invoiceNumber?: string
+
+  invoiceNumber: string
+
   power?: string
+
   screenType?: string
-  processador?: string
+
+  processor?: string
+
   storageType?: string
+
   storageAmount?: string
+
   createdAt: Date
+
   updatedAt: Date
+
+  // orderServices: OrderService[]
+
+  // dismisseds: Dismissed[]
+
+  brand: string
+
+  acquisition: string
+
+  history?: History
+
+  unit: string
 }
 
 interface propType {
