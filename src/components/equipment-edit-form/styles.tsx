@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 
 export const FormStyled = styled.form`
   display: flex;
+  column-gap: 66px;
 `
 
 export const StyledCard = styledSystem(Card)(({ theme }) => ({
