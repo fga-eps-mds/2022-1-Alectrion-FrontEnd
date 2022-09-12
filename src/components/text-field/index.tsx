@@ -14,6 +14,8 @@ interface PropTypes {
   error?: any
   size?: 'small' | 'medium'
   testid?: string
+  rows?: number | string
+  multiline?: boolean
 }
 
 const BasicTextFields: React.FC<PropTypes> = ({
@@ -28,7 +30,9 @@ const BasicTextFields: React.FC<PropTypes> = ({
   helperText,
   error,
   size,
-  testid
+  testid,
+  rows,
+  multiline
 }) => {
   return (
     <StyledTextField
@@ -46,6 +50,8 @@ const BasicTextFields: React.FC<PropTypes> = ({
       error={error}
       size={size}
       data-testid={testid}
+      rows={rows}
+      multiline={multiline}
     />
   )
 }

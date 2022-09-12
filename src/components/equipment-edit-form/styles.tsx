@@ -4,8 +4,10 @@ import { Card } from '@mui/material'
 import Box from '@mui/material/Box'
 
 export const FormStyled = styled.form`
-  display: flex;
-  column-gap: 66px;
+  display: Gid;
+  //column-gap: 66px;
+  //width: 1104px;
+  //padding: 0px;
 `
 
 export const StyledCard = styledSystem(Card)(({ theme }) => ({
@@ -18,9 +20,21 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
   backgroundColor: theme.palette.primary.light
 }))
 
+export const BiggestBox = styledSystem(Box)(({ theme }) => ({
+  display: 'flex',
+  columnGap: '66px',
+  width: '1104px',
+  padding: '0px'
+}))
+
 export const StyledBox = styledSystem(Box)(({ theme }) => ({
   width: '324px',
   display: 'grid',
   rowGap: '48px',
   gridTemplateColumns: '324px'
+}))
+
+export const DescriptionFieldBox = styledSystem(Box)(({ theme }) => ({
+  // width: '1104px',
+  // height: '96px'
 }))
