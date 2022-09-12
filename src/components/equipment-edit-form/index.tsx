@@ -1,4 +1,6 @@
 import { CardContent } from '@mui/material'
+import { theme } from '../../styles/theme'
+import { Button } from '../button'
 import DescriptionTextField from '../description-text-field'
 import BasicTextFields from '../text-field'
 import {
@@ -6,7 +8,8 @@ import {
   StyledCard,
   StyledBox,
   DescriptionFieldBox,
-  BiggestBox
+  BiggestBox,
+  ButtonFieldBox
 } from './styles'
 
 const EquipmentEditForm = () => {
@@ -107,12 +110,33 @@ const EquipmentEditForm = () => {
           <DescriptionFieldBox>
             <DescriptionTextField
               size="small"
-              id="Processador"
+              id="descrição"
               rows="4"
               multiline={true}
               label="Descrição"
             />
           </DescriptionFieldBox>
+
+          <ButtonFieldBox>
+            <Button
+              name="backButton"
+              id="voltar"
+              variant="contained"
+              styledColor={theme.palette.grey[300]}
+              textColor="black"
+              classes={{ root: 'rootBack' }}>
+              Voltar
+            </Button>
+            <Button
+              id="editar"
+              name="editButton"
+              variant="contained"
+              type="submit"
+              styledColor={theme.palette.primary.main}
+              classes={{ root: 'rootEdit' }}>
+              Salvar
+            </Button>
+          </ButtonFieldBox>
         </FormStyled>
       </CardContent>
     </StyledCard>

@@ -5,9 +5,8 @@ import Box from '@mui/material/Box'
 
 export const FormStyled = styled.form`
   display: Gid;
-  //column-gap: 66px;
-  //width: 1104px;
-  //padding: 0px;
+  //width: 1200px;
+  //height: 496px;
 `
 
 export const StyledCard = styledSystem(Card)(({ theme }) => ({
@@ -17,24 +16,44 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
   width: '1200px',
   height: '496px',
   borderRadius: '10px',
-  backgroundColor: theme.palette.primary.light
+  backgroundColor: theme.palette.primary.light,
+  '& .MuiCardContent-root': {
+    padding: '0px'
+  }
 }))
 
 export const BiggestBox = styledSystem(Box)(({ theme }) => ({
   display: 'flex',
   columnGap: '66px',
   width: '1104px',
-  padding: '0px'
+  padding: '0px',
+  marginRight: '48px',
+  marginLeft: '48px',
+  marginTop: '56px'
 }))
 
 export const StyledBox = styledSystem(Box)(({ theme }) => ({
   width: '324px',
   display: 'grid',
-  rowGap: '48px',
-  gridTemplateColumns: '324px'
+  rowGap: '48px'
 }))
 
 export const DescriptionFieldBox = styledSystem(Box)(({ theme }) => ({
-  // width: '1104px',
-  // height: '96px'
+  width: '1104px',
+  height: '96px',
+  marginRight: '48px',
+  marginLeft: '48px'
+}))
+
+export const ButtonFieldBox = styledSystem(Box)(({ theme }) => ({
+  display: 'flex',
+  columnGap: '44px',
+  width: '684px',
+  marginRight: '258px',
+  marginLeft: '258px',
+  marginTop: '66px',
+  marginButton: '32px',
+  lignSelf: 'center',
+  justifyContent: 'center',
+  padding: '0px'
 }))
