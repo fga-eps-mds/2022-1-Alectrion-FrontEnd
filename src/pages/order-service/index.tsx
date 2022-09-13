@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { CircularProgress, Typography } from '@mui/material'
 import { AxiosResponse } from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
   Params,
   useNavigate,
@@ -9,7 +9,8 @@ import {
   useSearchParams
 } from 'react-router-dom'
 import api from '../../api/config'
-import RegisterOrderServiceForm from '../../components/register-order-service-form/inder'
+import RegisterOrderServiceForm from '../../components/register-order-service-form'
+import { AuthContext } from '../../contexts/auth'
 import { Container } from '../user-register/styles'
 
 export type Equipment = {
@@ -91,6 +92,8 @@ const OrderRegister = () => {
     }
   }
 
+  const { user } = useContext(AuthContext)
+
   return (
     <Container>
       <>
@@ -100,7 +103,10 @@ const OrderRegister = () => {
         <RegisterOrderServiceForm
           units={units}
           initialData={equipment}
-          userName="Matheus"
+          user={{
+            token: user?.token ?? '',
+            name: user?.name ?? ''
+          }}
           handleTippingNumberChange={handleTippingNumberChange}
         />{' '}
       </>
