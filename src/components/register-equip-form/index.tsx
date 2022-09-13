@@ -32,22 +32,22 @@ const RegisterEquipForm = () => {
   const validationSchema = yup.object().shape({
     productType: yup.string().required('Esse campo é obrigatório'),
     tippingNumber: yup.string().required('Esse campo é obrigatório'),
-    brand: yup.string().required('Esse campo é obrigatório'),
-    serialNumber: yup.string().required('Esse campo é obrigatório'),
-    model: yup.string().required('Esse campo é obrigatório'),
-    acquisitionType: yup.string().required('Esse campo é obrigatório'),
+    brand: yup.string().trim().required('Esse campo é obrigatório'),
+    serialNumber: yup.string().trim().required('Esse campo é obrigatório'),
+    model: yup.string().trim().required('Esse campo é obrigatório'),
+    acquisitionType: yup.string().trim().required('Esse campo é obrigatório'),
     acquisitionDate: yup.date().required('Esse campo é obrigatório'),
-    invoiceNumber: yup.string().required('Esse campo é obrigatório'),
-    processor: yup.string().required('Esse campo é obrigatório'),
-    ramMemory: yup.string().required('Esse campo é obrigatório'),
-    storageType: yup.string().required('Esse campo é obrigatório'),
-    storageAmount: yup.string().required('Esse campo é obrigatório'),
-    monitorType: yup.string().required('Esse campo é obrigatório'),
-    monitorSize: yup.string().required('Esse campo é obrigatório'),
-    initialDate: yup.string().required('Esse campo é obrigatório'),
+    invoiceNumber: yup.string().trim().required('Esse campo é obrigatório'),
+    processor: yup.string().trim().required('Esse campo é obrigatório'),
+    ramMemory: yup.string().trim().required('Esse campo é obrigatório'),
+    storageType: yup.string().trim().required('Esse campo é obrigatório'),
+    storageAmount: yup.string().trim().required('Esse campo é obrigatório'),
+    monitorType: yup.string().trim().required('Esse campo é obrigatório'),
+    monitorSize: yup.string().trim().required('Esse campo é obrigatório'),
+    initialUseDate: yup.string().max(4),
     power: yup.string().required('Esse campo é obrigatório'),
-    unitId: yup.string().required('Esse campo é obrigatório'),
-    description: yup.string().length(250)
+    unitId: yup.string().trim().required('Esse campo é obrigatório'),
+    description: yup.string().max(250)
   })
   const formik = useFormik({
     initialValues: {
@@ -65,7 +65,7 @@ const RegisterEquipForm = () => {
       storageAmount: '',
       monitorType: '',
       monitorSize: '',
-      initialDate: '',
+      initialUseDate: '',
       power: '',
       unitId: '',
       description: ''
@@ -73,7 +73,7 @@ const RegisterEquipForm = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await api.post('/equipment/create', {
+        await api.post('/createEquipment', {
           type: values.productType,
           tippingNumber: values.tippingNumber,
           brand: values.brand,
@@ -83,14 +83,14 @@ const RegisterEquipForm = () => {
           acquisitionDate: values.acquisitionDate,
           invoiceNumber: values.invoiceNumber,
           processor: values.processor,
-          ramMemory: values.ramMemory,
+          ram_size: values.ramMemory,
           storageType: values.storageType,
           storageAmount: values.storageAmount,
           screenType: values.monitorType,
           screenSize: values.monitorSize,
-          initialUseDate: values.initialDate,
+          initialUseDate: values.initialUseDate,
           power: values.power,
-          unitId: values.unitId,
+          unit: values.unitId,
           description: values.description
         })
         toast.success('Equipamento cadastrado.')
@@ -144,7 +144,7 @@ const RegisterEquipForm = () => {
                 <MenuItem onClick={() => setState(0)} value="Scanner">
                   Scanner
                 </MenuItem>
-                <MenuItem onClick={() => setState(0)} value="Estabilizador">
+                <MenuItem onClick={() => setState(3)} value="Estabilizador">
                   Estabilizador
                 </MenuItem>
                 <MenuItem onClick={() => setState(0)} value="Webcam">
@@ -223,18 +223,19 @@ const RegisterEquipForm = () => {
               }
             />
             <StyledTextField
-              id="initialDate-input"
+              id="initialUseDate-input"
               label="Ano do equipamento"
               type="text"
-              name="initialDate"
+              name="initialUseDate"
               variant="outlined"
               onChange={formik.handleChange}
-              value={formik.values.initialDate}
+              value={formik.values.initialUseDate}
               helperText={
-                formik.touched.initialDate && formik.errors.initialDate
+                formik.touched.initialUseDate && formik.errors.initialUseDate
               }
               error={
-                formik.touched.initialDate && Boolean(formik.errors.initialDate)
+                formik.touched.initialUseDate &&
+                Boolean(formik.errors.initialUseDate)
               }
             />
             <StyledTextField
@@ -269,27 +270,33 @@ const RegisterEquipForm = () => {
                 Boolean(formik.errors.invoiceNumber)
               }
             />
-            <StyledTextField
-              id="unitId-input"
-              label="Unidade"
-              type="text"
-              name="unitId"
-              variant="outlined"
-              onChange={formik.handleChange}
-              value={formik.values.unitId}
-              helperText={formik.touched.unitId && formik.errors.unitId}
-              error={formik.touched.unitId && Boolean(formik.errors.unitId)}
-            />
             <Autocomplete
               disablePortal
               id="unitId-input"
-              options={units}
+              options={units ?? []}
               getOptionLabel={(option) =>
                 `${option.name} - ${option.localization}`
               }
               renderInput={(params) => (
-                <StyledTextField {...params} label="Unidade" />
+                <StyledTextField
+                  {...params}
+                  label="Unidade"
+                  helperText={formik.touched.unitId && formik.errors.unitId}
+                  error={formik.touched.unitId && Boolean(formik.errors.unitId)}
+                />
               )}
+              onChange={(_, value) => formik.setFieldValue('unit', value?.id)}
+              fullWidth
+              className="autocomplete"
+              sx={{
+                padding: 0,
+                '& .MuiOutlinedInput-root': {
+                  padding: '0 !important'
+                },
+                '& .MuiAutocomplete-input': {
+                  padding: '16.5px !important'
+                }
+              }}
             />
 
             {state === 1 && (
