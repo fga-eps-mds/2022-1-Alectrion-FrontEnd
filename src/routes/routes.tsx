@@ -62,10 +62,10 @@ export const SignRoutes = () => {
         <Route
           path="/equipment-register"
           element={
-            <AuthRoutes>
+            <>
               <NavBar />
               <EquipRegister />
-            </AuthRoutes>
+            </>
           }
         />
         <Route path="/login" element={<UserLoginScreen />} />

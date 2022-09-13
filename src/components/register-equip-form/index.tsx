@@ -12,32 +12,41 @@ import {
   StyledInputLabel
 } from './styles'
 import * as yup from 'yup'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { useFormik } from 'formik'
 import { Button } from '../button'
 import { theme } from '../../styles/theme'
+import Autocomplete from '@mui/material/Autocomplete'
+import { AxiosResponse } from 'axios'
+
+interface unit {
+  name: string
+  id: string
+  localization: string
+}
 
 const RegisterEquipForm = () => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     productType: yup.string().required('Esse campo é obrigatório'),
     tippingNumber: yup.string().required('Esse campo é obrigatório'),
-    brand: yup.string(),
-    serialNumber: yup.string(),
-    model: yup.string(),
-    acquisitionType: yup.string(),
-    acquisitionDate: yup.date(),
-    fiscalNote: yup.string(),
-    processor: yup.string(),
-    ramMemory: yup.string(),
-    storageType: yup.string(),
-    storageAmount: yup.string(),
-    monitorType: yup.string(),
-    monitorSize: yup.string(),
-    equipmentYear: yup.string(),
-    potency: yup.string(),
+    brand: yup.string().required('Esse campo é obrigatório'),
+    serialNumber: yup.string().required('Esse campo é obrigatório'),
+    model: yup.string().required('Esse campo é obrigatório'),
+    acquisitionType: yup.string().required('Esse campo é obrigatório'),
+    acquisitionDate: yup.date().required('Esse campo é obrigatório'),
+    invoiceNumber: yup.string().required('Esse campo é obrigatório'),
+    processor: yup.string().required('Esse campo é obrigatório'),
+    ramMemory: yup.string().required('Esse campo é obrigatório'),
+    storageType: yup.string().required('Esse campo é obrigatório'),
+    storageAmount: yup.string().required('Esse campo é obrigatório'),
+    monitorType: yup.string().required('Esse campo é obrigatório'),
+    monitorSize: yup.string().required('Esse campo é obrigatório'),
+    initialDate: yup.string().required('Esse campo é obrigatório'),
+    power: yup.string().required('Esse campo é obrigatório'),
+    unitId: yup.string().required('Esse campo é obrigatório'),
     description: yup.string().length(250)
   })
   const formik = useFormik({
@@ -49,15 +58,16 @@ const RegisterEquipForm = () => {
       model: '',
       acquisitionType: '',
       acquisitionDate: '',
-      fiscalNote: '',
+      invoiceNumber: '',
       processor: '',
       ramMemory: '',
       storageType: '',
       storageAmount: '',
       monitorType: '',
       monitorSize: '',
-      equipmentYear: '',
-      potency: '',
+      initialDate: '',
+      power: '',
+      unitId: '',
       description: ''
     },
     validationSchema,
@@ -71,15 +81,16 @@ const RegisterEquipForm = () => {
           model: values.model,
           acquisition: values.acquisitionType,
           acquisitionDate: values.acquisitionDate,
-          invoiceNumber: values.fiscalNote,
+          invoiceNumber: values.invoiceNumber,
           processor: values.processor,
           ramMemory: values.ramMemory,
           storageType: values.storageType,
           storageAmount: values.storageAmount,
           screenType: values.monitorType,
           screenSize: values.monitorSize,
-          initialUseDate: values.equipmentYear,
-          power: values.potency,
+          initialUseDate: values.initialDate,
+          power: values.power,
+          unitId: values.unitId,
           description: values.description
         })
         toast.success('Equipamento cadastrado.')
@@ -89,6 +100,16 @@ const RegisterEquipForm = () => {
     }
   })
   const [state, setState] = useState(0)
+  const [units, setUnits] = useState<unit[]>([])
+  useEffect(() => {
+    const getUnits = async () => {
+      try {
+        const { data }: AxiosResponse<unit[]> = await api.get('/getAllUnits')
+        setUnits(data)
+      } catch (error) {}
+    }
+    getUnits()
+  }, [])
   return (
     <Container>
       <StyledCard>
@@ -202,19 +223,18 @@ const RegisterEquipForm = () => {
               }
             />
             <StyledTextField
-              id="equipmentYear-input"
+              id="initialDate-input"
               label="Ano do equipamento"
               type="text"
-              name="equipmentYear"
+              name="initialDate"
               variant="outlined"
               onChange={formik.handleChange}
-              value={formik.values.equipmentYear}
+              value={formik.values.initialDate}
               helperText={
-                formik.touched.equipmentYear && formik.errors.equipmentYear
+                formik.touched.initialDate && formik.errors.initialDate
               }
               error={
-                formik.touched.equipmentYear &&
-                Boolean(formik.errors.equipmentYear)
+                formik.touched.initialDate && Boolean(formik.errors.initialDate)
               }
             />
             <StyledTextField
@@ -234,18 +254,44 @@ const RegisterEquipForm = () => {
               }
             />
             <StyledTextField
-              id="fiscalNote-input"
+              id="invoiceNumber-input"
               label="N° da nota fiscal"
               type="text"
-              name="model"
+              name="invoiceNumber"
               variant="outlined"
               onChange={formik.handleChange}
-              value={formik.values.fiscalNote}
-              helperText={formik.touched.fiscalNote && formik.errors.fiscalNote}
+              value={formik.values.invoiceNumber}
+              helperText={
+                formik.touched.invoiceNumber && formik.errors.invoiceNumber
+              }
               error={
-                formik.touched.fiscalNote && Boolean(formik.errors.fiscalNote)
+                formik.touched.invoiceNumber &&
+                Boolean(formik.errors.invoiceNumber)
               }
             />
+            <StyledTextField
+              id="unitId-input"
+              label="Unidade"
+              type="text"
+              name="unitId"
+              variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.unitId}
+              helperText={formik.touched.unitId && formik.errors.unitId}
+              error={formik.touched.unitId && Boolean(formik.errors.unitId)}
+            />
+            <Autocomplete
+              disablePortal
+              id="unitId-input"
+              options={units}
+              getOptionLabel={(option) =>
+                `${option.name} - ${option.localization}`
+              }
+              renderInput={(params) => (
+                <StyledTextField {...params} label="Unidade" />
+              )}
+            />
+
             {state === 1 && (
               <StyledTextField
                 id="ramMemory-input"
@@ -335,7 +381,7 @@ const RegisterEquipForm = () => {
                 id="monitorSize-input"
                 label="Tamanho monitor"
                 type="text"
-                name="monitorType"
+                name="monitorSize"
                 variant="outlined"
                 onChange={formik.handleChange}
                 value={formik.values.monitorType}
@@ -350,15 +396,15 @@ const RegisterEquipForm = () => {
             )}
             {state === 3 && (
               <StyledTextField
-                id="potency-input"
+                id="power-input"
                 label="Potência"
                 type="text"
-                name="potency"
+                name="power"
                 variant="outlined"
                 onChange={formik.handleChange}
-                value={formik.values.potency}
-                helperText={formik.touched.potency && formik.errors.potency}
-                error={formik.touched.potency && Boolean(formik.errors.potency)}
+                value={formik.values.power}
+                helperText={formik.touched.power && formik.errors.power}
+                error={formik.touched.power && Boolean(formik.errors.power)}
               />
             )}
           </FormContainer>
