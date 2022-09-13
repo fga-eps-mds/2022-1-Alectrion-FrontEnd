@@ -13,6 +13,7 @@ import UserRegister from '../pages/user-register'
 import ScreenUser from '../pages/user-screen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
+import EquipmentEditScreen from '../pages/equipment-edit-screen'
 
 type AuthRouteProps = {
   children: ReactNode
@@ -59,6 +60,15 @@ export const SignRoutes = () => {
           }
         />
         <Route path="/login" element={<UserLoginScreen />} />
+        <Route
+          path="/edit-equipment"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <EquipmentEditScreen />
+            </AuthRoutes>
+          }
+        />
       </Routes>
     </BrowserRouter>
   )
