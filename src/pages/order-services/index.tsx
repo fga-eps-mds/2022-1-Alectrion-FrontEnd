@@ -53,6 +53,7 @@ export const OrderServices = () => {
           name="username"
           variant="outlined"
           onChange={() => {}}
+          disabled
         />
         <ButtonGroup>
           <Button
@@ -61,6 +62,7 @@ export const OrderServices = () => {
             width="180px"
             height="40px"
             borderRadius="10px"
+            disabled
             endIcon={<FilterListIcon />}>
             Filtros
           </Button>
@@ -69,7 +71,7 @@ export const OrderServices = () => {
             height="62px"
             textColor="#FFFFFF"
             styledColor="#16878C"
-            onClick={() => navigate('/order-service-register')}
+            onClick={() => navigate('/create-order-service')}
             borderRadius="10px">
             Cadastrar OS
           </Button>
