@@ -7,8 +7,26 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 
 import { StyledTableCell, StyledTableRow } from './styles'
-
-export default function OderServiceTable() {
+import { dateFormat } from '../../utils/dateFormat'
+interface OrderService {
+  id: string
+  date: string
+  description: string
+  authorId: string
+  sender: string
+  senderFunctionalNumber: string
+  equipmentSnapshot: {
+    type: string
+    tippingNumber: string
+    status: string
+  }
+}
+interface OrderServicesProps {
+  orderServices: OrderService[]
+}
+export default function OderServiceTable({
+  orderServices
+}: OrderServicesProps) {
   return (
     <TableContainer
       sx={{
@@ -24,19 +42,29 @@ export default function OderServiceTable() {
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">N° tombamento</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
-            <StyledTableCell align="center">Recebedor</StyledTableCell>
+            {/* <StyledTableCell align="center">Recebedor</StyledTableCell> */}
             <StyledTableCell align="center">Entregador</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <StyledTableRow>
-            <StyledTableCell align="center">03/09/2022</StyledTableCell>
-            <StyledTableCell align="center">CPU</StyledTableCell>
-            <StyledTableCell align="center">28NAU23JA</StyledTableCell>
-            <StyledTableCell align="center">Reserva tecnica</StyledTableCell>
-            <StyledTableCell align="center">Maria</StyledTableCell>
-            <StyledTableCell align="center">Joao - 19230192</StyledTableCell>
-          </StyledTableRow>
+          {orderServices.map((orderSerivce) => (
+            <StyledTableRow key={orderSerivce.id}>
+              <StyledTableCell align="center">
+                {dateFormat(orderSerivce.date)}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {orderSerivce.equipmentSnapshot.type}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {orderSerivce.equipmentSnapshot.tippingNumber}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {orderSerivce.equipmentSnapshot.status}
+              </StyledTableCell>
+              {/* <StyledTableCell align="center">Maria</StyledTableCell> */}
+              <StyledTableCell align="center">{`${orderSerivce.sender} - ${orderSerivce.senderFunctionalNumber}`}</StyledTableCell>
+            </StyledTableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
