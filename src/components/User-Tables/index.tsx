@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { StyledTableCell, StyledTableRow } from './styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -8,7 +9,7 @@ import Paper from '@mui/material/Paper'
 import { useNavigate } from 'react-router-dom'
 import { EditButton } from '../edit-button/index'
 
-interface user {
+interface User {
   createdAt: string
   id: string
   updatedAt: string
@@ -20,12 +21,14 @@ interface user {
 }
 
 interface propType {
-  users: user[]
+  users: User[]
   isAdmin: boolean
 }
 
 export default function UserTables({ users, isAdmin }: propType) {
   const navigate = useNavigate()
+
+  console.log(typeof users)
 
   return (
     <TableContainer

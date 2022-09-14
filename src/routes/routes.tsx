@@ -13,6 +13,8 @@ import UserRegister from '../pages/user-register'
 import ScreenUser from '../pages/user-screen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
+import OrderRegister from '../pages/order-service'
+import { CircularProgress } from '@mui/material'
 import EquipRegister from '../pages/equipment-register'
 
 type AuthRouteProps = {
@@ -68,6 +70,15 @@ export const SignRoutes = () => {
             </AuthRoutes>
           }
         />
+        <Route
+          path="/create-order-service"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <OrderRegister />
+            </AuthRoutes>
+          }
+        />
         <Route path="/login" element={<UserLoginScreen />} />
       </Routes>
     </BrowserRouter>
@@ -77,8 +88,10 @@ export const SignRoutes = () => {
 export function AuthRoutes({ children }: AuthRouteProps): any {
   const { isAuthenticated } = useContext(AuthContext)
   const location = useLocation()
-  return isAuthenticated === true ? (
+  return isAuthenticated === 'authenticated' ? (
     children
+  ) : isAuthenticated === 'waiting' ? (
+    <CircularProgress />
   ) : (
     <Navigate to="/login" replace state={{ path: location.pathname }} />
   )
