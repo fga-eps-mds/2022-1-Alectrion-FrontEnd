@@ -22,7 +22,7 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: theme.palette.primary.dark,
+  backgroundColor: theme.palette.primary.light,
   margin: '32px 0px 16px 0px'
 }))
 
