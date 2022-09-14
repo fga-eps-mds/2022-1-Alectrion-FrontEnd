@@ -87,7 +87,8 @@ const RegisterOrderServiceForm = ({
             senderName: formik.values.senderName,
             senderFunctionalNumber: formik.values.senderFunctionalNumber,
             date: formik.values.date,
-            description: formik.values.description
+            description: formik.values.description,
+            receiverName: formik.values.userName
           },
           {
             headers: {
