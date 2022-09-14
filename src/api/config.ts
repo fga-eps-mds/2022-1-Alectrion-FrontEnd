@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { config } from '../config/env'
 
 const api = axios.create({
-  baseURL: config.url
+  baseURL: process.env.REACT_APP_GATEWAY_URL
 })
 
 export default api
