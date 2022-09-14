@@ -35,3 +35,11 @@ export const ButtonDownloadEquipament = styled(Button)(({ theme }) => ({
   fontSize: '14',
   fontWeight: 'bold'
 }))
+
+export const ButtonReservEquipament = styled(Button)(({ theme }) => ({
+  backgroundColor: '#5289B5',
+  color: '#ffff',
+  border: '10px',
+  fontSize: '14',
+  fontWeight: 'bold'
+}))

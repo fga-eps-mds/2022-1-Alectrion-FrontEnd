@@ -5,8 +5,10 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { Button } from '@mui/material'
 import {
   ButtonDownloadEquipament,
+  ButtonReservEquipament,
   StyledTableCell,
   StyledTableRow
 } from './style'
@@ -103,12 +105,15 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 <EditButton />
               </StyledTableCell>
               <StyledTableCell align="center">
-                <DeleteIcon />
+                <Button>
+                  <DeleteIcon />
+                </Button>
               </StyledTableCell>
               <StyledTableCell align="center">
-                <ButtonDownloadEquipament>
-                  Baixar Equipamento
-                </ButtonDownloadEquipament>
+                <ButtonDownloadEquipament>Baixar</ButtonDownloadEquipament>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <ButtonReservEquipament>Reserva</ButtonReservEquipament>
               </StyledTableCell>
             </StyledTableRow>
           ))}
