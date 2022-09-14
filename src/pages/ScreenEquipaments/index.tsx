@@ -20,7 +20,6 @@ import {
   Button
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-// import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
 import EquipamentsTables from '../../components/Equipament-Tables'
 
@@ -383,7 +382,8 @@ export default function ScreenEquipaments() {
                   name="createdAt"
                   value={formik.values.createdAt}
                   onChange={formik.handleChange}
-                  sx={{ ml: '90px' }}></StyledTextField>
+                  sx={{ ml: '90px' }}
+                />
               </Box>
             </FormControl>
             <Box
@@ -407,6 +407,7 @@ export default function ScreenEquipaments() {
               <Button
                 variant="contained"
                 type="submit"
+                onClick={handleClose}
                 sx={{
                   marginLeft: '150px',
                   width: '224px',
