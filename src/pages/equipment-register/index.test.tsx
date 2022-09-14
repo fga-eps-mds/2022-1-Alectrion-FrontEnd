@@ -149,8 +149,16 @@ test('should register new monitor', async () => {
 
 test('should register new nobreak', async () => {
   mockedAxios.post.mockResolvedValue({
-    productType: 'CPU',
-    tippingNumber: '1745248'
+    productType: 'Nobreak',
+    tippingNumber: '8237421',
+    brand: 'Intelbras',
+    serialNumber: '52385590',
+    model: 'UltraWide',
+    acquisition: 'Licitação',
+    initialUseDate: '2019',
+    acquisitionDate: '10/08/2021',
+    invoiceNumber: '289743',
+    power: '220W'
   })
   render(
     <Providers>
@@ -167,13 +175,13 @@ test('should register new nobreak', async () => {
     'button'
   )
   userEvent.click(typeInput)
-  await waitFor(() => userEvent.click(screen.getByText(/CPU/i)))
+  await waitFor(() => userEvent.click(screen.getByText(/Nobreak/i)))
 
   const tippingInput = screen.getByLabelText('N° Tombamento')
-  userEvent.type(tippingInput, '1745248')
+  userEvent.type(tippingInput, '8237421')
 
   const brandInput = screen.getByLabelText('Marca')
-  userEvent.type(brandInput, 'Apple')
+  userEvent.type(brandInput, 'Intelbras')
 
   const serialNumberInput = screen.getByLabelText('N° Série')
   userEvent.type(serialNumberInput, '52385238')
@@ -184,26 +192,17 @@ test('should register new nobreak', async () => {
   const acquisitionInput = screen.getByLabelText('Tipo aquisição')
   userEvent.type(acquisitionInput, 'Licitação')
 
-  const equipmentYearInput = screen.getByLabelText('Ano do equipamento')
-  userEvent.type(equipmentYearInput, '2020')
+  const initialUseDateInput = screen.getByLabelText('Ano do equipamento')
+  userEvent.type(initialUseDateInput, '2019')
 
   const acquisitionDateInput = screen.getByLabelText('Data de aquisição')
-  userEvent.type(acquisitionDateInput, '28/12/2001')
+  userEvent.type(acquisitionDateInput, '10/08/2021')
 
-  const fiscalNoteInput = screen.getByLabelText('N° da nota fiscal')
-  userEvent.type(fiscalNoteInput, '192802')
+  const invoiceNumberInput = screen.getByLabelText('N° da nota fiscal')
+  userEvent.type(invoiceNumberInput, '289743')
 
-  const memoryInput = screen.getByLabelText('Memória RAM')
-  userEvent.type(memoryInput, '8gb')
-
-  const storageAmountInput = screen.getByLabelText('Armazenamento')
-  userEvent.type(storageAmountInput, '1tb')
-
-  const storageTypeInput = screen.getByTestId('storageType-input')
-  userEvent.type(storageTypeInput, 'HD externo')
-
-  const processorInput = screen.getByLabelText('Processador')
-  userEvent.type(processorInput, 'Intel I7')
+  const powerInput = screen.getByLabelText('Potência')
+  userEvent.type(powerInput, '220W')
 
   const RegisterButton = screen.getByRole('button', { name: 'Cadastrar' })
   userEvent.click(RegisterButton)

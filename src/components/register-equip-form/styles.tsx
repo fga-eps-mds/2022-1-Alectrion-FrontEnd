@@ -14,7 +14,7 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
   boxShadow: '0 8px 10px rgba(0,0,0,0.45)',
   backgroundColor: theme.palette.primary.light,
   display: 'flex',
-  maxWidth: '1200px',
+  width: '1200px',
   margin: 'auto',
   height: 'max-content'
 }))
@@ -46,16 +46,19 @@ export const StyledForm = styled.form`
 
 export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
-    borderRadius: '15px !important'
+    borderRadius: '15px'
   },
   '& .MuiOutlinedInput-input': {
-    borderRadius: '15px !important',
     backgroundColor: theme.palette.background.default,
-    height: '10px'
+    borderRadius: '15px !important',
+    height: 12
   },
-  maxWidth: '324px',
-  '& .MuiInputLabel-root': {
-    marginTop: '-7px'
+  '& .MuiFormLabel-root': {
+    transform: 'none',
+    position: 'relative',
+    marginBottom: '4px',
+    border: 'none',
+    color: '#fff'
   }
 }))
 
