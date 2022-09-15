@@ -22,6 +22,9 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
 import EquipamentsTables from '../../components/Equipament-Tables'
+import { AxiosResponse } from 'axios'
+import api from '../../api/config'
+import { toast } from 'react-toastify'
 
 interface equipament {
   id: string
@@ -60,9 +63,9 @@ interface equipament {
 
   updatedAt: Date
 
-  // orderServices: OrderService[]
+  orderServices: OrderService[]
 
-  // dismisseds: Dismissed[]
+  dismisseds: Dismissed[]
 
   brand: string
 
@@ -74,7 +77,21 @@ interface equipament {
 }
 
 export default function ScreenEquipaments() {
-  const [equipaments] = React.useState<equipament[]>([])
+  const [equipaments, setEquipaments] = React.useState<equipament[]>([])
+  React.useEffect(() => {
+    const getEquipaments = async () => {
+      try {
+        const { data }: AxiosResponse<equipament[]> = await api.get(
+          '/equipments/find'
+        )
+        setEquipaments(data)
+        console.log(data)
+      } catch (error) {
+        toast.error('Aconteceu algum erro.')
+      }
+    }
+    getEquipaments()
+  }, [])
 
   const [open, setOpen] = React.useState(false)
 
