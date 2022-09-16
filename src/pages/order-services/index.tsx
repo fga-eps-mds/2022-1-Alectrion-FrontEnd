@@ -45,6 +45,7 @@ export const OrderServices = () => {
   const [openFilter, setOpenFilter] = useState(false)
 
   const handleApplyFilter = (values: any) => {
+    toast.success('Filtro aplicado')
     setFilters({
       ...filters,
       receiverName: values?.receiverName,
