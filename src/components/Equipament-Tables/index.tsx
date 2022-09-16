@@ -43,11 +43,11 @@ interface equipament {
 
   storageAmount?: string
 
-  brandId: string
+  brand: any
 
-  acquisitionId: string
+  acquisition: any
 
-  unitId: string
+  unit: any
 
   ram_size?: string
 }
@@ -82,7 +82,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
         </TableHead>
         <TableBody>
           {equipaments.map((equipaments) => (
-            <StyledTableRow key={equipaments.acquisitionId}>
+            <StyledTableRow key={equipaments?.acquisition?.id}>
               <StyledTableCell align="center" component="th" scope="equipament">
                 {equipaments.tippingNumber}
               </StyledTableCell>
@@ -95,20 +95,26 @@ export default function EquipamentsTables({ equipaments }: propType) {
               <StyledTableCell align="center">
                 {equipaments.type}
               </StyledTableCell>
-              <StyledTableCell align="center">{'LG'}</StyledTableCell>
               <StyledTableCell align="center">
-                <EditButton />
+                {equipaments.brand.name}
               </StyledTableCell>
               <StyledTableCell align="center">
-                <Button>
+                <EditButton disabled />
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <Button disabled>
                   <DeleteIcon />
                 </Button>
               </StyledTableCell>
               <StyledTableCell align="center">
-                <ButtonDownloadEquipament>Baixar</ButtonDownloadEquipament>
+                <ButtonDownloadEquipament disabled>
+                  Baixar
+                </ButtonDownloadEquipament>
               </StyledTableCell>
               <StyledTableCell align="center">
-                <ButtonReservEquipament>Reserva</ButtonReservEquipament>
+                <ButtonReservEquipament disabled>
+                  Reserva
+                </ButtonReservEquipament>
               </StyledTableCell>
             </StyledTableRow>
           ))}

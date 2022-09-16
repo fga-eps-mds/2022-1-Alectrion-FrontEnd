@@ -22,8 +22,10 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
 import EquipamentsTables from '../../components/Equipament-Tables'
-import axios, { AxiosResponse } from 'axios'
+
 import { toast } from 'react-toastify'
+import api from '../../api/config'
+import { AxiosResponse } from 'axios'
 
 export interface SearchParams {
   tippingNumber: string
@@ -92,11 +94,13 @@ interface equipament {
 
   storageAmount?: string
 
-  brandId: string
+  brand: {
+    name: string
+  }
 
-  acquisitionId: string
+  acquisition: any
 
-  unitId: string
+  unit: any
 
   ram_size?: string
 }
@@ -104,10 +108,6 @@ interface equipament {
 export default function ScreenEquipaments() {
   const [equipaments, setEquipaments] = React.useState<equipament[]>([])
   const [basicSearch, setbasicSearch] = React.useState<string>('')
-
-  const apiEquipment = axios.create({
-    baseURL: 'http://localhost:4002/'
-  })
 
   const initialValues = {
     tippingNumber: '',
@@ -169,7 +169,7 @@ export default function ScreenEquipaments() {
         console.log(queryParams.toString())
       }
 
-      const { data }: AxiosResponse<equipament[]> = await apiEquipment.get(
+      const { data }: AxiosResponse<equipament[]> = await api.get(
         'equipment/find',
         {
           params: queryParams
@@ -240,7 +240,7 @@ export default function ScreenEquipaments() {
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>
-          <ButtonCad>Cadastrar Equipamento</ButtonCad>
+          <ButtonCad disabled>Cadastrar Equipamento</ButtonCad>
         </Box>
       </FindContainer>
 
@@ -491,7 +491,7 @@ export default function ScreenEquipaments() {
             </FormControl>
             <Box
               sx={{
-                marginTop: '200px',
+                marginTop: '50px',
                 display: 'flex',
                 justifyContent: 'center'
               }}>

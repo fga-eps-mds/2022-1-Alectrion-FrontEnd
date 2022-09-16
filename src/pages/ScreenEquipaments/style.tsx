@@ -73,7 +73,8 @@ export const FilterScrenn = styledSystem(Dialog)(({ theme }) => ({
   '& .MuiPaper-root': {
     maxWidth: '790px !important',
     borderRadius: '14px',
-    height: '850px'
+    minHeight: '600px',
+    height: '80%'
   }
 }))
 
