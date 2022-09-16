@@ -64,13 +64,10 @@ export const SignRoutes = () => {
         <Route
           path="/equipaments"
           element={
-            // <AuthRoutes>
-            <>
+            <AuthRoutes>
               <NavBar />
               <ScreenEquipaments />
-            </>
-
-            // </AuthRoutes>
+            </AuthRoutes>
           }
         />
         <Route
