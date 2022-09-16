@@ -32,7 +32,49 @@ const EquipmentEditForm = () => {
     initialUseDate: yup.string().max(4), // não é obrigatório?
     acquisitionDate: yup.date().required('Esse campo é obrigatório'),
     invoiceNumber: yup.string().trim().required('Esse campo é obrigatório'),
-    description: yup.string().max(250)
+    description: yup.string().max(250),
+    ramMemory: yup
+      .string()
+      .trim()
+      .when('productType', {
+        is: 'CPU',
+        then: yup
+          .string()
+          .required('Esse campo é obrigatório')
+          .test('valida campo', 'Apenas números', (value) => {
+            if (value) {
+              return /^[0-9]/.test(value)
+            } else return false
+          })
+      }),
+    storageAmount: yup
+      .string()
+      .trim()
+      .when('productType', {
+        is: 'CPU',
+        then: yup
+          .string()
+          .required('Esse campo é obrigatório')
+          .test('valida campo', 'Apenas números', (value) => {
+            if (value) {
+              return /^[0-9]/.test(value)
+            } else return false
+          })
+      }),
+    storageType: yup
+      .string()
+      .trim()
+      .when('productType', {
+        is: 'CPU',
+        then: yup.string().required('Esse campo é obrigatório')
+      }),
+    processor: yup
+      .string()
+      .trim()
+      .when('productType', {
+        is: 'CPU',
+        then: yup.string().required('Esse campo é obrigatório')
+      })
   })
   const formik = useFormik({
     initialValues: {
@@ -45,7 +87,11 @@ const EquipmentEditForm = () => {
       initialUseDate: '',
       acquisitionDate: '',
       invoiceNumber: '',
-      description: ''
+      description: '',
+      ramMemory: '',
+      storageAmount: '',
+      storageType: '',
+      processor: ''
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -236,6 +282,94 @@ const EquipmentEditForm = () => {
                 Boolean(formik.errors.invoiceNumber)
               }
             />
+
+            {formik.values.productType === 'CPU' && (
+              <>
+                <StyledTextField
+                  id="ramMemory-input"
+                  label="Memória RAM"
+                  type="text"
+                  name="ramMemory"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  value={formik.values.ramMemory}
+                  helperText={
+                    formik.touched.ramMemory && formik.errors.ramMemory
+                  }
+                  error={
+                    formik.touched.ramMemory && Boolean(formik.errors.ramMemory)
+                  }
+                />
+
+                <StyledTextField
+                  id="storageAmount-input"
+                  label="Armazenamento"
+                  type="text"
+                  name="storageAmount"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  value={formik.values.storageAmount}
+                  helperText={
+                    formik.touched.storageAmount && formik.errors.storageAmount
+                  }
+                  error={
+                    formik.touched.storageAmount &&
+                    Boolean(formik.errors.storageAmount)
+                  }
+                />
+
+                <Autocomplete
+                  disablePortal
+                  options={[
+                    { value: 'SSD', label: 'SSD' },
+                    { value: 'HD', label: 'HD' }
+                  ]}
+                  getOptionLabel={(option) => option.label}
+                  renderInput={(params) => (
+                    <StyledTextField
+                      {...params}
+                      label="Tipo armazenamento"
+                      helperText={
+                        formik.touched.storageType && formik.errors.storageType
+                      }
+                      error={
+                        formik.touched.storageType &&
+                        Boolean(formik.errors.storageType)
+                      }
+                    />
+                  )}
+                  onChange={(_, value) =>
+                    formik.setFieldValue('storageType', value?.value)
+                  }
+                  fullWidth
+                  className="autocomplete"
+                  sx={{
+                    padding: 0,
+                    '& .MuiOutlinedInput-root': {
+                      padding: '0 !important'
+                    },
+                    '& .MuiAutocomplete-input': {
+                      padding: '16.5px !important'
+                    }
+                  }}
+                />
+                <StyledTextField
+                  id="processor-input"
+                  label="Processador"
+                  type="text"
+                  name="processor"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  value={formik.values.processor}
+                  helperText={
+                    formik.touched.processor && formik.errors.processor
+                  }
+                  error={
+                    formik.touched.processor && Boolean(formik.errors.processor)
+                  }
+                />
+              </>
+            )}
           </FormContainer>
           <DescriptionTextField
             size="small"
