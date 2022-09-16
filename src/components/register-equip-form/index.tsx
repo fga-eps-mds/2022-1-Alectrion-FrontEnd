@@ -173,7 +173,7 @@ const RegisterEquipForm = () => {
       monitorSize: '',
       initialUseDate: '',
       power: '',
-      unitId: '',
+      unitId: 'DSTI',
       description: ''
     },
     validationSchema,
@@ -184,7 +184,7 @@ const RegisterEquipForm = () => {
         brandName: values.brand,
         serialNumber: values.serialNumber,
         model: values.model,
-        status: 'ACTIVE',
+        status: 'TECHNICAL_RESERVE',
         acquisitionName: values.acquisitionType,
         acquisitionDate: values.acquisitionDate,
         invoiceNumber: values.invoiceNumber,
