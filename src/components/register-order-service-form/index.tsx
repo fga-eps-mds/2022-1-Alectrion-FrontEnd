@@ -96,7 +96,9 @@ const RegisterOrderServiceForm = ({
             }
           }
         )
+
         toast.success('Ordem de serviço criada.')
+        navigate('/order-services')
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
