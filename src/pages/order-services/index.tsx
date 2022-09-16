@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Typography } from '@mui/material'
@@ -74,6 +75,7 @@ export const OrderServices = () => {
     }
     getUser()
   }, [filters])
+
   return (
     <>
       <Container>
@@ -109,6 +111,17 @@ export const OrderServices = () => {
               endIcon={<FilterListIcon />}>
               Filtros
             </Button>
+            {Object.entries(filters).length !== 0 && (
+              <Button
+                textColor="#000"
+                styledColor={theme.palette.grey[500]}
+                width="180px"
+                height="40px"
+                borderRadius="10px"
+                onClick={() => setFilters({})}>
+                Limpar Filtros
+              </Button>
+            )}
             <Button
               width="240px"
               height="62px"

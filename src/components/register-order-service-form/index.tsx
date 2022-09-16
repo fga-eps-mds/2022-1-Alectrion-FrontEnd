@@ -308,7 +308,7 @@ const RegisterOrderServiceForm = ({
               variant="contained"
               styledColor={theme.palette.grey[100]}
               textColor={theme.palette.grey[900]}
-              onClick={() => navigate('/orderservice')}>
+              onClick={() => navigate('/order-services')}>
               Voltar
             </Button>{' '}
             <Button
