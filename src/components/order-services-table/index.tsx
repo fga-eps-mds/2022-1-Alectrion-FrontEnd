@@ -48,7 +48,7 @@ export default function OderServiceTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {orderServices.map((orderSerivce) => (
+          {orderServices?.map((orderSerivce) => (
             <StyledTableRow key={orderSerivce.id}>
               <StyledTableCell align="center">
                 {dateFormat(orderSerivce.date)}
