@@ -15,13 +15,9 @@ import {
 import { EditButton } from './../edit-button/index'
 
 interface equipament {
-  id: string
-
   tippingNumber: string
 
   serialNumber: string
-
-  acquision: string
 
   type: string
 
@@ -29,7 +25,7 @@ interface equipament {
 
   model: string
 
-  description: string
+  description?: string
 
   initialUseDate: Date
 
@@ -47,21 +43,13 @@ interface equipament {
 
   storageAmount?: string
 
-  createdAt: Date
+  brandId: string
 
-  updatedAt: Date
+  acquisitionId: string
 
-  // orderServices: OrderService[]
+  unitId: string
 
-  // dismisseds: Dismissed[]
-
-  brand: string
-
-  acquisition: string
-
-  history?: History
-
-  unit: string
+  ram_size?: string
 }
 
 interface propType {
@@ -71,7 +59,12 @@ interface propType {
 export default function EquipamentsTables({ equipaments }: propType) {
   return (
     <TableContainer
-      sx={{ margin: '0 auto', maxWidth: '1024px', textAlign: 'center' }}
+      sx={{
+        minWidth: '80%',
+        margin: '0 auto',
+        maxWidth: '1024px',
+        textAlign: 'center'
+      }}
       component={Paper}>
       <Table aria-label="customized table">
         <TableHead>
@@ -81,11 +74,15 @@ export default function EquipamentsTables({ equipaments }: propType) {
             <StyledTableCell align="center">Status</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">Marca</StyledTableCell>
+            <StyledTableCell align="center" />
+            <StyledTableCell align="center" />
+            <StyledTableCell align="center" />
+            <StyledTableCell align="center" />
           </TableRow>
         </TableHead>
         <TableBody>
           {equipaments.map((equipaments) => (
-            <StyledTableRow key={equipaments.acquision}>
+            <StyledTableRow key={equipaments.acquisitionId}>
               <StyledTableCell align="center" component="th" scope="equipament">
                 {equipaments.tippingNumber}
               </StyledTableCell>
@@ -98,9 +95,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
               <StyledTableCell align="center">
                 {equipaments.type}
               </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.brand}
-              </StyledTableCell>
+              <StyledTableCell align="center">{'LG'}</StyledTableCell>
               <StyledTableCell align="center">
                 <EditButton />
               </StyledTableCell>

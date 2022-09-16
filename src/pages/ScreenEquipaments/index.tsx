@@ -22,18 +22,14 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
 import EquipamentsTables from '../../components/Equipament-Tables'
-import { AxiosResponse } from 'axios'
-import api from '../../api/config'
-import { toast } from 'react-toastify'
+import axios, { AxiosResponse } from 'axios'
+// import api from '../../api/config'
+// import { toast } from 'react-toastify'
 
-interface equipament {
-  id: string
-
+export interface SearchParams {
   tippingNumber: string
 
   serialNumber: string
-
-  acquision: string
 
   type: string
 
@@ -41,7 +37,7 @@ interface equipament {
 
   model: string
 
-  description: string
+  description?: string
 
   initialUseDate: Date
 
@@ -59,37 +55,138 @@ interface equipament {
 
   storageAmount?: string
 
-  createdAt: Date
+  brandId: string
 
-  updatedAt: Date
+  acquisitionId: string
 
-  orderServices: OrderService[]
+  unitId: string
 
-  dismisseds: Dismissed[]
+  ram_size?: string
+}
 
-  brand: string
+interface equipament {
+  tippingNumber: string
 
-  acquisition: string
+  serialNumber: string
 
-  history?: History
+  type: string
 
-  unit: string
+  status: string
+
+  model: string
+
+  description?: string
+
+  initialUseDate: Date
+
+  screenSize?: string
+
+  invoiceNumber: string
+
+  power?: string
+
+  screenType?: string
+
+  processor?: string
+
+  storageType?: string
+
+  storageAmount?: string
+
+  brandId: string
+
+  acquisitionId: string
+
+  unitId: string
+
+  ram_size?: string
 }
 
 export default function ScreenEquipaments() {
   const [equipaments, setEquipaments] = React.useState<equipament[]>([])
-  React.useEffect(() => {
-    const getEquipaments = async () => {
-      try {
-        const { data }: AxiosResponse<equipament[]> = await api.get(
-          '/equipments/find'
-        )
-        setEquipaments(data)
-        console.log(data)
-      } catch (error) {
-        toast.error('Aconteceu algum erro.')
-      }
+
+  const apiEquipment = axios.create({
+    baseURL: 'http://localhost:4002/'
+  })
+
+  const initialValues = {
+    tippingNumber: '',
+
+    serialNumber: '',
+
+    type: '',
+
+    status: '',
+
+    model: '',
+
+    description: '',
+
+    initialUseDate: '',
+
+    screenSize: '',
+
+    invoiceNumber: '',
+
+    power: '',
+
+    screenType: '',
+
+    processor: '',
+
+    storageType: '',
+
+    storageAmount: '',
+
+    brandId: '',
+
+    acquisitionId: '',
+
+    unitId: '',
+
+    ram_size: ''
+  }
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit: (values: any) => {
+      Object.keys(values).forEach((param) => {
+        if (values[param] === '') {
+          delete values[param]
+        }
+      })
+      getEquipaments(values)
+      console.log('Objeto limpo: ', values)
+      alert(JSON.stringify(values, null, 2))
     }
+  })
+
+  const getEquipaments = async (query?: SearchParams) => {
+    try {
+      const queryParams = new URLSearchParams('')
+      if (query) {
+        Object.entries(query).forEach((value) =>
+          queryParams.append(value[0], value[1])
+        )
+        console.log(queryParams.toString())
+      }
+
+      const { data }: AxiosResponse<equipament[]> = await apiEquipment.get(
+        'equipment/find',
+        {
+          params: queryParams
+        }
+      )
+      setEquipaments(data)
+      console.log(data)
+    } catch (error) {
+      setEquipaments([])
+      alert('Nenhum Equipamento encontrado')
+      // toast.error('Aconteceu algum erro.')
+    }
+  }
+
+  React.useEffect(() => {
     getEquipaments()
   }, [])
 
@@ -105,33 +202,6 @@ export default function ScreenEquipaments() {
 
   const [busca, setBusca] = React.useState('')
 
-  const filterEquipaments = React.useMemo(() => {
-    const lowerBusca = busca.toLowerCase()
-    return equipaments.filter((equip) =>
-      equip.tippingNumber.toLowerCase().includes(lowerBusca)
-    )
-  }, [busca])
-
-  const formik = useFormik({
-    initialValues: {
-      type: '',
-      status: '',
-      screenType: '',
-      storageType: '',
-      screenSize: '',
-      model: '',
-      brand: '',
-      processor: '',
-      acquision: '',
-      ram: '',
-      power: '',
-      createdAt: ''
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    }
-  })
-
   return (
     <Container>
       <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'black' }}>
@@ -145,7 +215,9 @@ export default function ScreenEquipaments() {
             sx={{ flex: 0.9 }}
             placeholder="N° Tombamento ou N° serie"
             value={busca}
-            onChange={(ev) => setBusca(ev.target.value)}
+            onChange={(ev) => {
+              setBusca(ev.toString())
+            }}
           />
         </BoxInput>
 
@@ -158,7 +230,7 @@ export default function ScreenEquipaments() {
         </Box>
       </FindContainer>
 
-      <EquipamentsTables equipaments={filterEquipaments} />
+      <EquipamentsTables equipaments={equipaments} />
 
       <FilterScrenn open={open}>
         <FilterScrennContent>
@@ -339,7 +411,7 @@ export default function ScreenEquipaments() {
                   id="brand"
                   name="brand"
                   label="Marca"
-                  value={formik.values.brand}
+                  value={formik.values.brandId}
                   onChange={formik.handleChange}
                   sx={{ ml: '30px' }}
                 />
@@ -364,7 +436,7 @@ export default function ScreenEquipaments() {
                   id="acquision"
                   name="acquision"
                   label="Tipo aquisição"
-                  value={formik.values.acquision}
+                  value={formik.values.acquisitionId}
                   onChange={formik.handleChange}
                   sx={{ ml: '30px' }}
                 />
@@ -389,7 +461,7 @@ export default function ScreenEquipaments() {
                   id="ram"
                   name="ram"
                   label="Memória RAM"
-                  value={formik.values.ram}
+                  value={formik.values.ram_size}
                   onChange={formik.handleChange}
                   sx={{ ml: '30px' }}
                 />
@@ -397,7 +469,7 @@ export default function ScreenEquipaments() {
                   type="date"
                   id="createdAt"
                   name="createdAt"
-                  value={formik.values.createdAt}
+                  value={formik.values.initialUseDate}
                   onChange={formik.handleChange}
                   sx={{ ml: '90px' }}
                 />
