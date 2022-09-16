@@ -17,21 +17,38 @@ interface OrderService {
   authorId: string
   sender: string
   senderFunctionalNumber: string
-  equipmentSnapshot: {
+  receiverName: string
+  equipment: {
     type: string
     tippingNumber: string
     status: string
   }
 }
-
+interface filterType {
+  tippingNumber?: string
+  receiverName?: string
+  equipment?: string
+  serialNumber?: string
+  type?: string
+  status?: string
+}
 export const OrderServices = () => {
   const navigate = useNavigate()
   const [orderServices, setOrderServices] = useState<OrderService[]>([])
+  const [tippingNumber, setTippingNumber] = useState('')
+  const [filters, setFilters] = useState<filterType>({})
+
   useEffect(() => {
     const getUser = async () => {
       try {
+        let filterParams = '' as string | undefined
+        Object.keys(filters).forEach((item) => {
+          const params = filters[item as keyof filterType]
+          filterParams = params && filterParams?.concat(`${item}=${params}`)
+        })
+
         const { data }: AxiosResponse<OrderService[]> = await api.get(
-          '/equipment/listOrderSerice'
+          `/equipment/listOrderSerice?${filterParams}`
         )
         setOrderServices(data)
       } catch (error) {
@@ -39,7 +56,7 @@ export const OrderServices = () => {
       }
     }
     getUser()
-  }, [])
+  }, [filters])
   return (
     <Container>
       <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
@@ -50,10 +67,18 @@ export const OrderServices = () => {
           size="small"
           id="filter"
           type="text"
-          name="username"
+          name="tippingNumber"
+          label="Numero do tombamento"
           variant="outlined"
-          onChange={() => {}}
-          disabled
+          onChange={(e) => {
+            setTippingNumber(e.target.value)
+          }}
+          onKeyUp={(event) => {
+            if (event.key === 'Enter') {
+              toast.success('Filtro aplicado')
+              setFilters({ ...filters, tippingNumber })
+            }
+          }}
         />
         <ButtonGroup>
           <Button

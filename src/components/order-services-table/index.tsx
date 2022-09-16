@@ -15,7 +15,8 @@ interface OrderService {
   authorId: string
   sender: string
   senderFunctionalNumber: string
-  equipmentSnapshot: {
+  receiverName: string
+  equipment: {
     type: string
     tippingNumber: string
     status: string
@@ -42,7 +43,7 @@ export default function OderServiceTable({
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">N° tombamento</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
-            {/* <StyledTableCell align="center">Recebedor</StyledTableCell> */}
+            <StyledTableCell align="center">Recebedor</StyledTableCell>
             <StyledTableCell align="center">Entregador</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -53,15 +54,17 @@ export default function OderServiceTable({
                 {dateFormat(orderSerivce.date)}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {orderSerivce.equipmentSnapshot.type}
+                {orderSerivce.equipment.type}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {orderSerivce.equipmentSnapshot.tippingNumber}
+                {orderSerivce.equipment.tippingNumber}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {orderSerivce.equipmentSnapshot.status}
+                {orderSerivce.equipment.status}
               </StyledTableCell>
-              {/* <StyledTableCell align="center">Maria</StyledTableCell> */}
+              <StyledTableCell align="center">
+                {orderSerivce.receiverName}
+              </StyledTableCell>
               <StyledTableCell align="center">{`${orderSerivce.sender} - ${orderSerivce.senderFunctionalNumber}`}</StyledTableCell>
             </StyledTableRow>
           ))}
