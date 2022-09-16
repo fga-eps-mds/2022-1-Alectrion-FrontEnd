@@ -14,7 +14,9 @@ import ScreenUser from '../pages/user-screen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
 import EquipRegister from '../pages/equipment-register'
-
+import OrderRegister from '../pages/order-service'
+import { CircularProgress } from '@mui/material'
+import { OrderServices } from '../pages/order-services'
 type AuthRouteProps = {
   children: ReactNode
 }
@@ -68,6 +70,24 @@ export const SignRoutes = () => {
             </AuthRoutes>
           }
         />
+        <Route
+          path="/order-services"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <OrderServices />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/create-order-service"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <OrderRegister />
+            </AuthRoutes>
+          }
+        />
         <Route path="/login" element={<UserLoginScreen />} />
       </Routes>
     </BrowserRouter>
@@ -77,8 +97,10 @@ export const SignRoutes = () => {
 export function AuthRoutes({ children }: AuthRouteProps): any {
   const { isAuthenticated } = useContext(AuthContext)
   const location = useLocation()
-  return isAuthenticated === true ? (
+  return isAuthenticated === 'authenticated' ? (
     children
+  ) : isAuthenticated === 'waiting' ? (
+    <CircularProgress />
   ) : (
     <Navigate to="/login" replace state={{ path: location.pathname }} />
   )

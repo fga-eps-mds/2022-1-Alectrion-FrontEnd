@@ -9,7 +9,7 @@ test('Testing screen Task', () => {
     <Providers>
       <AuthContext.Provider
         value={{
-          isAuthenticated: true,
+          isAuthenticated: 'authenticated',
           user: {
             token: 'wjhqwejk',
             expireIn: 'sdfjhsdf',
