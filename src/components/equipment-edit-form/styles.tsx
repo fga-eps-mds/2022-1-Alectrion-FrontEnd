@@ -90,7 +90,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   margin: 0 auto;
   gap: 2rem;
-  > button {
+  button {
     min-width: 320px;
   }
 `

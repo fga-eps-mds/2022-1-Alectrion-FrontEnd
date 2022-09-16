@@ -1,4 +1,4 @@
-import { FormControl, MenuItem } from '@mui/material'
+// import { FormControl, MenuItem } from '@mui/material'
 // import { useState } from 'react'
 // import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
@@ -10,14 +10,15 @@ import {
   StyledCard,
   StyledForm,
   FormContainer,
-  StyledInputLabel,
-  StyledSelect,
+  // StyledInputLabel,
+  // StyledSelect,
   StyledTextField,
   DescriptionTextField,
   ButtonContainer
 } from './styles'
 import { Button } from '../button'
 import { theme } from '../../styles/theme'
+import Autocomplete from '@mui/material/Autocomplete'
 
 const EquipmentEditForm = () => {
   // const navigate = useNavigate()
@@ -66,25 +67,49 @@ const EquipmentEditForm = () => {
       <StyledCard>
         <StyledForm onSubmit={formik.handleSubmit}>
           <FormContainer>
-            <FormControl fullWidth>
-              <StyledInputLabel id="productType-label">
-                Tipo de Produto
-              </StyledInputLabel>
-              <StyledSelect
-                id="productType-label"
-                data-testid="productType-select"
-                type="text"
-                name="productType"
-                variant="outlined"
-                error={
-                  formik.touched.productType &&
-                  Boolean(formik.errors.productType)
+            <Autocomplete
+              disablePortal
+              id="unitId-input" // id
+              options={[
+                // as opções do componente autocomplete
+                { label: 'CPU', value: 'CPU' },
+                { label: 'Monitor', value: 'MONITOR' },
+                { label: 'Nobreak', value: 'NOBREAK' },
+                { label: 'Escaneador', value: 'SCANNER' },
+                { label: 'Estabilizador', value: 'STABILIZER' },
+                { value: 'WEBCAM', label: 'Webcam' }
+              ]}
+              getOptionLabel={(option) => option.label}
+              renderInput={(
+                parameter // esse atributo recebe uma arrow function que renderiza um textfield.
+              ) => (
+                <StyledTextField
+                  {...parameter}
+                  label="Tipo de Produto"
+                  helperText={
+                    formik.touched.productType && formik.errors.productType
+                  }
+                  error={
+                    formik.touched.productType &&
+                    Boolean(formik.errors.productType)
+                  }
+                />
+              )}
+              onChange={(_, value) =>
+                formik.setFieldValue('productType', value?.value)
+              }
+              fullWidth
+              className="autocomplete"
+              sx={{
+                padding: 0,
+                '& .MuiOutlinedInput-root': {
+                  padding: '0 !important'
+                },
+                '& .MuiAutocomplete-input': {
+                  padding: '16.5px !important'
                 }
-                onChange={formik.handleChange}
-                value={formik.values.productType}>
-                <MenuItem>CPU</MenuItem>
-              </StyledSelect>
-            </FormControl>
+              }}
+            />
 
             <StyledTextField
               id="tippingNumber-input"
