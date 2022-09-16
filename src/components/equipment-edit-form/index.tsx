@@ -12,8 +12,12 @@ import {
   FormContainer,
   StyledInputLabel,
   StyledSelect,
-  StyledTextField
+  StyledTextField,
+  DescriptionTextField,
+  ButtonContainer
 } from './styles'
+import { Button } from '../button'
+import { theme } from '../../styles/theme'
 
 const EquipmentEditForm = () => {
   // const navigate = useNavigate()
@@ -23,7 +27,11 @@ const EquipmentEditForm = () => {
     brand: yup.string().trim().required('Esse campo é obrigatório'),
     serialNumber: yup.string().trim().required('Esse campo é obrigatório'),
     model: yup.string().trim().required('Esse campo é obrigatório'),
-    acquisitionType: yup.string().trim().required('Esse campo é obrigatório')
+    acquisitionType: yup.string().trim().required('Esse campo é obrigatório'),
+    initialUseDate: yup.string().max(4), // não é obrigatório?
+    acquisitionDate: yup.date().required('Esse campo é obrigatório'),
+    invoiceNumber: yup.string().trim().required('Esse campo é obrigatório'),
+    description: yup.string().max(250)
   })
   const formik = useFormik({
     initialValues: {
@@ -32,7 +40,11 @@ const EquipmentEditForm = () => {
       brand: '',
       serialNumber: '',
       model: '',
-      acquisitionType: ''
+      acquisitionType: '',
+      initialUseDate: '',
+      acquisitionDate: '',
+      invoiceNumber: '',
+      description: ''
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -148,7 +160,88 @@ const EquipmentEditForm = () => {
                 Boolean(formik.errors.acquisitionType)
               }
             />
+
+            <StyledTextField
+              id="initialUseDate-input"
+              label="Ano do Equipamento"
+              type="text"
+              name="initialUseDate"
+              variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.initialUseDate}
+              helperText={
+                formik.touched.initialUseDate && formik.errors.initialUseDate
+              }
+              error={
+                formik.touched.initialUseDate &&
+                Boolean(formik.errors.initialUseDate)
+              }
+            />
+
+            <StyledTextField
+              id="acquisitionDate-input"
+              label="Data de Aquisição"
+              type="text"
+              name="acquisitionDate"
+              variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.acquisitionDate}
+              helperText={
+                formik.touched.acquisitionDate && formik.errors.acquisitionDate
+              }
+              error={
+                formik.touched.acquisitionDate &&
+                Boolean(formik.errors.acquisitionDate)
+              }
+            />
+
+            <StyledTextField
+              id="invoiceNumber-input"
+              label="N° da nota fiscal"
+              type="text"
+              name="invoiceNumber"
+              variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.invoiceNumber}
+              helperText={
+                formik.touched.invoiceNumber && formik.errors.invoiceNumber
+              }
+              error={
+                formik.touched.invoiceNumber &&
+                Boolean(formik.errors.invoiceNumber)
+              }
+            />
           </FormContainer>
+          <DescriptionTextField
+            size="small"
+            id="description-input"
+            rows="4"
+            multiline={true}
+            label="Descrição"
+            type="text"
+            name="description"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={formik.values.description}
+            helperText={formik.touched.description && formik.errors.description}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+          />
+          <ButtonContainer>
+            <Button
+              variant="contained"
+              styledColor={theme.palette.grey[100]}
+              textColor={theme.palette.grey[900]}>
+              Voltar
+            </Button>{' '}
+            <Button
+              variant="contained"
+              type="submit"
+              styledColor={theme.palette.primary.main}>
+              Salvar
+            </Button>
+          </ButtonContainer>
         </StyledForm>
       </StyledCard>
     </Container>

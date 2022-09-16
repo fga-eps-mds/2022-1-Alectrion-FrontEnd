@@ -3,8 +3,8 @@ import { styled as styledSystem } from '@mui/system'
 import { Card, InputLabel, Select, TextField } from '@mui/material'
 
 export const Container = styled.div`
-  display: flex;
-  min-height: 100vh;
+  //display: grid;
+  //min-height: 100vh;
 `
 export const StyledCard = styledSystem(Card)(({ theme }) => ({
   '& .MuiCardContent-root': {
@@ -16,24 +16,22 @@ export const StyledCard = styledSystem(Card)(({ theme }) => ({
   maxWidth: '1200px',
   minWidth: '1099.97px',
   margin: 'auto',
-  height: 'max-content', // Implica que o conteúdo não será quebrado.
+  height: 'max-content',
   borderRadius: '10px'
 }))
 
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  //gap: 3rem;
-  //flex: 1;
+  gap: 32px;
+  flex: 1;
   width: 100%;
-  //padding: 2rem;
   padding: 32px;
 `
 export const FormContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   height: max-content;
-  //gap: 2rem;
   gap: 32px;
 `
 
@@ -74,3 +72,25 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
     marginTop: '-7px'
   }
 }))
+
+export const DescriptionTextField = styledSystem(TextField)(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
+  borderRadius: '15px',
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px'
+  },
+  '& .MuiInputLabel-shrink': {
+    marginTop: '-7px',
+    color: theme.palette.background.default,
+    textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+  }
+}))
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  margin: 0 auto;
+  gap: 2rem;
+  > button {
+    min-width: 320px;
+  }
+`
