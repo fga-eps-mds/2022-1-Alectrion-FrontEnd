@@ -50,7 +50,7 @@ export default function UserTables({ users, isAdmin }: propType) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
+          {users?.map((user) => (
             <StyledTableRow key={user.name}>
               <StyledTableCell align="center" component="th" scope="user">
                 {user.username}

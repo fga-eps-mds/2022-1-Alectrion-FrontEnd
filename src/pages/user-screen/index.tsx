@@ -34,19 +34,17 @@ export default function ScreenUser() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const { data }: AxiosResponse<{ user: user[] }> = await api.get(
+        const { data }: AxiosResponse<user[]> = await api.get(
           '/user/get?allUsers=true'
         )
-        console.log(typeof data.user)
-        setUsers(data.user)
-        console.log(data.user)
+        setUsers(data)
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
     }
     getUsers()
   }, [])
-
+  console.log(users)
   return (
     <div>
       <Container>
