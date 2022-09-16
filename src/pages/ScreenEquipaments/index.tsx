@@ -13,18 +13,17 @@ import * as React from 'react'
 import { useFormik } from 'formik'
 import {
   Typography,
-  Input,
   Box,
   FormControl,
   MenuItem,
-  Button
+  Button,
+  Input
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
 import EquipamentsTables from '../../components/Equipament-Tables'
 import axios, { AxiosResponse } from 'axios'
-// import api from '../../api/config'
-// import { toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 export interface SearchParams {
   tippingNumber: string
@@ -104,6 +103,7 @@ interface equipament {
 
 export default function ScreenEquipaments() {
   const [equipaments, setEquipaments] = React.useState<equipament[]>([])
+  const [basicSearch, setbasicSearch] = React.useState<string>('')
 
   const apiEquipment = axios.create({
     baseURL: 'http://localhost:4002/'
@@ -156,8 +156,6 @@ export default function ScreenEquipaments() {
         }
       })
       getEquipaments(values)
-      console.log('Objeto limpo: ', values)
-      alert(JSON.stringify(values, null, 2))
     }
   })
 
@@ -181,8 +179,7 @@ export default function ScreenEquipaments() {
       console.log(data)
     } catch (error) {
       setEquipaments([])
-      alert('Nenhum Equipamento encontrado')
-      // toast.error('Aconteceu algum erro.')
+      toast.error('Nenhum Equipamento encontrado')
     }
   }
 
@@ -200,7 +197,10 @@ export default function ScreenEquipaments() {
     setOpen(false)
   }
 
-  const [busca, setBusca] = React.useState('')
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Valor do meu input: ', event.target.value)
+    setbasicSearch(event.target.value)
+  }
 
   return (
     <Container>
@@ -212,11 +212,25 @@ export default function ScreenEquipaments() {
         <BoxInput>
           <SearchIcon sx={{ marginBottom: '3px' }} />
           <Input
+            id="serialNumber"
+            name="serialNumber"
             sx={{ flex: 0.9 }}
             placeholder="N° Tombamento ou N° serie"
-            value={busca}
-            onChange={(ev) => {
-              setBusca(ev.toString())
+            value={basicSearch}
+            onChange={handleChange}
+            onKeyPress={(ev) => {
+              console.log(`Pressed keyCode ${ev}`)
+              if (ev.key === 'Enter') {
+                // Do code here
+                if (basicSearch === '') {
+                  getEquipaments()
+                } else {
+                  const query = {
+                    serialNumber: basicSearch.toString()
+                  } as unknown as SearchParams
+                  getEquipaments(query)
+                }
+              }
             }}
           />
         </BoxInput>
