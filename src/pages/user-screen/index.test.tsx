@@ -9,7 +9,7 @@ test('must edit user', async () => {
     <Providers>
       <AuthContext.Provider
         value={{
-          isAuthenticated: true,
+          isAuthenticated: 'authenticated',
           user: {
             token: 'wjhqwejk',
             expireIn: 'sdfjhsdf',

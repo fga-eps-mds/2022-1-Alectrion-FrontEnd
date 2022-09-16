@@ -39,7 +39,7 @@ export const Task = () => {
           data-testid="buttonOrderService"
           color="#EFCA45"
           className="Service Order"
-          onClick={() => navigate('/orderservice')}>
+          onClick={() => navigate('/order-services')}>
           <StyledBuildIcon style={{ fontSize: 100 }} />
         </StyledShortcut>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>

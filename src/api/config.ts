@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://alectrion-user-api.herokuapp.com/'
+  baseURL: process.env.REACT_APP_GATEWAY_URL
 })
 
 export default api
