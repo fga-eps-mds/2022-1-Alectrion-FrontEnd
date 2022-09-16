@@ -9,6 +9,7 @@ import { theme } from '../../styles/theme'
 import api from '../../api/config'
 import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
+import FilterOrderService from '../../components/filter-order-service'
 
 interface OrderService {
   id: string
@@ -31,24 +32,40 @@ interface filterType {
   serialNumber?: string
   type?: string
   status?: string
+  sender?: string
+  date?: string
 }
+
 export const OrderServices = () => {
   const navigate = useNavigate()
   const [orderServices, setOrderServices] = useState<OrderService[]>([])
   const [tippingNumber, setTippingNumber] = useState('')
   const [filters, setFilters] = useState<filterType>({})
+  const [openFilter, setOpenFilter] = useState(false)
 
+  const handleApplyFilter = (values: any) => {
+    setFilters({
+      ...filters,
+      receiverName: values?.receiverName,
+      sender: values?.senderName,
+      date: values?.date,
+      tippingNumber: values?.tippingNumber,
+      status: values?.status,
+      type: values?.productType
+    })
+  }
   useEffect(() => {
     const getUser = async () => {
       try {
-        let filterParams = '' as string | undefined
-        Object.keys(filters).forEach((item) => {
-          const params = filters[item as keyof filterType]
-          filterParams = params && filterParams?.concat(`${item}=${params}`)
-        })
-
+        const queryParams = new URLSearchParams('')
+        Object.entries(filters).forEach(
+          (value) => value[1] && queryParams.append(value[0], value[1])
+        )
         const { data }: AxiosResponse<OrderService[]> = await api.get(
-          `/equipment/listOrderSerice?${filterParams}`
+          `/equipment/listOrderSerice`,
+          {
+            params: queryParams
+          }
         )
         setOrderServices(data)
       } catch (error) {
@@ -58,51 +75,58 @@ export const OrderServices = () => {
     getUser()
   }, [filters])
   return (
-    <Container>
-      <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-        Ordem de serviço
-      </Typography>
-      <StyledCard>
-        <StyledTextField
-          size="small"
-          id="filter"
-          type="text"
-          name="tippingNumber"
-          label="Numero do tombamento"
-          variant="outlined"
-          onChange={(e) => {
-            setTippingNumber(e.target.value)
-          }}
-          onKeyUp={(event) => {
-            if (event.key === 'Enter') {
-              toast.success('Filtro aplicado')
-              setFilters({ ...filters, tippingNumber })
-            }
-          }}
-        />
-        <ButtonGroup>
-          <Button
-            textColor="#000"
-            styledColor={theme.palette.grey[500]}
-            width="180px"
-            height="40px"
-            borderRadius="10px"
-            disabled
-            endIcon={<FilterListIcon />}>
-            Filtros
-          </Button>
-          <Button
-            width="240px"
-            height="62px"
-            textColor="#FFFFFF"
-            styledColor="#16878C"
-            onClick={() => navigate('/create-order-service')}
-            borderRadius="10px">
-            Cadastrar OS
-          </Button>
-        </ButtonGroup>
-      </StyledCard>
-      <OderServiceTable orderServices={orderServices} />
-    </Container>
+    <>
+      <Container>
+        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+          Ordem de serviço
+        </Typography>
+        <StyledCard>
+          <StyledTextField
+            size="small"
+            id="filter"
+            type="text"
+            name="tippingNumber"
+            label="Numero do tombamento"
+            variant="outlined"
+            onChange={(e) => {
+              setTippingNumber(e.target.value)
+            }}
+            onKeyUp={(event) => {
+              if (event.key === 'Enter') {
+                toast.success('Filtro aplicado')
+                setFilters({ ...filters, tippingNumber })
+              }
+            }}
+          />
+          <ButtonGroup>
+            <Button
+              textColor="#000"
+              styledColor={theme.palette.grey[500]}
+              width="180px"
+              height="40px"
+              borderRadius="10px"
+              onClick={() => setOpenFilter(true)}
+              endIcon={<FilterListIcon />}>
+              Filtros
+            </Button>
+            <Button
+              width="240px"
+              height="62px"
+              textColor="#FFFFFF"
+              styledColor="#16878C"
+              onClick={() => navigate('/create-order-service')}
+              borderRadius="10px">
+              Cadastrar OS
+            </Button>
+          </ButtonGroup>
+        </StyledCard>
+        <OderServiceTable orderServices={orderServices} />
+      </Container>
+      <FilterOrderService
+        open={openFilter}
+        handleClose={() => setOpenFilter(false)}
+        handleApplyFilter={handleApplyFilter}
+      />
+    </>
   )
 }
