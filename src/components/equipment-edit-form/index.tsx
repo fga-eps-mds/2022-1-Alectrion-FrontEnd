@@ -1,5 +1,4 @@
-// import { FormControl, MenuItem } from '@mui/material'
-// import { useState } from 'react'
+import { useState, useEffect } from 'react'
 // import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { toast } from 'react-toastify'
@@ -10,8 +9,6 @@ import {
   StyledCard,
   StyledForm,
   FormContainer,
-  // StyledInputLabel,
-  // StyledSelect,
   StyledTextField,
   DescriptionTextField,
   ButtonContainer
@@ -19,6 +16,13 @@ import {
 import { Button } from '../button'
 import { theme } from '../../styles/theme'
 import Autocomplete from '@mui/material/Autocomplete'
+import { AxiosResponse } from 'axios'
+
+interface unit {
+  name: string
+  id: string
+  localization: string
+}
 
 const EquipmentEditForm = () => {
   // const navigate = useNavigate()
@@ -29,7 +33,7 @@ const EquipmentEditForm = () => {
     serialNumber: yup.string().trim().required('Esse campo é obrigatório'),
     model: yup.string().trim().required('Esse campo é obrigatório'),
     acquisitionType: yup.string().trim().required('Esse campo é obrigatório'),
-    initialUseDate: yup.string().max(4), // não é obrigatório?
+    initialUseDate: yup.string().max(4),
     acquisitionDate: yup.date().required('Esse campo é obrigatório'),
     invoiceNumber: yup.string().trim().required('Esse campo é obrigatório'),
     description: yup.string().max(250),
@@ -74,7 +78,44 @@ const EquipmentEditForm = () => {
       .when('productType', {
         is: 'CPU',
         then: yup.string().required('Esse campo é obrigatório')
+      }),
+    monitorType: yup
+      .string()
+      .trim()
+      .when('productType', {
+        is: 'MONITOR',
+        then: yup.string().required('Esse campo é obrigatório')
+      }),
+    monitorSize: yup
+      .string()
+      .trim()
+      .when('productType', {
+        is: 'MONITOR',
+        then: yup
+          .string()
+          .required('Esse campo é obrigatório')
+          .test('valida campo', 'Apenas números', (value) => {
+            if (value) {
+              return /^[0-9]/.test(value)
+            } else return false
+          })
+      }),
+    power: yup
+      .string()
+      .when('productType', {
+        is: 'STABILIZER',
+        then: yup.string().required('Esse campo é obrigatório')
       })
+      .when('productType', {
+        is: 'NOBREAK',
+        then: yup.string().required('Esse campo é obrigatório')
+      })
+      .test('valida campo', 'Apenas números', (value) => {
+        if (value) {
+          return /^[0-9]/.test(value)
+        } else return true
+      }),
+    unitId: yup.string().trim().required('Esse campo é obrigatório')
   })
   const formik = useFormik({
     initialValues: {
@@ -91,7 +132,11 @@ const EquipmentEditForm = () => {
       ramMemory: '',
       storageAmount: '',
       storageType: '',
-      processor: ''
+      processor: '',
+      monitorType: '',
+      monitorSize: '',
+      power: '',
+      unitId: ''
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -108,6 +153,18 @@ const EquipmentEditForm = () => {
     }
   })
   // const [state, setState] = useState(0)
+  const [units, setUnits] = useState<unit[]>([])
+  useEffect(() => {
+    const getUnits = async () => {
+      try {
+        const { data }: AxiosResponse<unit[]> = await api.get(
+          '/equipment/getAllUnits'
+        )
+        setUnits(data)
+      } catch (error) {}
+    }
+    getUnits()
+  }, [])
   return (
     <Container>
       <StyledCard>
@@ -115,9 +172,8 @@ const EquipmentEditForm = () => {
           <FormContainer>
             <Autocomplete
               disablePortal
-              id="unitId-input" // id
+              id="unitId-input"
               options={[
-                // as opções do componente autocomplete
                 { label: 'CPU', value: 'CPU' },
                 { label: 'Monitor', value: 'MONITOR' },
                 { label: 'Nobreak', value: 'NOBREAK' },
@@ -126,9 +182,7 @@ const EquipmentEditForm = () => {
                 { value: 'WEBCAM', label: 'Webcam' }
               ]}
               getOptionLabel={(option) => option.label}
-              renderInput={(
-                parameter // esse atributo recebe uma arrow function que renderiza um textfield.
-              ) => (
+              renderInput={(parameter) => (
                 <StyledTextField
                   {...parameter}
                   label="Tipo de Produto"
@@ -283,6 +337,35 @@ const EquipmentEditForm = () => {
               }
             />
 
+            <Autocomplete
+              disablePortal
+              id="unitId-input"
+              options={units ?? []}
+              getOptionLabel={(option) =>
+                `${option.name} - ${option.localization}`
+              }
+              renderInput={(params) => (
+                <StyledTextField
+                  {...params}
+                  label="Unidade"
+                  helperText={formik.touched.unitId && formik.errors.unitId}
+                  error={formik.touched.unitId && Boolean(formik.errors.unitId)}
+                />
+              )}
+              onChange={(_, value) => formik.setFieldValue('unitId', value?.id)}
+              fullWidth
+              className="autocomplete"
+              sx={{
+                padding: 0,
+                '& .MuiOutlinedInput-root': {
+                  padding: '0 !important'
+                },
+                '& .MuiAutocomplete-input': {
+                  padding: '16.5px !important'
+                }
+              }}
+            />
+
             {formik.values.productType === 'CPU' && (
               <>
                 <StyledTextField
@@ -366,6 +449,81 @@ const EquipmentEditForm = () => {
                   }
                   error={
                     formik.touched.processor && Boolean(formik.errors.processor)
+                  }
+                />
+              </>
+            )}
+
+            {formik.values.productType === 'NOBREAK' ||
+              (formik.values.productType === 'STABILIZER' && (
+                <StyledTextField
+                  id="power-input"
+                  label="Potência"
+                  type="text"
+                  name="power"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  value={formik.values.power}
+                  helperText={formik.touched.power && formik.errors.power}
+                  error={formik.touched.power && Boolean(formik.errors.power)}
+                />
+              ))}
+
+            {formik.values.productType === 'MONITOR' && (
+              <>
+                <Autocomplete
+                  disablePortal
+                  options={[
+                    { label: 'LCD', value: 'LCD' },
+                    { label: 'OLED', value: 'OLED' },
+                    { label: 'LED', value: 'LED' },
+                    { label: 'TN', value: 'TN' },
+                    { label: 'VA', value: 'VA' },
+                    { label: 'IPS', value: 'IPS' }
+                  ]}
+                  getOptionLabel={(option) => option.label}
+                  renderInput={(params) => (
+                    <StyledTextField
+                      {...params}
+                      label="Tipo monitor"
+                      helperText={
+                        formik.touched.monitorType && formik.errors.monitorType
+                      }
+                      error={
+                        formik.touched.monitorType &&
+                        Boolean(formik.errors.monitorType)
+                      }
+                    />
+                  )}
+                  onChange={(_, value) =>
+                    formik.setFieldValue('monitorType', value?.value)
+                  }
+                  fullWidth
+                  className="autocomplete"
+                  sx={{
+                    padding: 0,
+                    '& .MuiOutlinedInput-root': {
+                      padding: '0 !important'
+                    },
+                    '& .MuiAutocomplete-input': {
+                      padding: '16.5px !important'
+                    }
+                  }}
+                />
+                <StyledTextField
+                  id="monitorSize-input"
+                  label="Tamanho monitor"
+                  type="text"
+                  name="monitorSize"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  value={formik.values.monitorSize}
+                  helperText={
+                    formik.touched.monitorSize && formik.errors.monitorSize
+                  }
+                  error={
+                    formik.touched.monitorSize &&
+                    Boolean(formik.errors.monitorSize)
                   }
                 />
               </>
