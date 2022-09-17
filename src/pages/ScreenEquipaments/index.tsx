@@ -7,7 +7,8 @@ import {
   FilterScrenn,
   FilterScrennContent,
   StyledSelect,
-  StyledTextField
+  StyledTextField,
+  ButtonClearFilters
 } from './style'
 import * as React from 'react'
 import { useFormik } from 'formik'
@@ -219,7 +220,6 @@ export default function ScreenEquipaments() {
             value={basicSearch}
             onChange={handleChange}
             onKeyPress={(ev) => {
-              console.log(`Pressed keyCode ${ev}`)
               if (ev.key === 'Enter') {
                 // Do code here
                 if (basicSearch === '') {
@@ -236,6 +236,14 @@ export default function ScreenEquipaments() {
         </BoxInput>
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <ButtonClearFilters
+            sx={{ mr: '10px' }}
+            onClick={() => {
+              getEquipaments()
+            }}>
+            Limpar Filtros
+          </ButtonClearFilters>
+
           <ButtonFilters onClick={handleClickOpen} variant="contained">
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />

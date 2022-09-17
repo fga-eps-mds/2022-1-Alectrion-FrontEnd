@@ -27,6 +27,7 @@ export const FindContainer = styled.div`
   background-color: #1f3541;
   border-radius: 20px;
   width: 100%;
+  max-width: 1024px;
   margin-top: 40px;
   margin-bottom: 40px;
 `
@@ -44,6 +45,21 @@ export const BoxInput = styledSystem(Box)(({ theme }) => ({
 export const ButtonFilters = styledSystem(Button)(({ theme }) => ({
   backgroundColor: '#D9D9D9',
   width: '183px',
+  heigth: '45px',
+  borderRadius: '10px',
+  display: 'flex',
+  justifyContent: 'left',
+  color: '#575757',
+  fontWeight: 'bold',
+  '&:hover': {
+    backgroundColor: '#ffff'
+  }
+}))
+
+export const ButtonClearFilters = styledSystem(Button)(({ theme }) => ({
+  backgroundColor: '#D9D9D9',
+  alignText: 'center',
+  width: '160px',
   heigth: '45px',
   borderRadius: '10px',
   display: 'flex',

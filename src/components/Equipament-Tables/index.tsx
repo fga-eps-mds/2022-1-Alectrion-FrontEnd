@@ -50,6 +50,8 @@ interface equipament {
   unit: any
 
   ram_size?: string
+
+  createdAt?: string
 }
 
 interface propType {
@@ -72,8 +74,21 @@ export default function EquipamentsTables({ equipaments }: propType) {
             <StyledTableCell align="center">N° Tombamento </StyledTableCell>
             <StyledTableCell align="center">N° Serie</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Data de aquisição</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">Marca</StyledTableCell>
+            <StyledTableCell align="center">Modelo</StyledTableCell>
+            <StyledTableCell align="center">Processador</StyledTableCell>
+            <StyledTableCell align="center">
+              Tipo de armazenamento
+            </StyledTableCell>
+            <StyledTableCell align="center">
+              Espaço de armazenamento
+            </StyledTableCell>
+            <StyledTableCell align="center">Memoria RAM</StyledTableCell>
+            <StyledTableCell align="center">Modelo de Tela</StyledTableCell>
+            <StyledTableCell align="center">Tamanho da tela</StyledTableCell>
+            <StyledTableCell align="center">Potência</StyledTableCell>
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
@@ -93,10 +108,37 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 {equipaments.status}
               </StyledTableCell>
               <StyledTableCell align="center">
+                {equipaments.createdAt?.substring(0, 10)}
+              </StyledTableCell>
+              <StyledTableCell align="center">
                 {equipaments.type}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {equipaments.brand.name}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.model}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.processor}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.storageType}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.storageAmount}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.ram_size}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.screenType}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.screenSize}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.power}
               </StyledTableCell>
               <StyledTableCell align="center">
                 <EditButton disabled />
