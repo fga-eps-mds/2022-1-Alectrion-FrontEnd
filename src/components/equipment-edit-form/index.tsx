@@ -24,6 +24,27 @@ interface unit {
   localization: string
 }
 
+interface EquipmentData {
+  type: string
+  tippingNumber: string
+  brand: string
+  serialNumber: string
+  model: string
+  acquisition: string
+  acquisitionDate: string
+  invoiceNumber: string
+  processor: string
+  ram_size: string
+  storageType: string
+  storageAmount: string
+  screenType: string
+  screenSize: string
+  initialUseDate: string
+  power: string
+  unit: string
+  description: string
+}
+
 const EquipmentEditForm = () => {
   // const navigate = useNavigate()
   const validationSchema = yup.object().shape({
@@ -148,31 +169,45 @@ const EquipmentEditForm = () => {
       }),
     unitId: yup.string().trim().required('Esse campo é obrigatório')
   })
+
+  const [equipmentData, setEquipmentData] = useState<EquipmentData>()
+
+  useEffect(() => {
+    const getEquipment = async () => {
+      const { data }: AxiosResponse<EquipmentData> = await api.get(
+        `/find?tippingNumber=17261`
+      )
+      setEquipmentData(data)
+    }
+    getEquipment()
+  }, [])
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      productType: '',
-      tippingNumber: '',
-      brand: '',
-      serialNumber: '',
-      model: '',
-      acquisitionType: '',
-      initialUseDate: '',
-      acquisitionDate: '',
-      invoiceNumber: '',
-      description: '',
-      ramMemory: '',
-      storageAmount: '',
-      storageType: '',
-      processor: '',
-      monitorType: '',
-      monitorSize: '',
-      power: '',
-      unitId: ''
+      productType: equipmentData?.type,
+      tippingNumber: equipmentData?.tippingNumber,
+      brand: equipmentData?.brand,
+      serialNumber: equipmentData?.serialNumber,
+      model: equipmentData?.model,
+      acquisitionType: equipmentData?.acquisition,
+      initialUseDate: equipmentData?.initialUseDate,
+      acquisitionDate: equipmentData?.acquisitionDate,
+      invoiceNumber: equipmentData?.invoiceNumber,
+      description: equipmentData?.description,
+      ramMemory: equipmentData?.ram_size,
+      storageAmount: equipmentData?.storageAmount,
+      storageType: equipmentData?.storageType,
+      processor: equipmentData?.processor,
+      monitorType: equipmentData?.screenType,
+      monitorSize: equipmentData?.screenSize,
+      power: equipmentData?.power,
+      unitId: equipmentData?.unit
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await api.put('/find?tippingNumber=17261', {
+        await api.put('/rotaAindaNãotem', {
           // rota fictícia
           type: values.productType,
           tippingNumber: values.tippingNumber
@@ -183,7 +218,6 @@ const EquipmentEditForm = () => {
       }
     }
   })
-  // const [state, setState] = useState(0)
   const [units, setUnits] = useState<unit[]>([])
   useEffect(() => {
     const getUnits = async () => {
