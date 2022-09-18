@@ -8,11 +8,13 @@ import {
   FilterScrennContent,
   StyledSelect,
   StyledTextField,
-  ButtonClearFilters
+  ButtonClearFilters,
+  StyledGenerateButton
 } from './style'
 import * as React from 'react'
 import { CSVLink } from 'react-csv'
 import { useFormik } from 'formik'
+import { dateFormat } from '../../utils/dateFormat'
 import {
   Typography,
   Box,
@@ -202,6 +204,33 @@ export default function ScreenEquipaments() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('Valor do meu input: ', event.target.value)
     setbasicSearch(event.target.value)
+  }
+
+  const cabecalhos = [
+    { label: 'Nº de Tombamento', key: 'tippingNumber' },
+    { label: 'Nº Série', key: 'serialNumber' },
+    { label: 'Tipo Equipamento', key: 'type' },
+    { label: 'Status', key: 'status' },
+    { label: 'Modelo', key: 'model' },
+    { label: 'Descrição', key: 'description' },
+    { label: 'Data de aquisição', key: 'initialUseDate' },
+    { label: 'Tamanho da tela', key: 'screenSize' },
+    { label: 'Nota Fiscal', key: 'invoiceNumber' },
+    { label: 'Potência', key: 'power' },
+    { label: 'Modelo de Tela', key: 'screenType' },
+    { label: 'Processador', key: 'processor' },
+    { label: 'Tipo de armazenamento', key: 'storageType' },
+    { label: 'Espaço de armazenamento', key: 'storageAmount' },
+    { label: 'Marca', key: 'brandId' },
+    { label: 'Data de aquisição', key: 'acquisitionId' },
+    { label: 'ID', key: 'unitId' },
+    { label: 'Memoria RAM', key: 'ram_size' }
+  ]
+
+  const csvReport = {
+    filename: `RelatorioEquipamento-${dateFormat(new Date())}.csv`,
+    headers: cabecalhos,
+    data: equipaments
   }
 
   return (
@@ -532,21 +561,9 @@ export default function ScreenEquipaments() {
           </form>
         </FilterScrennContent>
       </FilterScrenn>
-      <CSVLink
-        style={{
-          backgroundColor: '#5289B5',
-          color: 'white',
-          marginTop: '47px',
-          width: '346px',
-          height: '74px',
-          display: 'flex',
-          fontWeight: 'bold',
-          alignSelf: 'center',
-          borderRadius: '10px'
-        }}
-        {...}>
-        Gerar Relatório
-      </CSVLink>
+      <StyledGenerateButton>
+        <CSVLink {...csvReport}>Gerar Relatório</CSVLink>
+      </StyledGenerateButton>
     </Container>
   )
 }
