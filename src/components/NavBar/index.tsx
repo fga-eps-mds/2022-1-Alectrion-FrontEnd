@@ -176,7 +176,7 @@ const NavBar = () => {
             <Button
               data-testid="buttonOrderServicePC"
               key={''}
-              onClick={() => navigate('/orderservice')}
+              onClick={() => navigate('/order-services')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
