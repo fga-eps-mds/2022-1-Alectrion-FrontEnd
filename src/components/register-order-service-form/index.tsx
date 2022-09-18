@@ -87,7 +87,8 @@ const RegisterOrderServiceForm = ({
             senderName: formik.values.senderName,
             senderFunctionalNumber: formik.values.senderFunctionalNumber,
             date: formik.values.date,
-            description: formik.values.description
+            description: formik.values.description,
+            receiverName: formik.values.userName
           },
           {
             headers: {
@@ -95,7 +96,9 @@ const RegisterOrderServiceForm = ({
             }
           }
         )
+
         toast.success('Ordem de serviço criada.')
+        navigate('/order-services')
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
@@ -307,7 +310,7 @@ const RegisterOrderServiceForm = ({
               variant="contained"
               styledColor={theme.palette.grey[100]}
               textColor={theme.palette.grey[900]}
-              onClick={() => navigate('/orderservice')}>
+              onClick={() => navigate('/order-services')}>
               Voltar
             </Button>{' '}
             <Button
