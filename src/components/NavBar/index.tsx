@@ -16,7 +16,6 @@ import Stack from '@mui/material/Stack'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
 import { AuthContext } from '../../contexts/auth'
-import { toast } from 'react-toastify'
 
 interface AuthContextType {
   user: {
@@ -29,43 +28,6 @@ const NavBar = () => {
   const navigate = useNavigate()
   const { Logout } = React.useContext(AuthContext)
   const { user } = React.useContext(AuthContext) as AuthContextType
-
-  React.useEffect(() => {
-    let time: any
-    let time2: any
-
-    window.onload = resetTimer
-    document.onmousemove = resetTimer
-    document.onkeydown = resetTimer
-
-    const alertTimer = () => {
-      toast.warn(
-        'Você será desconectado por inatividade em 5 minutos, clique aqui para continuar logado!',
-        {
-          position: 'top-right',
-          autoClose: 300000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined
-        }
-      )
-      clearTimeout(time2)
-      time2 = setTimeout(disconnect, 300000)
-    }
-
-    function disconnect() {
-      Logout()
-      window.location.reload()
-    }
-
-    function resetTimer() {
-      clearTimeout(time)
-      clearTimeout(time2)
-      time = setTimeout(alertTimer, 1500000)
-    }
-  })
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
@@ -157,16 +119,18 @@ const NavBar = () => {
                   Ordem de Serviço
                 </Button>
               </MenuItem>
-              <MenuItem key={''} onClick={handleCloseNavMenu}>
-                <Button
-                  data-testid="buttonUsers"
-                  key={''}
-                  href="/users"
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'black', display: 'block' }}>
-                  Usuários
-                </Button>
-              </MenuItem>
+              {user.role === 'administrador' && (
+                <MenuItem key={''} onClick={handleCloseNavMenu}>
+                  <Button
+                    data-testid="buttonUsers"
+                    key={''}
+                    href="/users"
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'black', display: 'block' }}>
+                    Usuários
+                  </Button>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <Typography
@@ -216,13 +180,15 @@ const NavBar = () => {
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
-            <Button
-              data-testid="buttonUsersPC"
-              key={''}
-              onClick={() => navigate('/users')}
-              sx={{ my: 2, color: 'white', display: 'block' }}>
-              Usuários
-            </Button>
+            {user.role === 'administrador' && (
+              <Button
+                data-testid="buttonUsersPC"
+                key={''}
+                onClick={() => navigate('/users')}
+                sx={{ my: 2, color: 'white', display: 'block' }}>
+                Usuários
+              </Button>
+            )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">

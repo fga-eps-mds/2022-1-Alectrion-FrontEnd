@@ -74,6 +74,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
             <StyledTableCell align="center">N° Tombamento </StyledTableCell>
             <StyledTableCell align="center">N° Serie</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Unidade</StyledTableCell>
             <StyledTableCell align="center">Data de aquisição</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">Marca</StyledTableCell>
@@ -106,6 +107,9 @@ export default function EquipamentsTables({ equipaments }: propType) {
               </StyledTableCell>
               <StyledTableCell align="center">
                 {equipaments.status}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {equipaments.unit.name}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {equipaments.createdAt?.substring(0, 10)}
