@@ -28,15 +28,46 @@ const EquipmentEditForm = () => {
   // const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     productType: yup.string().required('Esse campo é obrigatório'),
-    tippingNumber: yup.string().required('Esse campo é obrigatório'),
+    tippingNumber: yup
+      .string()
+      .trim()
+      .required('Esse campo é obrigatório')
+      .test('valida campo', 'Apenas números', (value) => {
+        if (value) {
+          return /^[0-9]/.test(value)
+        } else return false
+      }),
     brand: yup.string().trim().required('Esse campo é obrigatório'),
-    serialNumber: yup.string().trim().required('Esse campo é obrigatório'),
+    serialNumber: yup
+      .string()
+      .trim()
+      .required('Esse campo é obrigatório')
+      .test('valida campo', 'Apenas números', (value) => {
+        if (value) {
+          return /^[0-9]/.test(value)
+        } else return false
+      }),
     model: yup.string().trim().required('Esse campo é obrigatório'),
     acquisitionType: yup.string().trim().required('Esse campo é obrigatório'),
-    initialUseDate: yup.string().max(4),
+    initialUseDate: yup
+      .date()
+      .required('Esse campo é obrigatório')
+      .test('test date', 'Data inválida', (value) => {
+        if (value) {
+          return value < new Date()
+        } else return false
+      }),
     acquisitionDate: yup.date().required('Esse campo é obrigatório'),
-    invoiceNumber: yup.string().trim().required('Esse campo é obrigatório'),
-    description: yup.string().max(250),
+    invoiceNumber: yup
+      .string()
+      .trim()
+      .required('Esse campo é obrigatório')
+      .test('valida campo', 'Apenas números', (value) => {
+        if (value) {
+          return /^[0-9]/.test(value)
+        } else return false
+      }),
+    description: yup.string().min(3).max(250).trim(),
     ramMemory: yup
       .string()
       .trim()
@@ -141,7 +172,7 @@ const EquipmentEditForm = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await api.put('/updateEquipment', {
+        await api.put('/find?tippingNumber=17261', {
           // rota fictícia
           type: values.productType,
           tippingNumber: values.tippingNumber
