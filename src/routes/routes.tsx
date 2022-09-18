@@ -13,6 +13,7 @@ import UserRegister from '../pages/user-register'
 import ScreenUser from '../pages/user-screen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
+import ScreenEquipaments from '../pages/ScreenEquipaments'
 import OrderRegister from '../pages/order-service'
 import { CircularProgress } from '@mui/material'
 import { OrderServices } from '../pages/order-services'
@@ -66,6 +67,24 @@ export const SignRoutes = () => {
             <AuthRoutes>
               <NavBar />
               <OrderServices />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/equipaments"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <ScreenEquipaments />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <ScreenUser />
             </AuthRoutes>
           }
         />
