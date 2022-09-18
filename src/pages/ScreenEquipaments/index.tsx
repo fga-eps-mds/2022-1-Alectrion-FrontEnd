@@ -8,10 +8,10 @@ import {
   FilterScrennContent,
   StyledSelect,
   StyledTextField,
-  ButtonClearFilters,
-  StyledGenerateButton
+  ButtonClearFilters
 } from './style'
 import * as React from 'react'
+import { CSVLink } from 'react-csv'
 import { useFormik } from 'formik'
 import {
   Typography,
@@ -532,7 +532,21 @@ export default function ScreenEquipaments() {
           </form>
         </FilterScrennContent>
       </FilterScrenn>
-      <StyledGenerateButton> Gerar Relatório </StyledGenerateButton>
+      <CSVLink
+        style={{
+          backgroundColor: '#5289B5',
+          color: 'white',
+          marginTop: '47px',
+          width: '346px',
+          height: '74px',
+          display: 'flex',
+          fontWeight: 'bold',
+          alignSelf: 'center',
+          borderRadius: '10px'
+        }}
+        {...}>
+        Gerar Relatório
+      </CSVLink>
     </Container>
   )
 }

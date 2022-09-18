@@ -56,26 +56,6 @@ export const ButtonFilters = styledSystem(Button)(({ theme }) => ({
   }
 }))
 
-//
-export const StyledGenerateButton = styledSystem(Button)(({ theme }) => ({
-  backgroundColor: '#5289B5',
-  color: 'white',
-  marginTop: '47px',
-  width: '346px',
-  height: '74px',
-  display: 'flex',
-  fontWeight: 'bold',
-  alignSelf: 'center',
-  borderRadius: '10px',
-  '& 	.MuiButton-text': {
-    textColor: '#ffff'
-  },
-  '&:hover': {
-    backgroundColor: '#84b5db'
-  }
-}))
-//
-
 export const ButtonClearFilters = styledSystem(Button)(({ theme }) => ({
   backgroundColor: '#D9D9D9',
   alignText: 'center',
