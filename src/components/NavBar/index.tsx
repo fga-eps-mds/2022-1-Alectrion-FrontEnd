@@ -12,14 +12,23 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
+import Stack from '@mui/material/Stack'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
 import { AuthContext } from '../../contexts/auth'
 import { toast } from 'react-toastify'
 
+interface AuthContextType {
+  user: {
+    role: string
+    name: string
+  }
+}
+
 const NavBar = () => {
   const navigate = useNavigate()
   const { Logout } = React.useContext(AuthContext)
+  const { user } = React.useContext(AuthContext) as AuthContextType
 
   React.useEffect(() => {
     let time: any
@@ -66,6 +75,18 @@ const NavBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
+  }
+
+  function stringAvatar(name: string) {
+    let word = ''
+    name.split(' ').map((name) => (word += name[0]))
+    console.log(word)
+    return {
+      sx: {
+        color: '#000'
+      },
+      children: word
+    }
   }
 
   return (
@@ -219,9 +240,15 @@ const NavBar = () => {
                 data-testid="buttonUser"
                 onClick={() => navigate('/user')}
                 sx={{ p: 0 }}>
-                <Avatar alt="" src="" />
+                <Stack direction="row">
+                  <Avatar {...stringAvatar(user.name)} />
+                </Stack>
               </IconButton>
             </Tooltip>
+          </Box>
+          <Box sx={{ ml: '15px' }}>
+            <Typography>{user.name}</Typography>
+            <Typography>{user.role}</Typography>
           </Box>
         </Toolbar>
       </Container>
