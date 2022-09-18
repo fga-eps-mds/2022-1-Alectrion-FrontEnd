@@ -47,7 +47,10 @@ interface equipament {
 
   acquisition: any
 
-  unit: any
+  unit: {
+    name: string
+    localization: string
+  }
 
   ram_size?: string
 
