@@ -42,6 +42,8 @@ export interface SearchParams {
 
   model: string
 
+  acquisitionDate: Date
+
   description?: string
 
   initialUseDate: Date
@@ -60,7 +62,7 @@ export interface SearchParams {
 
   storageAmount?: string
 
-  brandId: string
+  brand: string
 
   acquisitionId: string
 
@@ -79,6 +81,8 @@ interface equipament {
   status: string
 
   model: string
+
+  acquisitionDate: Date
 
   description?: string
 
@@ -104,9 +108,14 @@ interface equipament {
 
   acquisition: any
 
-  unit: any
+  unit: {
+    name: string
+    localization: string
+  }
 
   ram_size?: string
+
+  createdAt?: string
 }
 
 export default function ScreenEquipaments() {
@@ -123,6 +132,8 @@ export default function ScreenEquipaments() {
     status: '',
 
     model: '',
+
+    acquisitionDate: '',
 
     description: '',
 
@@ -142,7 +153,7 @@ export default function ScreenEquipaments() {
 
     storageAmount: '',
 
-    brandId: '',
+    brand: '',
 
     acquisitionId: '',
 
@@ -209,22 +220,22 @@ export default function ScreenEquipaments() {
   const cabecalhos = [
     { label: 'Nº de Tombamento', key: 'tippingNumber' },
     { label: 'Nº Série', key: 'serialNumber' },
-    { label: 'Tipo Equipamento', key: 'type' },
     { label: 'Status', key: 'status' },
+    { label: 'Unidade', key: 'unit.name' },
+    { label: 'Unidade', key: 'unit.localization' },
+    { label: 'Data de aquisição', key: 'createdAt' },
+    { label: 'Tipo Equipamento', key: 'type' },
+    { label: 'Marca', key: 'brand.name' },
     { label: 'Modelo', key: 'model' },
-    { label: 'Descrição', key: 'description' },
-    { label: 'Data de aquisição', key: 'initialUseDate' },
-    { label: 'Tamanho da tela', key: 'screenSize' },
-    { label: 'Nota Fiscal', key: 'invoiceNumber' },
-    { label: 'Potência', key: 'power' },
-    { label: 'Modelo de Tela', key: 'screenType' },
     { label: 'Processador', key: 'processor' },
     { label: 'Tipo de armazenamento', key: 'storageType' },
     { label: 'Espaço de armazenamento', key: 'storageAmount' },
-    { label: 'Marca', key: 'brandId' },
-    { label: 'Data de aquisição', key: 'acquisitionId' },
-    { label: 'ID', key: 'unitId' },
-    { label: 'Memoria RAM', key: 'ram_size' }
+    { label: 'Memoria RAM', key: 'ram_size' },
+    { label: 'Modelo de Tela', key: 'screenType' },
+    { label: 'Tamanho da tela', key: 'screenSize' },
+    { label: 'Potência', key: 'power' },
+    { label: 'Descrição', key: 'description' },
+    { label: 'Nota Fiscal', key: 'invoiceNumber' }
   ]
 
   const csvReport = {
@@ -463,7 +474,7 @@ export default function ScreenEquipaments() {
                   id="brand"
                   name="brand"
                   label="Marca"
-                  value={formik.values.brandId}
+                  value={formik.values.brand}
                   onChange={formik.handleChange}
                   sx={{ ml: '30px' }}
                 />

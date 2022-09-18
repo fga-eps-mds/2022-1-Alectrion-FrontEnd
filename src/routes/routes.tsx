@@ -16,6 +16,7 @@ import NavBar from '../components/NavBar'
 import ScreenEquipaments from '../pages/ScreenEquipaments'
 import OrderRegister from '../pages/order-service'
 import { CircularProgress } from '@mui/material'
+import EquipRegister from '../pages/equipment-register'
 import { OrderServices } from '../pages/order-services'
 type AuthRouteProps = {
   children: ReactNode
@@ -86,6 +87,15 @@ export const SignRoutes = () => {
               <NavBar />
               <ScreenUser />
             </AuthRoutes>
+          }
+        />
+        <Route
+          path="/equipment-register"
+          element={
+            <>
+              <NavBar />
+              <EquipRegister />
+            </>
           }
         />
         <Route

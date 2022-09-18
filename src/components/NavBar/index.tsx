@@ -12,51 +12,22 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
+import Stack from '@mui/material/Stack'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
 import { AuthContext } from '../../contexts/auth'
-import { toast } from 'react-toastify'
+
+interface AuthContextType {
+  user: {
+    role: string
+    name: string
+  }
+}
 
 const NavBar = () => {
   const navigate = useNavigate()
   const { Logout } = React.useContext(AuthContext)
-
-  React.useEffect(() => {
-    let time: any
-    let time2: any
-
-    window.onload = resetTimer
-    document.onmousemove = resetTimer
-    document.onkeydown = resetTimer
-
-    const alertTimer = () => {
-      toast.warn(
-        'Você será desconectado por inatividade em 5 minutos, clique aqui para continuar logado!',
-        {
-          position: 'top-right',
-          autoClose: 300000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined
-        }
-      )
-      clearTimeout(time2)
-      time2 = setTimeout(disconnect, 300000)
-    }
-
-    function disconnect() {
-      Logout()
-      window.location.reload()
-    }
-
-    function resetTimer() {
-      clearTimeout(time)
-      clearTimeout(time2)
-      time = setTimeout(alertTimer, 1500000)
-    }
-  })
+  const { user } = React.useContext(AuthContext) as AuthContextType
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
@@ -66,6 +37,18 @@ const NavBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
+  }
+
+  function stringAvatar(name: string) {
+    let word = ''
+    name.split(' ').forEach((name) => (word += name[0]))
+    console.log(word)
+    return {
+      sx: {
+        color: '#000'
+      },
+      children: word
+    }
   }
 
   return (
@@ -136,16 +119,18 @@ const NavBar = () => {
                   Ordem de Serviço
                 </Button>
               </MenuItem>
-              <MenuItem key={''} onClick={handleCloseNavMenu}>
-                <Button
-                  data-testid="buttonUsers"
-                  key={''}
-                  href="/users"
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'black', display: 'block' }}>
-                  Usuários
-                </Button>
-              </MenuItem>
+              {user.role === 'administrador' && (
+                <MenuItem key={''} onClick={handleCloseNavMenu}>
+                  <Button
+                    data-testid="buttonUsers"
+                    key={''}
+                    href="/users"
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'black', display: 'block' }}>
+                    Usuários
+                  </Button>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <Typography
@@ -191,17 +176,19 @@ const NavBar = () => {
             <Button
               data-testid="buttonOrderServicePC"
               key={''}
-              onClick={() => navigate('/orderservice')}
+              onClick={() => navigate('/order-services')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
-            <Button
-              data-testid="buttonUsersPC"
-              key={''}
-              onClick={() => navigate('/users')}
-              sx={{ my: 2, color: 'white', display: 'block' }}>
-              Usuários
-            </Button>
+            {user.role === 'administrador' && (
+              <Button
+                data-testid="buttonUsersPC"
+                key={''}
+                onClick={() => navigate('/users')}
+                sx={{ my: 2, color: 'white', display: 'block' }}>
+                Usuários
+              </Button>
+            )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
@@ -219,9 +206,15 @@ const NavBar = () => {
                 data-testid="buttonUser"
                 onClick={() => navigate('/user')}
                 sx={{ p: 0 }}>
-                <Avatar alt="" src="" />
+                <Stack direction="row">
+                  <Avatar {...stringAvatar(user.name)} />
+                </Stack>
               </IconButton>
             </Tooltip>
+          </Box>
+          <Box sx={{ ml: '15px' }}>
+            <Typography>{user.name}</Typography>
+            <Typography>{user.role}</Typography>
           </Box>
         </Toolbar>
       </Container>
