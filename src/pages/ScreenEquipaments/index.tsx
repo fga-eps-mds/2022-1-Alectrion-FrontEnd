@@ -27,6 +27,7 @@ import EquipamentsTables from '../../components/Equipament-Tables'
 import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export interface SearchParams {
   tippingNumber: string
@@ -107,6 +108,7 @@ interface equipament {
 }
 
 export default function ScreenEquipaments() {
+  const navigate = useNavigate()
   const [equipaments, setEquipaments] = React.useState<equipament[]>([])
   const [basicSearch, setbasicSearch] = React.useState<string>('')
 
@@ -248,7 +250,9 @@ export default function ScreenEquipaments() {
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>
-          <ButtonCad disabled>Cadastrar Equipamento</ButtonCad>
+          <ButtonCad onClick={() => navigate('/equipment-register')}>
+            Cadastrar Equipamento
+          </ButtonCad>
         </Box>
       </FindContainer>
 
