@@ -41,7 +41,7 @@ const NavBar = () => {
 
   function stringAvatar(name: string) {
     let word = ''
-    name.split(' ').map((name) => (word += name[0]))
+    name.split(' ').forEach((name) => (word += name[0]))
     console.log(word)
     return {
       sx: {

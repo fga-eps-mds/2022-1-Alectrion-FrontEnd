@@ -110,6 +110,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
               </StyledTableCell>
               <StyledTableCell align="center">
                 {equipaments.unit.name}
+                {equipaments.unit.localization}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {equipaments.createdAt?.substring(0, 10)}
