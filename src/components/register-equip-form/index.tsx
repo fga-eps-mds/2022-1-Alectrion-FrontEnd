@@ -277,7 +277,6 @@ const RegisterEquipForm = () => {
                 }
               }}
             />
-
             <StyledTextField
               id="tippingNumber-input"
               label="N° Tombamento"
@@ -424,7 +423,6 @@ const RegisterEquipForm = () => {
                 }
               }}
             />
-
             {formik.values.productType === 'CPU' && (
               <>
                 <StyledTextField
@@ -572,20 +570,32 @@ const RegisterEquipForm = () => {
                 />
               </>
             )}
-            {formik.values.productType === 'NOBREAK' ||
-              (formik.values.productType === 'STABILIZER' && (
-                <StyledTextField
-                  id="power-input"
-                  label="Potência"
-                  type="text"
-                  name="power"
-                  variant="outlined"
-                  onChange={formik.handleChange}
-                  value={formik.values.power}
-                  helperText={formik.touched.power && formik.errors.power}
-                  error={formik.touched.power && Boolean(formik.errors.power)}
-                />
-              ))}
+            {formik.values.productType === 'STABILIZER' && (
+              <StyledTextField
+                id="power-input"
+                label="Potência"
+                type="text"
+                name="power"
+                variant="outlined"
+                onChange={formik.handleChange}
+                value={formik.values.power}
+                helperText={formik.touched.power && formik.errors.power}
+                error={formik.touched.power && Boolean(formik.errors.power)}
+              />
+            )}
+            {formik.values.productType === 'NOBREAK' && (
+              <StyledTextField
+                id="power-input"
+                label="Potência"
+                type="text"
+                name="power"
+                variant="outlined"
+                onChange={formik.handleChange}
+                value={formik.values.power}
+                helperText={formik.touched.power && formik.errors.power}
+                error={formik.touched.power && Boolean(formik.errors.power)}
+              />
+            )}
           </FormContainer>
           <StyledDescTextField
             id="description-input"
@@ -611,7 +621,8 @@ const RegisterEquipForm = () => {
             <Button
               variant="contained"
               type="submit"
-              styledColor={theme.palette.primary.main}>
+              styledColor={theme.palette.primary.main}
+              onClick={() => navigate('/equipaments')}>
               Cadastrar
             </Button>
           </ButtonContainer>
