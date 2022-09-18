@@ -8,7 +8,8 @@ import {
   FilterScrennContent,
   StyledSelect,
   StyledTextField,
-  ButtonClearFilters
+  ButtonClearFilters,
+  StyledGenerateButton
 } from './style'
 import * as React from 'react'
 import { useFormik } from 'formik'
@@ -531,6 +532,7 @@ export default function ScreenEquipaments() {
           </form>
         </FilterScrennContent>
       </FilterScrenn>
+      <StyledGenerateButton> Gerar Relatório </StyledGenerateButton>
     </Container>
   )
 }
