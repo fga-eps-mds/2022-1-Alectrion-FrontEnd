@@ -39,7 +39,7 @@ interface EquipmentData {
   storageAmount: string
   screenType: string
   screenSize: string
-  initialUseDate: string
+  initialUseDate: string | number
   power: string
   unit: string
   description: string
@@ -206,16 +206,43 @@ const EquipmentEditForm = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      const body = {
+        type: values.productType,
+        tippingNumber: values.tippingNumber,
+        brandName: values.brand,
+        serialNumber: values.serialNumber,
+        model: values.model,
+        status: 'TECHNICAL_RESERVE',
+        acquisitionName: values.acquisitionType,
+        acquisitionDate: values.acquisitionDate,
+        invoiceNumber: values.invoiceNumber,
+        processor: values.processor !== '' ? values.processor : null,
+        ram_size: values.ramMemory !== '' ? values.ramMemory : null,
+        storageType: values.storageType !== '' ? values.storageType : null,
+        storageAmount:
+          values.storageAmount !== '' ? values.storageAmount : null,
+        screenType: values.monitorType !== '' ? values.monitorType : null,
+        screenSize: values.monitorSize !== '' ? values.monitorSize : null,
+        initialUseDate:
+          values.initialUseDate !== '' && values.initialUseDate !== undefined
+            ? new Date(values.initialUseDate)
+            : null,
+        power: values.power !== '' ? values.power : null,
+        unitId: values.unitId,
+        description: values.description !== '' ? values.description : null
+      }
+      const formattedBody = Object.entries(body)
+        .filter((object) => object[1] !== null)
+        .reduce((newObj, [key, val]) => {
+          return { ...newObj, [key]: val }
+        }, {})
       try {
-        await api.put('/rotaAindaNãotem', {
-          // rota fictícia
-          type: values.productType,
-          tippingNumber: values.tippingNumber
-        })
+        await api.post('equipment/updateEquipment', formattedBody) // essa rota ainda não existe
         toast.success('Equipamento cadastrado.')
       } catch (error) {
         toast.error('Aconteceu algum erro.')
       }
+      formik.resetForm()
     }
   })
   const [units, setUnits] = useState<unit[]>([])
