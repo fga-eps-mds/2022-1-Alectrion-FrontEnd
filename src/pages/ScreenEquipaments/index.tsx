@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Container,
   FindContainer,
@@ -30,6 +31,7 @@ import EquipamentsTables from '../../components/Equipament-Tables'
 import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export interface SearchParams {
   tippingNumber: string
@@ -116,12 +118,14 @@ interface equipament {
   ram_size?: string
 
   createdAt?: string
+
+  id: string
 }
 
 export default function ScreenEquipaments() {
-  const [equipaments, setEquipaments] = React.useState<equipament[]>([])
-  const [basicSearch, setbasicSearch] = React.useState<string>('')
-
+  const [equipaments, setEquipaments] = useState<equipament[]>([])
+  const [basicSearch, setbasicSearch] = useState<string>('')
+  const navigate = useNavigate()
   const initialValues = {
     tippingNumber: '',
 
@@ -181,7 +185,6 @@ export default function ScreenEquipaments() {
         Object.entries(query).forEach((value) =>
           queryParams.append(value[0], value[1])
         )
-        console.log(queryParams.toString())
       }
 
       const { data }: AxiosResponse<equipament[]> = await api.get(
@@ -191,13 +194,14 @@ export default function ScreenEquipaments() {
         }
       )
       setEquipaments(data)
-      console.log(data)
     } catch (error) {
       setEquipaments([])
       toast.error('Nenhum Equipamento encontrado')
     }
   }
-
+  const renderEquipmentTable = React.useCallback(() => {
+    return <EquipamentsTables equipaments={equipaments} />
+  }, [equipaments])
   React.useEffect(() => {
     getEquipaments()
   }, [])
@@ -289,12 +293,12 @@ export default function ScreenEquipaments() {
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>
-          <ButtonCad disabled>Cadastrar Equipamento</ButtonCad>
+          <ButtonCad onClick={() => navigate('/equipment-register')}>
+            Cadastrar Equipamento
+          </ButtonCad>
         </Box>
       </FindContainer>
-
-      <EquipamentsTables equipaments={equipaments} />
-
+      {renderEquipmentTable()}
       <FilterScrenn open={open}>
         <FilterScrennContent>
           <form onSubmit={formik.handleSubmit}>
