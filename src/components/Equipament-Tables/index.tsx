@@ -14,7 +14,7 @@ import {
 } from './style'
 import { EditButton } from './../edit-button/index'
 
-interface equipament {
+export interface equipament {
   tippingNumber: string
 
   serialNumber: string
@@ -64,7 +64,6 @@ interface propType {
 }
 
 export default function EquipamentsTables({ equipaments }: propType) {
-  console.log({ equipaments })
   return (
     <TableContainer
       sx={{
@@ -104,7 +103,6 @@ export default function EquipamentsTables({ equipaments }: propType) {
         </TableHead>
         <TableBody>
           {equipaments.map((equipaments, index) => {
-            console.log('moacir')
             return (
               <StyledTableRow key={index + equipaments.id}>
                 <StyledTableCell align="center" component="th">

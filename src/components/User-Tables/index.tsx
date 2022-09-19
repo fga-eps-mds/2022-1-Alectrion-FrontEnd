@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper'
 import { useNavigate } from 'react-router-dom'
 import { EditButton } from '../edit-button/index'
 
-interface User {
+export interface User {
   createdAt: string
   id: string
   updatedAt: string
@@ -27,9 +27,6 @@ interface propType {
 
 export default function UserTables({ users, isAdmin }: propType) {
   const navigate = useNavigate()
-
-  console.log(typeof users)
-
   return (
     <TableContainer
       sx={{
@@ -65,7 +62,7 @@ export default function UserTables({ users, isAdmin }: propType) {
                   onClick={() =>
                     navigate('/edit-user', { state: { userId: user.id } })
                   }>
-                  <EditButton />
+                  <EditButton data-testid="edit-user-button" />
                   Editar
                 </StyledTableCell>
               )}

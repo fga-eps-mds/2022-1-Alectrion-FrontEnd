@@ -216,8 +216,6 @@ const RegisterEquipForm = () => {
     }
   })
 
-  console.log(formik.errors)
-
   const [units, setUnits] = useState<unit[]>([])
   useEffect(() => {
     const getUnits = async () => {
@@ -225,7 +223,6 @@ const RegisterEquipForm = () => {
         const { data }: AxiosResponse<unit[]> = await api.get(
           '/equipment/getAllUnits'
         )
-        console.log(data)
         setUnits(data)
       } catch (error) {}
     }
@@ -253,6 +250,8 @@ const RegisterEquipForm = () => {
                 <StyledTextField
                   {...params}
                   label="Tipo produto"
+                  id="productType-select-label"
+                  data-testid="productType-select"
                   helperText={
                     formik.touched.productType && formik.errors.productType
                   }
@@ -429,6 +428,7 @@ const RegisterEquipForm = () => {
               <>
                 <StyledTextField
                   id="ramMemory-input"
+                  data-testid="memory-input"
                   label="Memória RAM"
                   type="text"
                   name="ramMemory"
@@ -471,6 +471,8 @@ const RegisterEquipForm = () => {
                     <StyledTextField
                       {...params}
                       label="Tipo armazenamento"
+                      id="storageType-input"
+                      data-testid="storageType-input"
                       helperText={
                         formik.touched.storageType && formik.errors.storageType
                       }
@@ -572,20 +574,21 @@ const RegisterEquipForm = () => {
                 />
               </>
             )}
-            {formik.values.productType === 'NOBREAK' ||
-              (formik.values.productType === 'STABILIZER' && (
-                <StyledTextField
-                  id="power-input"
-                  label="Potência"
-                  type="text"
-                  name="power"
-                  variant="outlined"
-                  onChange={formik.handleChange}
-                  value={formik.values.power}
-                  helperText={formik.touched.power && formik.errors.power}
-                  error={formik.touched.power && Boolean(formik.errors.power)}
-                />
-              ))}
+            {(formik.values.productType === 'NOBREAK' ||
+              formik.values.productType === 'STABILIZER') && (
+              <StyledTextField
+                id="power-input"
+                data-testid="power-input"
+                label="Potência"
+                type="text"
+                name="power"
+                variant="outlined"
+                onChange={formik.handleChange}
+                value={formik.values.power}
+                helperText={formik.touched.power && formik.errors.power}
+                error={formik.touched.power && Boolean(formik.errors.power)}
+              />
+            )}
           </FormContainer>
           <StyledDescTextField
             id="description-input"

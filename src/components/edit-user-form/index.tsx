@@ -122,7 +122,6 @@ const Form = ({ userId }: formProps) => {
 
       try {
         if (flag === true) {
-          console.log('a flag vale true!')
           await api.put('/user/update', bodyVerif)
           toast.success('Usuário editado com sucesso.')
           flag = false

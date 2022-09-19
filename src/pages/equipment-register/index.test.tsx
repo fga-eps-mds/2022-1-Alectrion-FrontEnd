@@ -66,7 +66,7 @@ test('should register new CPU', async () => {
   const invoiceNumberInput = screen.getByLabelText('N° da nota fiscal')
   userEvent.type(invoiceNumberInput, '192802')
 
-  const ramMemoryInput = screen.getByLabelText('Memória RAM')
+  const ramMemoryInput = screen.getByTestId('memory-input')
   userEvent.type(ramMemoryInput, '8gb')
 
   const storageAmountInput = screen.getByLabelText('Armazenamento')
@@ -137,11 +137,8 @@ test('should register new monitor', async () => {
   const invoiceNumberInput = screen.getByLabelText('N° da nota fiscal')
   userEvent.type(invoiceNumberInput, '192800')
 
-  const screenTypeInput = screen.getByLabelText('Memória RAM')
+  const screenTypeInput = screen.getByLabelText('Tipo monitor')
   userEvent.type(screenTypeInput, 'LED')
-
-  const screenSizeInput = screen.getByLabelText('Processador')
-  userEvent.type(screenSizeInput, '23 polegadas')
 
   const RegisterButton = screen.getByRole('button', { name: 'Cadastrar' })
   userEvent.click(RegisterButton)
@@ -201,7 +198,7 @@ test('should register new nobreak', async () => {
   const invoiceNumberInput = screen.getByLabelText('N° da nota fiscal')
   userEvent.type(invoiceNumberInput, '289743')
 
-  const powerInput = screen.getByLabelText('Potência')
+  const powerInput = screen.getByTestId('power-input')
   userEvent.type(powerInput, '220W')
 
   const RegisterButton = screen.getByRole('button', { name: 'Cadastrar' })
