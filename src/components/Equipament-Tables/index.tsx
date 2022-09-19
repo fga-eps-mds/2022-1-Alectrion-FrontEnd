@@ -14,7 +14,7 @@ import {
 } from './style'
 import { EditButton } from './../edit-button/index'
 
-interface equipament {
+export interface equipament {
   tippingNumber: string
 
   serialNumber: string
@@ -47,11 +47,16 @@ interface equipament {
 
   acquisition: any
 
-  unit: any
+  unit: {
+    name: string
+    localization: string
+  }
 
   ram_size?: string
 
   createdAt?: string
+
+  id: string
 }
 
 interface propType {
@@ -97,74 +102,76 @@ export default function EquipamentsTables({ equipaments }: propType) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {equipaments.map((equipaments) => (
-            <StyledTableRow key={equipaments?.acquisition?.id}>
-              <StyledTableCell align="center" component="th" scope="equipament">
-                {equipaments.tippingNumber}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.serialNumber}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.status}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.unit.name}
-                {equipaments.unit.localization}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.createdAt?.substring(0, 10)}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.type}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.brand.name}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.model}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.processor}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.storageType}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.storageAmount}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.ram_size}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.screenType}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.screenSize}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {equipaments.power}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <EditButton disabled />
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <Button disabled>
-                  <DeleteIcon />
-                </Button>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <ButtonDownloadEquipament disabled>
-                  Baixar
-                </ButtonDownloadEquipament>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <ButtonReservEquipament disabled>
-                  Reserva
-                </ButtonReservEquipament>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {equipaments.map((equipaments, index) => {
+            return (
+              <StyledTableRow key={index + equipaments.id}>
+                <StyledTableCell align="center" component="th">
+                  {equipaments.tippingNumber}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.serialNumber}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.status}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.unit.name}
+                  {equipaments.unit.localization}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.createdAt?.substring(0, 10)}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.type}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.brand.name}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.model}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.processor}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.storageType}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.storageAmount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.ram_size}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.screenType}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.screenSize}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.power}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <EditButton disabled />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <Button disabled>
+                    <DeleteIcon />
+                  </Button>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <ButtonDownloadEquipament disabled>
+                    Baixar
+                  </ButtonDownloadEquipament>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <ButtonReservEquipament disabled>
+                    Reserva
+                  </ButtonReservEquipament>
+                </StyledTableCell>
+              </StyledTableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>

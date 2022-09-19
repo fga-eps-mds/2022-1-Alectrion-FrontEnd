@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Container,
   FindContainer,
@@ -8,10 +9,13 @@ import {
   FilterScrennContent,
   StyledSelect,
   StyledTextField,
-  ButtonClearFilters
+  ButtonClearFilters,
+  StyledGenerateButton
 } from './style'
 import * as React from 'react'
+import { CSVLink } from 'react-csv'
 import { useFormik } from 'formik'
+import { dateFormat } from '../../utils/dateFormat'
 import {
   Typography,
   Box,
@@ -27,6 +31,7 @@ import EquipamentsTables from '../../components/Equipament-Tables'
 import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export interface SearchParams {
   tippingNumber: string
@@ -38,6 +43,8 @@ export interface SearchParams {
   status: string
 
   model: string
+
+  acquisitionDate: Date
 
   description?: string
 
@@ -57,7 +64,7 @@ export interface SearchParams {
 
   storageAmount?: string
 
-  brandId: string
+  brand: string
 
   acquisitionId: string
 
@@ -76,6 +83,8 @@ interface equipament {
   status: string
 
   model: string
+
+  acquisitionDate: Date
 
   description?: string
 
@@ -101,15 +110,22 @@ interface equipament {
 
   acquisition: any
 
-  unit: any
+  unit: {
+    name: string
+    localization: string
+  }
 
   ram_size?: string
+
+  createdAt?: string
+
+  id: string
 }
 
 export default function ScreenEquipaments() {
-  const [equipaments, setEquipaments] = React.useState<equipament[]>([])
-  const [basicSearch, setbasicSearch] = React.useState<string>('')
-
+  const [equipaments, setEquipaments] = useState<equipament[]>([])
+  const [basicSearch, setbasicSearch] = useState<string>('')
+  const navigate = useNavigate()
   const initialValues = {
     tippingNumber: '',
 
@@ -120,6 +136,8 @@ export default function ScreenEquipaments() {
     status: '',
 
     model: '',
+
+    acquisitionDate: '',
 
     description: '',
 
@@ -139,7 +157,7 @@ export default function ScreenEquipaments() {
 
     storageAmount: '',
 
-    brandId: '',
+    brand: '',
 
     acquisitionId: '',
 
@@ -167,7 +185,6 @@ export default function ScreenEquipaments() {
         Object.entries(query).forEach((value) =>
           queryParams.append(value[0], value[1])
         )
-        console.log(queryParams.toString())
       }
 
       const { data }: AxiosResponse<equipament[]> = await api.get(
@@ -177,13 +194,14 @@ export default function ScreenEquipaments() {
         }
       )
       setEquipaments(data)
-      console.log(data)
     } catch (error) {
       setEquipaments([])
       toast.error('Nenhum Equipamento encontrado')
     }
   }
-
+  const renderEquipmentTable = React.useCallback(() => {
+    return <EquipamentsTables equipaments={equipaments} />
+  }, [equipaments])
   React.useEffect(() => {
     getEquipaments()
   }, [])
@@ -199,8 +217,34 @@ export default function ScreenEquipaments() {
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Valor do meu input: ', event.target.value)
     setbasicSearch(event.target.value)
+  }
+
+  const cabecalhos = [
+    { label: 'Nº de Tombamento', key: 'tippingNumber' },
+    { label: 'Nº Série', key: 'serialNumber' },
+    { label: 'Status', key: 'status' },
+    { label: 'Unidade', key: 'unit.name' },
+    { label: 'Unidade', key: 'unit.localization' },
+    { label: 'Data de aquisição', key: 'createdAt' },
+    { label: 'Tipo Equipamento', key: 'type' },
+    { label: 'Marca', key: 'brand.name' },
+    { label: 'Modelo', key: 'model' },
+    { label: 'Processador', key: 'processor' },
+    { label: 'Tipo de armazenamento', key: 'storageType' },
+    { label: 'Espaço de armazenamento', key: 'storageAmount' },
+    { label: 'Memoria RAM', key: 'ram_size' },
+    { label: 'Modelo de Tela', key: 'screenType' },
+    { label: 'Tamanho da tela', key: 'screenSize' },
+    { label: 'Potência', key: 'power' },
+    { label: 'Descrição', key: 'description' },
+    { label: 'Nota Fiscal', key: 'invoiceNumber' }
+  ]
+
+  const csvReport = {
+    filename: `RelatorioEquipamento-${dateFormat(new Date())}.csv`,
+    headers: cabecalhos,
+    data: equipaments
   }
 
   return (
@@ -248,12 +292,12 @@ export default function ScreenEquipaments() {
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>
-          <ButtonCad disabled>Cadastrar Equipamento</ButtonCad>
+          <ButtonCad onClick={() => navigate('/equipment-register')}>
+            Cadastrar Equipamento
+          </ButtonCad>
         </Box>
       </FindContainer>
-
-      <EquipamentsTables equipaments={equipaments} />
-
+      {renderEquipmentTable()}
       <FilterScrenn open={open}>
         <FilterScrennContent>
           <form onSubmit={formik.handleSubmit}>
@@ -433,7 +477,7 @@ export default function ScreenEquipaments() {
                   id="brand"
                   name="brand"
                   label="Marca"
-                  value={formik.values.brandId}
+                  value={formik.values.brand}
                   onChange={formik.handleChange}
                   sx={{ ml: '30px' }}
                 />
@@ -531,6 +575,9 @@ export default function ScreenEquipaments() {
           </form>
         </FilterScrennContent>
       </FilterScrenn>
+      <StyledGenerateButton>
+        <CSVLink {...csvReport}>Gerar Relatório</CSVLink>
+      </StyledGenerateButton>
     </Container>
   )
 }

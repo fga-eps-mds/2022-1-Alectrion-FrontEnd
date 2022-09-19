@@ -105,8 +105,6 @@ const RegisterOrderServiceForm = ({
     }
   })
 
-  console.log(formik.errors)
-
   return (
     <Container>
       <StyledCard>
@@ -293,6 +291,7 @@ const RegisterOrderServiceForm = ({
 
           <StyledTextArea
             label="Descrição"
+            data-testid="description-input"
             name="description"
             multiline
             rows={2}
@@ -315,6 +314,7 @@ const RegisterOrderServiceForm = ({
             </Button>{' '}
             <Button
               variant="contained"
+              data-testid="register-button"
               type="submit"
               styledColor={theme.palette.primary.main}>
               Cadastrar

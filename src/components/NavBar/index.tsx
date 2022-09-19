@@ -42,7 +42,6 @@ const NavBar = () => {
   function stringAvatar(name: string) {
     let word = ''
     name.split(' ').forEach((name) => (word += name[0]))
-    console.log(word)
     return {
       sx: {
         color: '#000'
@@ -176,7 +175,7 @@ const NavBar = () => {
             <Button
               data-testid="buttonOrderServicePC"
               key={''}
-              onClick={() => navigate('/orderservice')}
+              onClick={() => navigate('/order-services')}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>

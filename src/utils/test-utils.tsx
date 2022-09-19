@@ -8,6 +8,21 @@ interface PropTypes {
   location?: any
 }
 
+// function mockFunction() {
+//   const original = require.requireActual('react-router-dom')
+//   return {
+//     ...original,
+//     useLocation: jest.fn().mockReturnValue({
+//       pathname: '/another-route',
+//       search: '',
+//       hash: '',
+//       state: null,
+//       key: '5nvxpbdafa'
+//     })
+//   }
+// }
+// jest.mock('react-router-dom', () => mockFunction())]
+
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
   useNavigate: () => jest.fn()

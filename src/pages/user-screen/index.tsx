@@ -44,7 +44,6 @@ export default function ScreenUser() {
     }
     getUsers()
   }, [])
-  console.log(users)
   return (
     <div>
       <Container>

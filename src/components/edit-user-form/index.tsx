@@ -64,10 +64,10 @@ const Form = ({ userId }: formProps) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data }: AxiosResponse<UserData> = await api.get(
+      const { data }: AxiosResponse<UserData[]> = await api.get(
         `/user/get?userId=${userId}`
       )
-      setUserData(data)
+      setUserData(data[0])
     }
     getUser()
   }, [])
@@ -119,10 +119,9 @@ const Form = ({ userId }: formProps) => {
       if (flag === true) {
         bodyVerif.userId = userId
       }
-      console.log(bodyVerif)
+
       try {
         if (flag === true) {
-          console.log('a flag vale true!')
           await api.put('/user/update', bodyVerif)
           toast.success('Usuário editado com sucesso.')
           flag = false
@@ -242,15 +241,24 @@ const Form = ({ userId }: formProps) => {
             onClick={() => navigate('/users')}>
             Voltar
           </Button>
-          {/* <Button
+          <Button
             name="removeButton"
             id="remover"
             variant="contained"
             styledColor={theme.palette.error.main}
             textColor="white"
-            classes={{ root: 'rootRemove' }}>
+            classes={{ root: 'rootRemove' }}
+            onClick={async () => {
+              try {
+                await api.delete(`/user/delete?userId=${userId}`)
+                toast.success('Usuário excluido.')
+              } catch (error) {
+                toast.error('Aconteceu algum erro.')
+              }
+              navigate('/users')
+            }}>
             Remover
-          </Button> */}
+          </Button>
         </FormStyled>
       </CardContent>
     </StyledCard>
