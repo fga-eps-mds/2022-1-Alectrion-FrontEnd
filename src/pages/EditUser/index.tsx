@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom'
 
 export default function EditUser() {
   const { state } = useLocation()
-  console.log(state)
 
   return (
     <DivForm>

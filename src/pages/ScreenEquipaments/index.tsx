@@ -217,7 +217,6 @@ export default function ScreenEquipaments() {
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Valor do meu input: ', event.target.value)
     setbasicSearch(event.target.value)
   }
 
