@@ -22,7 +22,7 @@ Aplicação disponível em: [link da aplicação](https://alectrion-front.heroku
 5. instale as depencencias
 > yarn
 6. execute o projeto
-> yarn start
+> yarn dev
 7. inicie a aplicação na porta 3000
 
 ## Contribuir
