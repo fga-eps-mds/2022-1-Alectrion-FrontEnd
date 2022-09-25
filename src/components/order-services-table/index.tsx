@@ -39,7 +39,7 @@ export default function OderServiceTable({
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Data Entreada</StyledTableCell>
+            <StyledTableCell align="center">Data Entrada</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">N° tombamento</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
