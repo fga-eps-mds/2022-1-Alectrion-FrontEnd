@@ -21,9 +21,10 @@ Aplicação disponível em: [link da aplicação](https://alectrion-front.heroku
 > cd 2022-1-Alectrion-FrontEnd
 5. instale as depencencias
 > yarn
-6. execute o projeto
+6. Crie um arquivo .env da mesma forma do arquivo .env.example 
+7. execute o projeto
 > yarn dev
-7. inicie a aplicação na porta 3000
+8. inicie a aplicação na porta 3000
 
 ## Contribuir
 Para contribuir com esse projeto é importante seguir nosso [Guia de Contribuição](docs\documentation\Documentos\guia-contribuicao.md) do repositório e seguir nossa [Política de Branches](docs\documentation\Documentos\politicas-branch.md).
