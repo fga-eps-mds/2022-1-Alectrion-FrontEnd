@@ -58,6 +58,7 @@ const OrderRegister = () => {
     const { data }: AxiosResponse<Equipment> = await api.get(
       `equipment/listOne/?tippingNumber=${tippingNumber}`
     )
+
     let formattedStatus = ''
     const { status } = data
     switch (status) {
@@ -87,7 +88,7 @@ const OrderRegister = () => {
   }
 
   const handleTippingNumberChange = (data: string) => {
-    if (data.length >= 7) {
+    if (data.length) {
       fetchEquipment(data)
     }
   }
