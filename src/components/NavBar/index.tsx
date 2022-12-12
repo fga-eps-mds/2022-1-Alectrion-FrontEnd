@@ -118,7 +118,7 @@ const NavBar = () => {
                   Ordem de Serviço
                 </Button>
               </MenuItem>
-              {user.role === 'administrador' && (
+             
                 <MenuItem key={''} onClick={handleCloseNavMenu}>
                   <Button
                     data-testid="buttonUsers"
@@ -129,7 +129,7 @@ const NavBar = () => {
                     Usuários
                   </Button>
                 </MenuItem>
-              )}
+
             </Menu>
           </Box>
           <Typography
@@ -179,7 +179,7 @@ const NavBar = () => {
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
-            {user.role === 'administrador' && (
+            
               <Button
                 data-testid="buttonUsersPC"
                 key={''}
@@ -187,7 +187,7 @@ const NavBar = () => {
                 sx={{ my: 2, color: 'white', display: 'block' }}>
                 Usuários
               </Button>
-            )}
+ 
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
