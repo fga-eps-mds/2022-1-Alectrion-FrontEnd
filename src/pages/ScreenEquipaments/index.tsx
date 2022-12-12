@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import {
   Container,
   FindContainer,
@@ -265,7 +265,6 @@ export default function ScreenEquipaments() {
             onChange={handleChange}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
-                // Do code here
                 if (basicSearch === '') {
                   getEquipaments()
                 } else {
@@ -356,13 +355,18 @@ export default function ScreenEquipaments() {
                     Ativo
                   </MenuItem>
                   <MenuItem
-                    value="ACTIVE_BY_DEMISE"
+                    value="ACTIVE_LOAN"
                     sx={{ justifyContent: 'center' }}>
-                    Ativo mas quebrado
+                    Ativo Empréstimo
                   </MenuItem>
-                  <MenuItem value="INACTIVE" sx={{ justifyContent: 'center' }}>
+                  <MenuItem
+                    value="DOWNGRADED"
+                    sx={{ justifyContent: 'center' }}>
+                    Baixado
+                  </MenuItem>
+                  {/* <MenuItem value="INACTIVE" sx={{ justifyContent: 'center' }}>
                     Inativo
-                  </MenuItem>
+                  </MenuItem> // São apenas 5 status dos equipamentos */} 
                   <MenuItem
                     value="MAINTENANCE"
                     sx={{ justifyContent: 'center' }}>
@@ -372,11 +376,6 @@ export default function ScreenEquipaments() {
                     value="TECHNICAL_RESERVE"
                     sx={{ justifyContent: 'center' }}>
                     Reserva Técnica
-                  </MenuItem>
-                  <MenuItem
-                    value="DOWNGRADED"
-                    sx={{ justifyContent: 'center' }}>
-                    Baixado
                   </MenuItem>
                 </StyledSelect>
               </Box>

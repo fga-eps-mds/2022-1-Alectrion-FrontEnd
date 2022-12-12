@@ -13,6 +13,13 @@ import {
   StyledTableRow
 } from './style'
 import { EditButton } from './../edit-button/index'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/auth'
+interface AuthContextType {
+  user: {
+    role: string
+  }
+}
 
 export interface equipament {
   tippingNumber: string
@@ -64,6 +71,8 @@ interface propType {
 }
 
 export default function EquipamentsTables({ equipaments }: propType) {
+  const { user } = useContext(AuthContext) as AuthContextType
+  const role = user?.role
   return (
     <TableContainer
       sx={{
@@ -97,6 +106,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
             <StyledTableCell align="center">Potência</StyledTableCell>
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
+            <>
+            {role === 'administrador' && ( // Ajusta espaço da tabela do Administrador
+              <StyledTableCell align="center" />
+            )}
+            </>
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
           </TableRow>
@@ -116,6 +130,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {equipaments.unit.name}
+                  {' - '} {/* Ajuste do nome da unidade apresentado na tabela dos equipamentos */}
                   {equipaments.unit.localization}
                 </StyledTableCell>
                 <StyledTableCell align="center">
@@ -154,11 +169,15 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 <StyledTableCell align="center">
                   <EditButton disabled />
                 </StyledTableCell>
+                <>
+                {role === 'administrador' && ( // Apenas o perfil de administrador tem acesso ao botao de exluir o equipamento
                 <StyledTableCell align="center">
                   <Button disabled>
                     <DeleteIcon />
                   </Button>
                 </StyledTableCell>
+                )}
+                </>
                 <StyledTableCell align="center">
                   <ButtonDownloadEquipament disabled>
                     Baixar
