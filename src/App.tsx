@@ -24,14 +24,14 @@ function App() {
   const handleLogoutTimer = () => {
     timer = setTimeout(() => {
       resetTimer()
-      Object.values(events2).forEach((item) => {
+      Object.values(events).forEach((item) => {
         window.removeEventListener(item, resetTimer)
       })
       toast.warn(
         'Você será desconectado por inatividade em 5 minutos, clique aqui para continuar logado!',
         {
           position: 'top-right',
-          autoClose: 10000,
+          autoClose: 200000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -42,8 +42,8 @@ function App() {
       setTimeout(() => {
         Logout()
    
-      }, 10000)
-    }, 5000)
+      }, 300000)
+    }, 150000)
   }
 
   const resetTimer = () => {
@@ -51,7 +51,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    Object.values(events2).forEach((item) => {
+    Object.values(events).forEach((item) => {
       window.addEventListener(item, () => {
         resetTimer()
         handleLogoutTimer()
