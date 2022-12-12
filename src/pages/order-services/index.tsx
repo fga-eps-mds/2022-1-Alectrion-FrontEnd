@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Typography } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList'
@@ -11,7 +11,12 @@ import api from '../../api/config'
 import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import FilterOrderService from '../../components/filter-order-service'
-
+import { AuthContext } from '../../contexts/auth'
+interface AuthContextType {
+  user: {
+    role: string
+  }
+}
 interface OrderService {
   id: string
   date: string
@@ -43,6 +48,8 @@ export const OrderServices = () => {
   const [tippingNumber, setTippingNumber] = useState('')
   const [filters, setFilters] = useState<filterType>({})
   const [openFilter, setOpenFilter] = useState(false)
+  const { user } = useContext(AuthContext) as AuthContextType
+  const role = user?.role
 
   const handleApplyFilter = (values: any) => {
     toast.success('Filtro aplicado')
@@ -123,15 +130,17 @@ export const OrderServices = () => {
                 Limpar Filtros
               </Button>
             )}
-            <Button
-              width="240px"
-              height="62px"
-              textColor="#FFFFFF"
-              styledColor="#16878C"
-              onClick={() => navigate('/create-order-service')}
-              borderRadius="10px">
-              Cadastrar OS
-            </Button>
+            {role !== 'consulta' && ( // Apenas o perfil de consulta não tem acesso ao botão de cadastro de equipamento
+              <Button
+                width="240px"
+                height="62px"
+                textColor="#FFFFFF"
+                styledColor="#16878C"
+                onClick={() => navigate('/create-order-service')}
+                borderRadius="10px">
+                Cadastrar OS
+              </Button>
+            )}
           </ButtonGroup>
         </StyledCard>
         <OderServiceTable orderServices={orderServices} />
