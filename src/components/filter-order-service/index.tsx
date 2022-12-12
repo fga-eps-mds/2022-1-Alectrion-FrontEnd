@@ -159,9 +159,9 @@ const FilterOrderService = ({
                 onChange={formik.handleChange}
                 value={formik.values.status}>
                 <MenuItem value="ACTIVE">Ativo</MenuItem>
-                <MenuItem value="INACTIVE">Inativo</MenuItem>
-                <MenuItem value="MAINTENANCE">Manutenção</MenuItem>
+                <MenuItem value="ACTIVE_LOAN">Ativo Empréstimo</MenuItem>
                 <MenuItem value="DOWNGRADED">Baixado</MenuItem>
+                <MenuItem value="MAINTENANCE">Manutenção</MenuItem>
                 <MenuItem value="TECHNICAL_RESERVE">Reserva técnica</MenuItem>
               </StyledSelect>
             </FormControl>

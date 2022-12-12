@@ -62,21 +62,21 @@ const OrderRegister = () => {
     let formattedStatus = ''
     const { status } = data
     switch (status) {
-      case 'MAINTENANCE':
-        formattedStatus = 'Em manutenção'
-        break
       case 'ACTIVE':
         formattedStatus = 'Ativo'
         break
-      case 'ACTIVE_BY_DEMISE':
-        formattedStatus = 'Ativo'
+      case 'ACTIVE_LOAN':
+        formattedStatus = 'Ativo Empréstimo'
         break
-      case 'INACTIVE':
-        formattedStatus = 'Inativo'
-        break
+      // case 'INACTIVE':
+      //   formattedStatus = 'Inativo' // Apenas 5 status
+      //  break
       case 'DOWNGRADED':
         formattedStatus = 'Baixado'
         break
+      case 'MAINTENANCE':
+        formattedStatus = 'Em manutenção'
+      break
       case 'TECHNICAL_RESERVE':
         formattedStatus = 'Reserva técnica'
         break
