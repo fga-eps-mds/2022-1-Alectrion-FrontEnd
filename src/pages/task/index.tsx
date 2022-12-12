@@ -46,7 +46,7 @@ export const Task = () => {
           Ordem de serviço
         </Typography>
       </ContainerCard>
-      {role === 'administrador' && (
+      
         <ContainerCard data-testid="cardUsers">
           <StyledShortcut
             data-testid="buttonUsers"
@@ -59,7 +59,6 @@ export const Task = () => {
             Usuário
           </Typography>
         </ContainerCard>
-      )}
     </Container>
   )
 }

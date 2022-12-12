@@ -15,7 +15,7 @@ test('Testing screen Task', () => {
             expireIn: 'sdfjhsdf',
             email: 'user@user.com',
             name: 'user',
-            role: 'administrador'
+            role: 'gerente'
           },
           Login: jest.fn(),
           Logout: jest.fn()
