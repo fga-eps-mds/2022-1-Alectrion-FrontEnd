@@ -7,22 +7,32 @@ import { AuthProvider, AuthContext } from './contexts/auth'
 import * as React from 'react'
 import events from 'events'
 
+import ReactDOM from "react-dom";
+
 function App() {
-  const { Logout } = React.useContext(AuthContext)
+  const events2 = [
+    "load",
+    "mousemove",
+    "mousedown",
+    "click",
+    "scroll",
+    "keypress",
+  ];
 
   let timer: any
+  let timer2: any
 
   const handleLogoutTimer = () => {
     timer = setTimeout(() => {
       resetTimer()
-      Object.values(events).forEach((item) => {
+      Object.values(events2).forEach((item) => {
         window.removeEventListener(item, resetTimer)
       })
       toast.warn(
-        'Você será desconectado por inatividade em 5 minutos, clique aqui para continuar logado!',
+        'Você será desconectado por inatividade em 1 minuto, clique aqui para continuar logado!',
         {
           position: 'top-right',
-          autoClose: 200000,
+          autoClose: 60000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -30,10 +40,12 @@ function App() {
           progress: undefined
         }
       )
-      setTimeout(() => {
-        Logout()
-      }, 300000)
-    }, 1500000)
+      timer2 = setTimeout(() => {
+        localStorage.clear()
+        sessionStorage.clear()
+        window.location.pathname = "/login"
+      }, 60000) 
+    }, 1140000) 
   }
 
   const resetTimer = () => {
@@ -41,13 +53,16 @@ function App() {
   }
 
   React.useEffect(() => {
-    Object.values(events).forEach((item) => {
+    Object.values(events2).forEach((item) => {
       window.addEventListener(item, () => {
         resetTimer()
         handleLogoutTimer()
+  
+        
       })
     })
   }, [])
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,6 +72,7 @@ function App() {
       </AuthProvider>
       <ToastContainer />
     </ThemeProvider>
+
   )
 }
 export default App
