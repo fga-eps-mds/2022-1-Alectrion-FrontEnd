@@ -13,6 +13,13 @@ import {
   StyledTableRow
 } from './style'
 import { EditButton } from './../edit-button/index'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/auth'
+interface AuthContextType {
+  user: {
+    role: string
+  }
+}
 
 export interface equipament {
   tippingNumber: string
@@ -64,6 +71,8 @@ interface propType {
 }
 
 export default function EquipamentsTables({ equipaments }: propType) {
+  const { user } = useContext(AuthContext) as AuthContextType
+  const role = user?.role
   return (
     <TableContainer
       sx={{
@@ -97,8 +106,12 @@ export default function EquipamentsTables({ equipaments }: propType) {
             <StyledTableCell align="center">Potência</StyledTableCell>
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
-            <StyledTableCell align="center" />
-            <StyledTableCell align="center" />
+              <StyledTableCell align="center" />
+            <>
+            {(role === 'administrador' || role === 'gerente') && ( // Ajusta espaço da tabela do Administrador e Gerente
+              <StyledTableCell align="center" />
+            )}
+            </>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -151,9 +164,13 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 <StyledTableCell align="center">
                   {equipaments.power}
                 </StyledTableCell>
+                <>
+                {(role === 'administrador' || role === 'gerente') && ( // Os perfis de administrador e de gerente irão ter acesso ao botão de edição do equipamento
                 <StyledTableCell align="center">
                   <EditButton disabled />
                 </StyledTableCell>
+                )}
+                </>
                 <StyledTableCell align="center">
                   <Button disabled>
                     <DeleteIcon />
