@@ -113,6 +113,12 @@ export default function EquipamentsTables({ equipaments }: propType) {
             </>
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
+            <StyledTableCell align="center" />
+            <>
+            {(role === 'administrador' || role === 'gerente') && ( // Ajusta espaço da tabela do Administrador e Gerente
+              <StyledTableCell align="center" />
+            )}
+            </>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -166,11 +172,15 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 <StyledTableCell align="center">
                   {equipaments.power}
                 </StyledTableCell>
+                <>
+                {(role === 'administrador' || role === 'gerente') && ( // Os perfis de administrador e de gerente irão ter acesso ao botão de edição do equipamento
                 <StyledTableCell align="center">
                   <EditButton disabled />
                 </StyledTableCell>
                 <>
                 {role === 'administrador' && ( // Apenas o perfil de administrador tem acesso ao botao de exluir o equipamento
+                )}
+                </>
                 <StyledTableCell align="center">
                   <Button disabled>
                     <DeleteIcon />
