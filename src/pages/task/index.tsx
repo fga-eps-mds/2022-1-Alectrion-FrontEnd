@@ -18,6 +18,7 @@ interface AuthContextType {
 
 export const Task = () => {
   const { user } = useContext(AuthContext) as AuthContextType
+  // eslint-disable-next-line no-unused-vars
   const role = user?.role
   const navigate = useNavigate()
   return (
@@ -46,20 +47,18 @@ export const Task = () => {
           Ordem de serviço
         </Typography>
       </ContainerCard>
-      
-        <ContainerCard data-testid="cardUsers">
-          <StyledShortcut
-            data-testid="buttonUsers"
-            color="#71ABDA"
-            className="User"
-            onClick={() => navigate('/users')}>
-            <StyledPersonIcon style={{ fontSize: 100 }} />
-          </StyledShortcut>
-          <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-            Usuário
-          </Typography>
-        </ContainerCard>
-
+      <ContainerCard data-testid="cardUsers">
+        <StyledShortcut
+          data-testid="buttonUsers"
+          color="#71ABDA"
+          className="User"
+          onClick={() => navigate('/users')}>
+          <StyledPersonIcon style={{ fontSize: 100 }} />
+        </StyledShortcut>
+        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+          Usuário
+        </Typography>
+      </ContainerCard>
     </Container>
   )
 }

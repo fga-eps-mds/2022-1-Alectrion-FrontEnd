@@ -22,7 +22,7 @@ export interface User {
 
 interface propType {
   users: User[]
-  isEditor:boolean
+  isEditor: boolean
 }
 
 export default function UserTables({ users, isEditor }: propType) {
