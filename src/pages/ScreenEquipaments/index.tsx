@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import {
   Container,
   FindContainer,
@@ -32,6 +32,12 @@ import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/auth'
+interface AuthContextType {
+  user: {
+    role: string
+  }
+}
 
 export interface SearchParams {
   tippingNumber: string
@@ -126,6 +132,8 @@ export default function ScreenEquipaments() {
   const [equipaments, setEquipaments] = useState<equipament[]>([])
   const [basicSearch, setbasicSearch] = useState<string>('')
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext) as AuthContextType
+  const role = user?.role
   const initialValues = {
     tippingNumber: '',
 
@@ -265,7 +273,6 @@ export default function ScreenEquipaments() {
             onChange={handleChange}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
-                // Do code here
                 if (basicSearch === '') {
                   getEquipaments()
                 } else {
@@ -292,9 +299,11 @@ export default function ScreenEquipaments() {
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>
-          <ButtonCad onClick={() => navigate('/equipment-register')}>
-            Cadastrar Equipamento
-          </ButtonCad>
+          {role !== 'consulta' && ( // Apenas o perfil de consulta não tem acesso ao botao de cadastro de equipamento
+            <ButtonCad onClick={() => navigate('/equipment-register')}>
+              Cadastrar Equipamento
+            </ButtonCad>
+          )}
         </Box>
       </FindContainer>
       {renderEquipmentTable()}
@@ -372,11 +381,6 @@ export default function ScreenEquipaments() {
                     value="TECHNICAL_RESERVE"
                     sx={{ justifyContent: 'center' }}>
                     Reserva Técnica
-                  </MenuItem>
-                  <MenuItem
-                    value="DOWNGRADED"
-                    sx={{ justifyContent: 'center' }}>
-                    Baixado
                   </MenuItem>
                 </StyledSelect>
               </Box>
