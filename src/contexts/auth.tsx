@@ -68,7 +68,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.clear()
     sessionStorage.clear()
   }
-  
 
   return (
     <AuthContext.Provider

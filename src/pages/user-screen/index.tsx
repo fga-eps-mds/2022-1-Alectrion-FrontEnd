@@ -27,9 +27,11 @@ interface user {
 
 export default function ScreenUser() {
   const { user } = useContext(AuthContext) as AuthContextType
-  const isAdmin = user.role === 'gerente' || user.role === 'administrador' || user.role === 'basico'
+  const isAdmin =
+    user.role === 'gerente' ||
+    user.role === 'administrador' ||
+    user.role === 'basico'
   const isEditor = user.role === 'gerente' || user.role === 'administrador'
-
 
   const navigate = useNavigate()
   const [users, setUsers] = useState<user[]>([])
