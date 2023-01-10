@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext,useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import BasicTextFields from '../text-field'
@@ -13,6 +13,7 @@ import SelectJob from '../select-job'
 import { theme } from '../../styles/theme'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/auth'
 
 interface UserData {
   createdAt: string
@@ -36,8 +37,15 @@ interface objProps {
   password?: string
   userId?: string
 }
+interface AuthContextType2 {
+  user: {
+    role: string
+  }
+}
 
 const Form = ({ userId }: formProps) => {
+  const { user } = useContext(AuthContext) as AuthContextType2
+  const isSuperAdmin = user.role === 'administrador'
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     name: yup
@@ -241,24 +249,26 @@ const Form = ({ userId }: formProps) => {
             onClick={() => navigate('/users')}>
             Voltar
           </Button>
-          <Button
-            name="removeButton"
-            id="remover"
-            variant="contained"
-            styledColor={theme.palette.error.main}
-            textColor="white"
-            classes={{ root: 'rootRemove' }}
-            onClick={async () => {
-              try {
-                await api.delete(`/user/delete?userId=${userId}`)
-                toast.success('Usuário excluido.')
-              } catch (error) {
-                toast.error('Aconteceu algum erro.')
-              }
-              navigate('/users')
-            }}>
-            Remover
-          </Button>
+          {isSuperAdmin && (
+            <Button
+              name="removeButton"
+              id="remover"
+              variant="contained"
+              styledColor={theme.palette.error.main}
+              textColor="white"
+              classes={{ root: 'rootRemove' }}
+              onClick={async () => {
+                try {
+                  await api.delete(`/user/delete?userId=${userId}`)
+                  toast.success('Usuário excluido.')
+                } catch (error) {
+                  toast.error('Aconteceu algum erro.')
+                }
+                navigate('/users')
+              }}>
+              Remover
+            </Button>
+          )}
         </FormStyled>
       </CardContent>
     </StyledCard>

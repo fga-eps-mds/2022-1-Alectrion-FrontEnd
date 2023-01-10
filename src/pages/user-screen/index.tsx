@@ -27,7 +27,9 @@ interface user {
 
 export default function ScreenUser() {
   const { user } = useContext(AuthContext) as AuthContextType
-  const isAdmin = user.role === 'administrador'
+  const isAdmin = user.role === 'gerente' || user.role === 'administrador' || user.role === 'basico'
+  const isEditor = user.role === 'gerente' || user.role === 'administrador'
+
 
   const navigate = useNavigate()
   const [users, setUsers] = useState<user[]>([])
@@ -60,17 +62,19 @@ export default function ScreenUser() {
             disabled
           />
           <div></div>
-          <Button
-            onClick={() => navigate('/user-register')}
-            data-testid="userRegister"
-            styledColor={theme.palette.primary.dark}
-            disabled={!isAdmin}
-            textColor="white">
-            Cadastrar usuário
-          </Button>
+          {isAdmin && (
+            <Button
+              onClick={() => navigate('/user-register')}
+              data-testid="userRegister"
+              styledColor={theme.palette.primary.dark}
+              disabled={!isAdmin}
+              textColor="white">
+              Cadastrar usuário
+            </Button>
+          )}
         </FindContainer>
         <div></div>
-        <UserTables users={users} isAdmin={isAdmin} />
+        <UserTables users={users} isEditor={isEditor} />
       </Container>
     </div>
   )
