@@ -118,18 +118,16 @@ const NavBar = () => {
                   Ordem de Serviço
                 </Button>
               </MenuItem>
-              {user.role === 'administrador' && (
-                <MenuItem key={''} onClick={handleCloseNavMenu}>
-                  <Button
-                    data-testid="buttonUsers"
-                    key={''}
-                    href="/users"
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'black', display: 'block' }}>
-                    Usuários
-                  </Button>
-                </MenuItem>
-              )}
+              <MenuItem key={''} onClick={handleCloseNavMenu}>
+                <Button
+                  data-testid="buttonUsers"
+                  key={''}
+                  href="/users"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block' }}>
+                  Usuários
+                </Button>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -179,15 +177,13 @@ const NavBar = () => {
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
-            {user.role === 'administrador' && (
-              <Button
-                data-testid="buttonUsersPC"
-                key={''}
-                onClick={() => navigate('/users')}
-                sx={{ my: 2, color: 'white', display: 'block' }}>
-                Usuários
-              </Button>
-            )}
+            <Button
+              data-testid="buttonUsersPC"
+              key={''}
+              onClick={() => navigate('/users')}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              Usuários
+            </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">

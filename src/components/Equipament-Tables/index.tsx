@@ -106,11 +106,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
             <StyledTableCell align="center">Potência</StyledTableCell>
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
-              <StyledTableCell align="center" />
+            <StyledTableCell align="center" />
             <>
-            {(role === 'administrador' || role === 'gerente') && ( // Ajusta espaço da tabela do Administrador e Gerente
-              <StyledTableCell align="center" />
-            )}
+              {(role === 'administrador' || role === 'gerente') && ( // Ajusta espaço da tabela do Administrador e Gerente
+                <StyledTableCell align="center" />
+              )}
             </>
           </TableRow>
         </TableHead>
@@ -165,11 +165,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
                   {equipaments.power}
                 </StyledTableCell>
                 <>
-                {(role === 'administrador' || role === 'gerente') && ( // Os perfis de administrador e de gerente irão ter acesso ao botão de edição do equipamento
-                <StyledTableCell align="center">
-                  <EditButton disabled />
-                </StyledTableCell>
-                )}
+                  {(role === 'administrador' || role === 'gerente') && ( // Os perfis de administrador e de gerente irão ter acesso ao botão de edição do equipamento
+                    <StyledTableCell align="center">
+                      <EditButton disabled />
+                    </StyledTableCell>
+                  )}
                 </>
                 <StyledTableCell align="center">
                   <Button disabled>

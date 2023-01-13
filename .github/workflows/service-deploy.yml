@@ -1,18 +1,21 @@
-name: Build
+name: heroku-deploy
 on:
- pull_request:
-   branches:
-     - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   deploy-heroku:
     runs-on: ubuntu-latest
     name: heroku deploy
     steps:
       - uses: actions/checkout@v2
+      - name: Config deploy
+        run: python config-deploy.py ${{secrets.GATEWAY_URL}}
       - uses: akhileshns/heroku-deploy@v3.12.12 
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "alectrion-front"
+          heroku_app_name: "alectrion-2022"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
           docker_build_args: |
