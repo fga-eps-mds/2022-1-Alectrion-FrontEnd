@@ -8,6 +8,9 @@ import Paper from '@mui/material/Paper'
 
 import { StyledTableCell, StyledTableRow } from './styles'
 import { dateFormat } from '../../utils/dateFormat'
+import { useNavigate } from 'react-router-dom'
+import { EditOSButton } from '../edit-os-button'
+
 interface OrderService {
   id: string
   date: string
@@ -24,10 +27,13 @@ interface OrderService {
 }
 interface OrderServicesProps {
   orderServices: OrderService[]
+  isConsulta: boolean
 }
 export default function OderServiceTable({
-  orderServices
+  orderServices,
+  isConsulta
 }: OrderServicesProps) {
+  const navigate = useNavigate()
   return (
     <TableContainer
       sx={{
@@ -39,17 +45,22 @@ export default function OderServiceTable({
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
+            <StyledTableCell align="center">ID</StyledTableCell>
             <StyledTableCell align="center">Data Entrada</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">N° tombamento</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
             <StyledTableCell align="center">Recebedor</StyledTableCell>
             <StyledTableCell align="center">Entregador</StyledTableCell>
+            <StyledTableCell align="center">Editar</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {orderServices?.map((orderSerivce) => (
             <StyledTableRow key={orderSerivce.id}>
+              <StyledTableCell align="center">
+                {orderSerivce.id}
+              </StyledTableCell>
               <StyledTableCell align="center">
                 {dateFormat(orderSerivce.date)}
               </StyledTableCell>
@@ -66,6 +77,17 @@ export default function OderServiceTable({
                 {orderSerivce.receiverName}
               </StyledTableCell>
               <StyledTableCell align="center">{`${orderSerivce.sender} - ${orderSerivce.senderFunctionalNumber}`}</StyledTableCell>
+              {!isConsulta && (
+                <StyledTableCell
+                  align="center"
+                  onClick={() =>
+                    navigate('/edit-os', {
+                      state: { orderSerivce }
+                    })
+                  }>
+                  <EditOSButton data-testid="edit-os-button" />
+                </StyledTableCell>
+              )}
             </StyledTableRow>
           ))}
         </TableBody>

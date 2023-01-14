@@ -50,6 +50,7 @@ export const OrderServices = () => {
   const [openFilter, setOpenFilter] = useState(false)
   const { user } = useContext(AuthContext) as AuthContextType
   const role = user?.role
+  const isConsulta = user.role === 'consulta'
 
   const handleApplyFilter = (values: any) => {
     toast.success('Filtro aplicado')
@@ -143,7 +144,10 @@ export const OrderServices = () => {
             )}
           </ButtonGroup>
         </StyledCard>
-        <OderServiceTable orderServices={orderServices} />
+        <OderServiceTable
+          orderServices={orderServices}
+          isConsulta={isConsulta}
+        />
       </Container>
       <FilterOrderService
         open={openFilter}

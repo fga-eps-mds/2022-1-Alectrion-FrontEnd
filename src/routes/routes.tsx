@@ -18,6 +18,7 @@ import OrderRegister from '../pages/order-service'
 import { CircularProgress } from '@mui/material'
 import EquipRegister from '../pages/equipment-register'
 import { OrderServices } from '../pages/order-services'
+import EditOrderServices from '../pages/order-service-edit'
 type AuthRouteProps = {
   children: ReactNode
 }
@@ -68,6 +69,15 @@ export const SignRoutes = () => {
             <AuthRoutes>
               <NavBar />
               <OrderServices />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/edit-os"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <EditOrderServices />
             </AuthRoutes>
           }
         />
