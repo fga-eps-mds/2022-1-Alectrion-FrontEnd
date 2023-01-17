@@ -23,6 +23,12 @@ export const EditButton = (props: StyledButton) => {
           {props.children}
         </StyledEditButton>
       )}
+      {role === 'gerente' && (
+        <StyledEditButton {...props} data-testid="button">
+          <EditIcon />
+          {props.children}
+        </StyledEditButton>
+      )}
     </>
   )
 }

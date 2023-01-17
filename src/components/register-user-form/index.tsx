@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { useFormik } from 'formik'
 import CardContent from '@mui/material/CardContent'
 import {
@@ -7,6 +8,7 @@ import {
   StyledTextField,
   StyledInputLabel
 } from './styles'
+import SelectProfile from '../select-profile'
 import * as yup from 'yup'
 import { Button } from '../button'
 import { FormControl, MenuItem } from '@mui/material'
@@ -14,8 +16,20 @@ import { theme } from '../../styles/theme'
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/auth'
+
+interface AuthContextType2 {
+  user: {
+    role: string
+  }
+}
 
 const RegisterUserForm = () => {
+  const { user } = useContext(AuthContext) as AuthContextType2
+  const isAdmin = user.role === 'administrador'
+  const isGerente = user.role === 'gerente'
+  const isBasico = user.role === 'basico'
+
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     email: yup.string().email('Insira um email válido').trim().required(),
@@ -148,10 +162,18 @@ const RegisterUserForm = () => {
               error={formik.touched.profile && Boolean(formik.errors.profile)}
               onChange={formik.handleChange}
               value={formik.values.profile}>
+
+              <MenuItem value="BASICO">Básico</MenuItem>
+              <MenuItem value={"CONSULTA"}>Consulta</MenuItem>
+              {!isBasico &&
+                (<MenuItem value="GERENTE">Gerente</MenuItem>)}
+              {!isGerente && !isBasico &&
+                (<MenuItem value="ADMIN">Admin</MenuItem>)}
+{/* 
               <MenuItem value="BASICO">Básico</MenuItem>
               <MenuItem value="ADMIN">Admin</MenuItem>
               <MenuItem value="GERENTE">Gerente</MenuItem>
-              <MenuItem value="CONSULTA">Consulta</MenuItem>
+              <MenuItem value="CONSULTA">Consulta</MenuItem> */}
             </StyledSelect>
           </FormControl>
           <StyledTextField
