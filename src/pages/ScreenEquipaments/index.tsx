@@ -374,9 +374,6 @@ export default function ScreenEquipaments() {
                     sx={{ justifyContent: 'center' }}>
                     Baixado
                   </MenuItem>
-                  {/* <MenuItem value="INACTIVE" sx={{ justifyContent: 'center' }}>
-                    Inativo
-                  </MenuItem> // São apenas 5 status dos equipamentos */} 
                   <MenuItem
                     value="MAINTENANCE"
                     sx={{ justifyContent: 'center' }}>

@@ -19,10 +19,10 @@ export const EditButton = (props: StyledButton) => {
     <>
       {role === 'administrador' && (
         <StyledEditButton {...props} data-testid="button">
-         <EditIcon />
-         {props.children}
+          <EditIcon />
+          {props.children}
         </StyledEditButton>
-      )} 
-    </> 
+      )}
+    </>
   )
 }

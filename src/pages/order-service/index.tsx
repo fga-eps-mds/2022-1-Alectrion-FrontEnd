@@ -76,7 +76,7 @@ const OrderRegister = () => {
         break
       case 'MAINTENANCE':
         formattedStatus = 'Em manutenção'
-      break
+        break
       case 'TECHNICAL_RESERVE':
         formattedStatus = 'Reserva técnica'
         break

@@ -107,17 +107,17 @@ export default function EquipamentsTables({ equipaments }: propType) {
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
             <>
-            {role === 'administrador' && ( // Ajusta espaço da tabela do Administrador
-              <StyledTableCell align="center" />
-            )}
+              {role === 'administrador' && ( // Ajusta espaço da tabela do Administrador
+                <StyledTableCell align="center" />
+              )}
             </>
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
             <StyledTableCell align="center" />
             <>
-            {(role === 'administrador' || role === 'gerente') && ( // Ajusta espaço da tabela do Administrador e Gerente
-              <StyledTableCell align="center" />
-            )}
+              {(role === 'administrador' || role === 'gerente') && ( // Ajusta espaço da tabela do Administrador e Gerente
+                <StyledTableCell align="center" />
+              )}
             </>
           </TableRow>
         </TableHead>
@@ -136,7 +136,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {equipaments.unit.name}
-                  {' - '} {/* Ajuste do nome da unidade apresentado na tabela dos equipamentos */}
+                  {' - '}
                   {equipaments.unit.localization}
                 </StyledTableCell>
                 <StyledTableCell align="center">
@@ -173,20 +173,20 @@ export default function EquipamentsTables({ equipaments }: propType) {
                   {equipaments.power}
                 </StyledTableCell>
                 <>
-                {(role === 'administrador' || role === 'gerente') && ( // Os perfis de administrador e de gerente irão ter acesso ao botão de edição do equipamento
-                <StyledTableCell align="center">
-                  <EditButton disabled />
-                </StyledTableCell>
-                <>
-                {role === 'administrador' && ( // Apenas o perfil de administrador tem acesso ao botao de exluir o equipamento
-                )}
+                  {(role === 'administrador' || role === 'gerente') && ( // Os perfis de administrador e de gerente irão ter acesso ao botão de edição do equipamento
+                    <StyledTableCell align="center">
+                      <EditButton disabled />
+                    </StyledTableCell>
+                  )}
                 </>
-                <StyledTableCell align="center">
-                  <Button disabled>
-                    <DeleteIcon />
-                  </Button>
-                </StyledTableCell>
-                )}
+                <>
+                  {role === 'administrador' && ( // Apenas o perfil de administrador tem acesso ao botao de exluir o equipamento
+                    <StyledTableCell align="center">
+                      <Button disabled>
+                        <DeleteIcon />
+                      </Button>
+                    </StyledTableCell>
+                  )}
                 </>
                 <StyledTableCell align="center">
                   <ButtonDownloadEquipament disabled>

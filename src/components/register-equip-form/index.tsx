@@ -152,7 +152,6 @@ const RegisterEquipForm = () => {
           return /^[0-9]/.test(value)
         } else return true
       }),
-    unitId: yup.string().trim().required('Esse campo é obrigatório'),
     description: yup.string().min(3).max(250).trim()
   })
   const formik = useFormik({
@@ -198,7 +197,9 @@ const RegisterEquipForm = () => {
         initialUseDate:
           values.initialUseDate !== '' ? new Date(values.initialUseDate) : null,
         power: values.power !== '' ? values.power : null,
-        unitId: values.unitId,
+        unitId: units.filter(
+          (x) => x.name === 'Divisão de Suporte Técnico em Informática'
+        )[0].id, // Define como unidade padrão a DSTI
         description: values.description !== '' ? values.description : null
       }
       const formattedBody = Object.entries(body)
@@ -236,7 +237,7 @@ const RegisterEquipForm = () => {
           <FormContainer>
             <Autocomplete
               disablePortal
-              id="unitId-input"
+              id="productType-input"
               options={[
                 { value: 'CPU', label: 'CPU' },
                 { label: 'Monitor', value: 'MONITOR' },
@@ -394,34 +395,6 @@ const RegisterEquipForm = () => {
                 formik.touched.invoiceNumber &&
                 Boolean(formik.errors.invoiceNumber)
               }
-            />
-            <Autocomplete
-              disablePortal
-              id="unitId-input"
-              options={units ?? []}
-              getOptionLabel={(option) =>
-                `${option.name} - ${option.localization}`
-              }
-              renderInput={(params) => (
-                <StyledTextField
-                  {...params}
-                  label="Unidade"
-                  helperText={formik.touched.unitId && formik.errors.unitId}
-                  error={formik.touched.unitId && Boolean(formik.errors.unitId)}
-                />
-              )}
-              onChange={(_, value) => formik.setFieldValue('unitId', value?.id)}
-              fullWidth
-              className="autocomplete"
-              sx={{
-                padding: 0,
-                '& .MuiOutlinedInput-root': {
-                  padding: '0 !important'
-                },
-                '& .MuiAutocomplete-input': {
-                  padding: '16.5px !important'
-                }
-              }}
             />
 
             {formik.values.productType === 'CPU' && (
