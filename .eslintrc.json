@@ -19,6 +19,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
+  "ignorePatterns": ["*.tsx"],
   "rules": {
     "react/react-in-jsx-scope": "off"
   }
