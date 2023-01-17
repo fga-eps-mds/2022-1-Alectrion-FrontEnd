@@ -100,7 +100,8 @@ const RegisterOrderServiceForm = ({
         toast.success('Ordem de serviço criada.')
         navigate('/order-services')
       } catch (error) {
-        toast.error('Aconteceu algum erro.')
+        console.log(`erro: ${error}`)
+        toast.error('Error ao cadastrar O.S.')
       }
     }
   })
@@ -131,7 +132,7 @@ const RegisterOrderServiceForm = ({
               <StyledTextField
                 aria-readonly
                 id="senderFunctionalNumber-input"
-                label="N° funcional"
+                label="N° funcional do entregador"
                 type="text"
                 fullWidth
                 name="senderFunctionalNumber"

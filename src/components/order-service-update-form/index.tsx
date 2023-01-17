@@ -28,7 +28,7 @@ type Props = {
   units: { id: string; name: string; localization: string }[] | undefined
 }
 
-const EditOrderServiceForm = ({
+const OrderServiceUpdateForm = ({
   initialData,
   user,
   handleTippingNumberChange,
@@ -60,7 +60,10 @@ const EditOrderServiceForm = ({
     status: yup.string().trim(),
     destination: yup.string().trim().required('Esse campo é obrigatório'),
     productType: yup.string().trim(),
-    description: yup.string().trim().max(250)
+    description: yup.string().trim().max(250),
+    receiverName: yup.string().trim(),
+    receiverFunctionalNumber: yup.string().trim(),
+    technicians: yup.string().trim()
   })
   const formik = useFormik({
     initialValues: {
@@ -73,7 +76,10 @@ const EditOrderServiceForm = ({
       productType: initialData?.type,
       description: '',
       userName: user.name,
-      destination: ''
+      destination: '',
+      receiverName: '',
+      receiverFunctionalNumber: '',
+      technicians: ''
     },
     validationSchema,
     enableReinitialize: true,
@@ -88,7 +94,9 @@ const EditOrderServiceForm = ({
             senderFunctionalNumber: formik.values.senderFunctionalNumber,
             date: formik.values.date,
             description: formik.values.description,
-            receiverName: formik.values.userName
+            receiverName: formik.values.userName,
+            receiverFunctionalNumber: formik.values.receiverFunctionalNumber,
+            technicians: formik.values.userName
           },
           {
             headers: {
@@ -100,7 +108,8 @@ const EditOrderServiceForm = ({
         toast.success('Ordem de serviço criada.')
         navigate('/order-services')
       } catch (error) {
-        toast.error('Aconteceu algum erro.')
+        console.log(`erro: ${error}`)
+        toast.error('Error ao alterar O.S.')
       }
     }
   })
@@ -131,7 +140,7 @@ const EditOrderServiceForm = ({
               <StyledTextField
                 aria-readonly
                 id="senderFunctionalNumber-input"
-                label="N° funcional"
+                label="N° funcional do entregador"
                 type="text"
                 fullWidth
                 name="senderFunctionalNumber"
@@ -286,7 +295,23 @@ const EditOrderServiceForm = ({
                   />
                 )}
               />
+              <StyledTextField
+                aria-readonly
+                id="brand-input"
+                label="Tecnicos"
+                type="text"
+                name="userName"
+                fullWidth
+                variant="outlined"
+                onChange={formik.handleChange}
+                value={formik.values.userName}
+                helperText={formik.touched.userName && formik.errors.userName}
+                error={
+                  formik.touched.userName && Boolean(formik.errors.userName)
+                }
+              />
             </Column>
+
           </FormContainer>
 
           <StyledTextArea
@@ -325,4 +350,4 @@ const EditOrderServiceForm = ({
     </Container>
   )
 }
-export default EditOrderServiceForm
+export default OrderServiceUpdateForm

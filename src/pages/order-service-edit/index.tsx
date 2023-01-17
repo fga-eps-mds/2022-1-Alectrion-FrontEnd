@@ -9,9 +9,9 @@ import {
   useSearchParams
 } from 'react-router-dom'
 import api from '../../api/config'
-import EditOrderServiceForm from '../../components/edit-os-form'
 import { AuthContext } from '../../contexts/auth'
 import { Container } from '../user-register/styles'
+import OrderServiceUpdateForm  from '../../components/order-service-update-form'
 
 export type Equipment = {
   id: string
@@ -101,7 +101,7 @@ const OrderEdit = () => {
         <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
           Edição de ordem de serviço
         </Typography>
-        <EditOrderServiceForm
+        <OrderServiceUpdateForm
           units={units}
           initialData={equipment}
           user={{

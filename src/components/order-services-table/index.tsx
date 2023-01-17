@@ -10,6 +10,7 @@ import { StyledTableCell, StyledTableRow } from './styles'
 import { dateFormat } from '../../utils/dateFormat'
 import { useNavigate } from 'react-router-dom'
 import { EditOSButton } from '../edit-os-button'
+import OrderServiceUpdateForm  from '../order-service-update-form'
 
 interface OrderService {
   id: string
@@ -81,11 +82,11 @@ export default function OderServiceTable({
                 <StyledTableCell
                   align="center"
                   onClick={() =>
-                    navigate('/edit-os', {
+                    navigate('/order-service-update-form', {
                       state: { orderSerivce }
                     })
                   }>
-                  <EditOSButton data-testid="edit-os-button" />
+                  <EditOSButton/>
                 </StyledTableCell>
               )}
             </StyledTableRow>
