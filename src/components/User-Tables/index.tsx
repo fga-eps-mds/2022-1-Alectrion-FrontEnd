@@ -58,7 +58,7 @@ export default function UserTables({ users, isEditor, isAdmin }: propType) {
               <StyledTableCell align="center">{user.role}</StyledTableCell>
               <StyledTableCell align="center">{user.job}</StyledTableCell>
  
-                {isAdmin &&
+                {(isAdmin || (!isAdmin && isEditor && user.role !== 'administrador')) &&
                   (<StyledTableCell
                     align="center"
                     onClick={() =>
@@ -67,16 +67,6 @@ export default function UserTables({ users, isEditor, isAdmin }: propType) {
                     <EditButton data-testid="edit-user-button" />
                     <>Editar</>
                   </StyledTableCell>)}
-
-                {!isAdmin && isEditor && user.role !== 'administrador' &&
-                  (<StyledTableCell
-                    align="center"
-                    onClick={() =>
-                      navigate('/edit-user', { state: { userId: user.id } })
-                    }>    
-                    <EditButton data-testid="edit-user-button" />
-                    <>Editar</>
-                  </StyledTableCell>)}  
             </StyledTableRow>
           ))}
         </TableBody>
