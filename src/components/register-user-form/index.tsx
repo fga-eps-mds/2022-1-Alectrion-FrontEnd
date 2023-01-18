@@ -140,12 +140,16 @@ const RegisterUserForm = () => {
               error={formik.touched.job && Boolean(formik.errors.job)}
               onChange={formik.handleChange}
               value={formik.values.job}>
-              <MenuItem value="DELEGADO">Básico</MenuItem>
-              <MenuItem value="AGENTE_POLICIA">Agente de polícia</MenuItem>
-              <MenuItem value="ESCRIVAO">Escrivão</MenuItem>
-              <MenuItem value="COORDENADOR">Coordenador</MenuItem>
-              <MenuItem value="CHEFE_SECAO">Chefe de seção</MenuItem>
-              <MenuItem value="GENERICO">Genérico</MenuItem>
+
+              <MenuItem value={'DELEGADO'}>Delegado</MenuItem>
+              <MenuItem value={'AGENTE_POLICIA'}>Agente de polícia</MenuItem>
+              <MenuItem value={'ESCRIVAO'}>Escrivão</MenuItem>
+              <MenuItem value={'COORDENADOR'}>Coordenador</MenuItem>
+              <MenuItem value={'CHEFE_SECAO'}>Chefe de seção</MenuItem>
+              <MenuItem value={'GENERICO'}>Genérico</MenuItem>
+              <MenuItem value={'COMISSIONADO'}>Comissionado</MenuItem>
+              <MenuItem value={'ESTAGIARIO'}>Estagiário</MenuItem>
+              <MenuItem value={'SUPERINTENDENTE'}>Superintendente</MenuItem>
             </StyledSelect>
           </FormControl>
           <FormControl fullWidth>
@@ -169,11 +173,6 @@ const RegisterUserForm = () => {
                 (<MenuItem value="GERENTE">Gerente</MenuItem>)}
               {!isGerente && !isBasico &&
                 (<MenuItem value="ADMIN">Admin</MenuItem>)}
-{/* 
-              <MenuItem value="BASICO">Básico</MenuItem>
-              <MenuItem value="ADMIN">Admin</MenuItem>
-              <MenuItem value="GERENTE">Gerente</MenuItem>
-              <MenuItem value="CONSULTA">Consulta</MenuItem> */}
             </StyledSelect>
           </FormControl>
           <StyledTextField
