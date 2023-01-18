@@ -15,6 +15,7 @@ import {
 import { EditButton } from './../edit-button/index'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/auth'
+import { dateFormat } from '../../utils/dateFormat'
 interface AuthContextType {
   user: {
     role: string
@@ -52,7 +53,7 @@ export interface equipament {
 
   brand: any
 
-  acquisition: any
+  acquisitionDate: Date
 
   unit: {
     name: string
@@ -111,9 +112,6 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 <StyledTableCell align="center" />
               )}
             </>
-            <StyledTableCell align="center" />
-            <StyledTableCell align="center" />
-            <StyledTableCell align="center" />
             <>
               {(role === 'administrador' || role === 'gerente') && ( // Ajusta espaço da tabela do Administrador e Gerente
                 <StyledTableCell align="center" />
@@ -135,12 +133,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
                   {equipaments.status}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.unit.name}
-                  {' - '}
-                  {equipaments.unit.localization}
+                  {`${equipaments.unit.name} - ${equipaments.unit.localization}`}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.createdAt?.substring(0, 10)}
+                  {dateFormat(equipaments.acquisitionDate)}
+                  {/* Corrige data que estava errada na tabela */}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {equipaments.type}
