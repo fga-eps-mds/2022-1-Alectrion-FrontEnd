@@ -68,9 +68,6 @@ const OrderRegister = () => {
       case 'ACTIVE_LOAN':
         formattedStatus = 'Ativo Empréstimo'
         break
-      // case 'INACTIVE':
-      //   formattedStatus = 'Inativo' // Apenas 5 status
-      //  break
       case 'DOWNGRADED':
         formattedStatus = 'Baixado'
         break
