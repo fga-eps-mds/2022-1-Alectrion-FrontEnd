@@ -47,6 +47,8 @@ interface AuthContextType2 {
 const Form = ({ userId }: formProps) => {
   const { user } = useContext(AuthContext) as AuthContextType2
   const isSuperAdmin = user.role === 'administrador'
+  const isGerente = user.role === 'gerente'
+  const isBasico = user.role === 'basico'
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     name: yup
@@ -54,7 +56,7 @@ const Form = ({ userId }: formProps) => {
       .required('O campo é obrigatório.')
       .min(3, 'Digite pelo menos 3 caracteres')
       .trim(),
-    email: yup.string().email('E-mail inválido.').trim().required(),
+    email: yup.string().email('E-mail inválido.').trim().required('O campo é obrigatório.'),
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
     username: yup
@@ -215,6 +217,9 @@ const Form = ({ userId }: formProps) => {
             onChange={formik.handleChange}
             error={formik.touched.profile && Boolean(formik.errors.profile)}
             testid="profileSelect"
+            isAdmin={isSuperAdmin}
+            isGerente={isGerente}
+            isBasico={isBasico}
           />
 
           <BasicTextFields
