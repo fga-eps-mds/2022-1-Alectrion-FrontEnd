@@ -48,6 +48,8 @@ export interface SearchParams {
 
   status: string
 
+  estado: string
+
   model: string
 
   acquisitionDate: Date
@@ -87,6 +89,8 @@ interface equipament {
   type: string
 
   status: string
+
+  estado: string
 
   model: string
 
@@ -265,10 +269,10 @@ export default function ScreenEquipaments() {
         <BoxInput>
           <SearchIcon sx={{ marginBottom: '3px' }} />
           <Input
-            id="serialNumber"
-            name="serialNumber"
+            id="searchField"
+            name="search"
             sx={{ flex: 0.9 }}
-            placeholder="N° Tombamento ou N° serie"
+            placeholder="Campo de busca"
             value={basicSearch}
             onChange={handleChange}
             onKeyPress={(ev) => {

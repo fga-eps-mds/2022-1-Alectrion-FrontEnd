@@ -19,6 +19,7 @@ export type Equipment = {
   serialNumber: string
   type: string
   status: string
+  estado: string
   model: string
   description: string
   initialUseDate: string
@@ -68,9 +69,6 @@ const OrderRegister = () => {
       case 'ACTIVE_LOAN':
         formattedStatus = 'Ativo Empréstimo'
         break
-      // case 'INACTIVE':
-      //   formattedStatus = 'Inativo' // Apenas 5 status
-      //  break
       case 'DOWNGRADED':
         formattedStatus = 'Baixado'
         break

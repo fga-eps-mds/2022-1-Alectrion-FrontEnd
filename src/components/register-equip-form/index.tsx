@@ -28,6 +28,7 @@ const RegisterEquipForm = () => {
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     productType: yup.string().trim().required('Esse campo é obrigatório'),
+    estado: yup.string().trim().required('Esse campo é obrigatório'),
     tippingNumber: yup
       .string()
       .trim()
@@ -157,6 +158,7 @@ const RegisterEquipForm = () => {
   const formik = useFormik({
     initialValues: {
       productType: '',
+      estado: '',
       tippingNumber: '',
       brand: '',
       serialNumber: '',
@@ -179,6 +181,7 @@ const RegisterEquipForm = () => {
     onSubmit: async (values) => {
       const body = {
         type: values.productType,
+        estado: values.estado,
         tippingNumber: values.tippingNumber,
         brandName: values.brand,
         serialNumber: values.serialNumber,
@@ -264,6 +267,44 @@ const RegisterEquipForm = () => {
               )}
               onChange={(_, value) =>
                 formik.setFieldValue('productType', value?.value)
+              }
+              fullWidth
+              className="autocomplete"
+              sx={{
+                padding: 0,
+                '& .MuiOutlinedInput-root': {
+                  padding: '0 !important'
+                },
+                '& .MuiAutocomplete-input': {
+                  padding: '16.5px !important'
+                }
+              }}
+            />
+            <Autocomplete
+              disablePortal
+              id="estado-input"
+              options={[
+                { label: 'Novo', value: 'Novo' },
+                { label: 'Usado', value: 'Usado' }
+              ]}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <StyledTextField
+                  {...params}
+                  label="Estado do equipamento"
+                  id="estado-input-select-label"
+                  data-testid="estado-select"
+                  helperText={
+                    formik.touched.productType && formik.errors.productType
+                  }
+                  error={
+                    formik.touched.productType &&
+                    Boolean(formik.errors.productType)
+                  }
+                />
+              )}
+              onChange={(_, value) =>
+                formik.setFieldValue('estado', value?.value)
               }
               fullWidth
               className="autocomplete"

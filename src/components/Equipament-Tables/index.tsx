@@ -31,6 +31,8 @@ export interface equipament {
 
   status: string
 
+  estado: string
+
   model: string
 
   description?: string
@@ -88,10 +90,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
           <TableRow>
             <StyledTableCell align="center">N° Tombamento </StyledTableCell>
             <StyledTableCell align="center">N° Serie</StyledTableCell>
-            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Situação</StyledTableCell> {/* renomeamos status para situação */}
             <StyledTableCell align="center">Unidade</StyledTableCell>
             <StyledTableCell align="center">Data de aquisição</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
+            <StyledTableCell align="center">Estado</StyledTableCell> {/* novo/usuado */}
             <StyledTableCell align="center">Marca</StyledTableCell>
             <StyledTableCell align="center">Modelo</StyledTableCell>
             <StyledTableCell align="center">Processador</StyledTableCell>
@@ -141,6 +144,9 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {equipaments.type}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {equipaments.estado}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {equipaments.brand.name}
