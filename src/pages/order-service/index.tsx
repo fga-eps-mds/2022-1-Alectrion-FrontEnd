@@ -18,7 +18,7 @@ export type Equipment = {
   tippingNumber: string
   serialNumber: string
   type: string
-  status: string
+  situação: string
   estado: string
   model: string
   description: string
@@ -61,22 +61,22 @@ const OrderRegister = () => {
     )
 
     let formattedStatus = ''
-    const { status } = data
-    switch (status) {
-      case 'ACTIVE':
+    const { situação } = data
+    switch (situação) {
+      case 'Ativo':
         formattedStatus = 'Ativo'
         break
-      case 'ACTIVE_LOAN':
+      case 'Ativo Empréstimo':
         formattedStatus = 'Ativo Empréstimo'
         break
-      case 'DOWNGRADED':
+      case 'Baixado':
         formattedStatus = 'Baixado'
         break
-      case 'MAINTENANCE':
-        formattedStatus = 'Em manutenção'
+      case 'Manutenção':
+        formattedStatus = 'Manutenção'
         break
-      case 'TECHNICAL_RESERVE':
-        formattedStatus = 'Reserva técnica'
+      case 'Reserva Técnica':
+        formattedStatus = 'Reserva Técnica'
         break
       default:
         break

@@ -46,7 +46,7 @@ export interface SearchParams {
 
   type: string
 
-  status: string
+  situação: string
 
   estado: string
 
@@ -88,7 +88,7 @@ interface equipament {
 
   type: string
 
-  status: string
+  situação: string
 
   estado: string
 
@@ -145,7 +145,9 @@ export default function ScreenEquipaments() {
 
     type: '',
 
-    status: '',
+    estado: '',
+
+    situação: '',
 
     model: '',
 
@@ -235,11 +237,12 @@ export default function ScreenEquipaments() {
   const cabecalhos = [
     { label: 'Nº de Tombamento', key: 'tippingNumber' },
     { label: 'Nº Série', key: 'serialNumber' },
-    { label: 'Status', key: 'status' },
+    { label: 'Situação', key: 'situação' },
     { label: 'Unidade', key: 'unit.name' },
     { label: 'Unidade', key: 'unit.localization' },
     { label: 'Data de aquisição', key: 'createdAt' },
-    { label: 'Tipo Equipamento', key: 'type' },
+    { label: 'Tipo Equipamento', key: 'type' },    
+    { label: 'Estado', key: 'estado' },
     { label: 'Marca', key: 'brand.name' },
     { label: 'Modelo', key: 'model' },
     { label: 'Processador', key: 'processor' },
@@ -333,28 +336,28 @@ export default function ScreenEquipaments() {
                   <MenuItem value="CPU" sx={{ justifyContent: 'center' }}>
                     CPU
                   </MenuItem>
-                  <MenuItem value="WEBCAM" sx={{ justifyContent: 'center' }}>
+                  <MenuItem value="Webcam" sx={{ justifyContent: 'center' }}>
                     WebCam
                   </MenuItem>
-                  <MenuItem value="MONITOR" sx={{ justifyContent: 'center' }}>
+                  <MenuItem value="Monitor" sx={{ justifyContent: 'center' }}>
                     Monitor
                   </MenuItem>
-                  <MenuItem value="NOBREAK" sx={{ justifyContent: 'center' }}>
+                  <MenuItem value="Nobreak" sx={{ justifyContent: 'center' }}>
                     Nobreak
                   </MenuItem>
-                  <MenuItem value="SCANNER" sx={{ justifyContent: 'center' }}>
-                    Scanner
+                  <MenuItem value="Escaneador" sx={{ justifyContent: 'center' }}>
+                  Escaneador
                   </MenuItem>
                   <MenuItem
-                    value="STABILIZER"
+                    value="Estabilizador"
                     sx={{ justifyContent: 'center' }}>
                     Estabilizador
                   </MenuItem>
                 </StyledSelect>
                 <StyledSelect
-                  id="status"
-                  name="status"
-                  value={formik.values.status}
+                  id="situação"
+                  name="situação"
+                  value={formik.values.situação}
                   onChange={formik.handleChange}
                   displayEmpty
                   sx={{
@@ -363,28 +366,28 @@ export default function ScreenEquipaments() {
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
                   <MenuItem value="" sx={{ justifyContent: 'center' }}>
-                    <em>Status</em>
+                    <em>Situação</em>
                   </MenuItem>
-                  <MenuItem value="ACTIVE" sx={{ justifyContent: 'center' }}>
+                  <MenuItem value="Ativo" sx={{ justifyContent: 'center' }}>
                     Ativo
                   </MenuItem>
                   <MenuItem
-                    value="ACTIVE_LOAN"
+                    value="Ativo Empréstimo"
                     sx={{ justifyContent: 'center' }}>
                     Ativo Empréstimo
                   </MenuItem>
                   <MenuItem
-                    value="DOWNGRADED"
+                    value="Baixado"
                     sx={{ justifyContent: 'center' }}>
                     Baixado
                   </MenuItem>
                   <MenuItem
-                    value="MAINTENANCE"
+                    value="Manutenção"
                     sx={{ justifyContent: 'center' }}>
                     Manutenção
                   </MenuItem>
                   <MenuItem
-                    value="TECHNICAL_RESERVE"
+                    value="Reserva Técnica"
                     sx={{ justifyContent: 'center' }}>
                     Reserva Técnica
                   </MenuItem>

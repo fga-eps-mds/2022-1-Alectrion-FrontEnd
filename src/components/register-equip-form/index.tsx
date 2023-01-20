@@ -113,14 +113,14 @@ const RegisterEquipForm = () => {
       .string()
       .trim()
       .when('productType', {
-        is: 'MONITOR',
+        is: 'Monitor',
         then: yup.string().required('Esse campo é obrigatório')
       }),
     monitorSize: yup
       .string()
       .trim()
       .when('productType', {
-        is: 'MONITOR',
+        is: 'Monitor',
         then: yup
           .string()
           .required('Esse campo é obrigatório')
@@ -141,11 +141,11 @@ const RegisterEquipForm = () => {
     power: yup
       .string()
       .when('productType', {
-        is: 'STABILIZER',
+        is: 'Estabilizador',
         then: yup.string().required('Esse campo é obrigatório')
       })
       .when('productType', {
-        is: 'NOBREAK',
+        is: 'Nobreak',
         then: yup.string().required('Esse campo é obrigatório')
       })
       .test('valida campo', 'Apenas números', (value) => {
@@ -186,7 +186,7 @@ const RegisterEquipForm = () => {
         brandName: values.brand,
         serialNumber: values.serialNumber,
         model: values.model,
-        status: 'TECHNICAL_RESERVE',
+        status: 'Reserva Técnica',
         acquisitionName: values.acquisitionType,
         acquisitionDate: values.acquisitionDate,
         invoiceNumber: values.invoiceNumber,
@@ -243,11 +243,11 @@ const RegisterEquipForm = () => {
               id="productType-input"
               options={[
                 { value: 'CPU', label: 'CPU' },
-                { label: 'Monitor', value: 'MONITOR' },
-                { label: 'Nobreak', value: 'NOBREAK' },
-                { label: 'Escaneador', value: 'SCANNER' },
-                { label: 'Estabilizador', value: 'STABILIZER' },
-                { value: 'WEBCAM', label: 'Webcam' }
+                { label: 'Monitor', value: 'Monitor' },
+                { label: 'Nobreak', value: 'Nobreak' },
+                { label: 'Escaneador', value: 'Escaneador' },
+                { label: 'Estabilizador', value: 'Estabilizador' },
+                { value: 'Webcam', label: 'Webcam' }
               ]}
               getOptionLabel={(option) => option.label}
               renderInput={(params) => (
@@ -588,8 +588,8 @@ const RegisterEquipForm = () => {
                 />
               </>
             )}
-            {(formik.values.productType === 'NOBREAK' ||
-              formik.values.productType === 'STABILIZER') && (
+            {(formik.values.productType === 'Nobreak' ||
+              formik.values.productType === 'Estabilizador') && (
               <StyledTextField
                 id="power-input"
                 data-testid="power-input"

@@ -29,7 +29,7 @@ export interface equipament {
 
   type: string
 
-  status: string
+  situação: string
 
   estado: string
 
@@ -133,7 +133,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
                   {equipaments.serialNumber}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.status}
+                  {equipaments.situação}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {`${equipaments.unit.name} - ${equipaments.unit.localization}`}

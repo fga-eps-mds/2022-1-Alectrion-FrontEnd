@@ -29,7 +29,7 @@ const FilterOrderService = ({
     senderName: yup.string().trim(),
     date: yup.date(),
     tippingNumber: yup.string().trim(),
-    status: yup.string().trim()
+    situação: yup.string().trim()
   })
   const formik = useFormik({
     initialValues: {
@@ -37,7 +37,7 @@ const FilterOrderService = ({
       senderName: '',
       date: '',
       tippingNumber: '',
-      status: '',
+      situação: '',
       productType: ''
     },
     validationSchema,
@@ -89,11 +89,11 @@ const FilterOrderService = ({
                 onChange={formik.handleChange}
                 value={formik.values.productType}>
                 <MenuItem value="CPU">CPU</MenuItem>
-                <MenuItem value="NOBREAK">No Break</MenuItem>
-                <MenuItem value="SCANNER">Scanner</MenuItem>
-                <MenuItem value="WEBCAM">Webcan</MenuItem>
-                <MenuItem value="MONITOR">Monitor</MenuItem>
-                <MenuItem value="STABILIZER">Estabilizador</MenuItem>
+                <MenuItem value="Nobreak">Nobreak</MenuItem>
+                <MenuItem value="Escaneador">Scanner</MenuItem>
+                <MenuItem value="Webcan">Webcan</MenuItem>
+                <MenuItem value="Monitor">Monitor</MenuItem>
+                <MenuItem value="Estabilizador">Estabilizador</MenuItem>
               </StyledSelect>
             </FormControl>
             <StyledTextField
@@ -147,22 +147,22 @@ const FilterOrderService = ({
               error={formik.touched.date && Boolean(formik.errors.date)}
             />
             <FormControl fullWidth>
-              <StyledInputLabel id="job-select-label">Status</StyledInputLabel>
+              <StyledInputLabel id="job-select-label">Situação</StyledInputLabel>
               <StyledSelect
-                id="status-select-label"
-                data-testid="status-select"
-                label="status"
+                id="situação-select-label"
+                data-testid="situação-select"
+                label="situação"
                 type="text"
-                name="status"
+                name="situação"
                 variant="outlined"
-                error={formik.touched.status && Boolean(formik.errors.status)}
+                error={formik.touched.situação && Boolean(formik.errors.situação)}
                 onChange={formik.handleChange}
-                value={formik.values.status}>
-                <MenuItem value="ACTIVE">Ativo</MenuItem>
-                <MenuItem value="ACTIVE_LOAN">Ativo Empréstimo</MenuItem>
-                <MenuItem value="DOWNGRADED">Baixado</MenuItem>
-                <MenuItem value="MAINTENANCE">Manutenção</MenuItem>
-                <MenuItem value="TECHNICAL_RESERVE">Reserva técnica</MenuItem>
+                value={formik.values.situação}>
+                <MenuItem value="Ativo">Ativo</MenuItem>
+                <MenuItem value="Ativo Empréstimo">Ativo Empréstimo</MenuItem>
+                <MenuItem value="Baixado">Baixado</MenuItem>
+                <MenuItem value="Manutenção">Manutenção</MenuItem>
+                <MenuItem value="Reserva Técnica">Reserva técnica</MenuItem>
               </StyledSelect>
             </FormControl>
           </Column>

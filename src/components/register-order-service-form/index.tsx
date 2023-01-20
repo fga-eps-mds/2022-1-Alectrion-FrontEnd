@@ -57,7 +57,7 @@ const RegisterOrderServiceForm = ({
         } else return false
       }),
     tippingNumber: yup.string().trim().required('Esse campo é obrigatório'),
-    status: yup.string().trim(),
+    situação: yup.string().trim(),
     destination: yup.string().trim().required('Esse campo é obrigatório'),
     productType: yup.string().trim(),
     description: yup.string().trim().max(250)
@@ -69,7 +69,7 @@ const RegisterOrderServiceForm = ({
       senderFunctionalNumber: '',
       date: '',
       tippingNumber: initialData?.tippingNumber,
-      status: initialData?.formattedStatus,
+      situação: initialData?.formattedStatus,
       productType: initialData?.type,
       description: '',
       userName: user.name,
@@ -186,17 +186,17 @@ const RegisterOrderServiceForm = ({
               />
 
               <StyledTextField
-                id="status-input"
-                label="Status"
+                id="situação-input"
+                label="Situação"
                 fullWidth
                 InputLabelProps={{ shrink: true }}
                 type="text"
-                name="status"
+                name="situação"
                 variant="outlined"
                 aria-readonly
-                value={formik.values.status}
-                helperText={formik.touched.status && formik.errors.status}
-                error={formik.touched.status && Boolean(formik.errors.status)}
+                value={formik.values.situação}
+                helperText={formik.touched.situação && formik.errors.situação}
+                error={formik.touched.situação && Boolean(formik.errors.situação)}
               />
               <StyledTextField
                 InputLabelProps={{ shrink: true }}
