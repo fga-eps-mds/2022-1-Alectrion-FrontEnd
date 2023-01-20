@@ -222,7 +222,8 @@ const Form = ({ userId }: formProps) => {
             isBasico={isBasico}
           />
 
-          <BasicTextFields
+          {isSuperAdmin &&
+            (<BasicTextFields
             size="small"
             data-testid="password"
             name="password"
@@ -234,7 +235,7 @@ const Form = ({ userId }: formProps) => {
             color="primary"
             helperText={formik.touched.password && formik.errors.password}
             error={formik.touched.password && Boolean(formik.errors.password)}
-          />
+          />)}
 
           <Button
             id="editar"
