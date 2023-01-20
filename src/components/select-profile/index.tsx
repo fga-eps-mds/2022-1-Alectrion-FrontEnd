@@ -18,9 +18,6 @@ interface PropTypes {
   error?: any
   testid?: string
   size?: 'small' | 'medium'
-  isAdmin?: any
-  isGerente?: any
-  isBasico?: any
 }
 
 const SelectProfile: React.FC<PropTypes> = ({
@@ -34,9 +31,6 @@ const SelectProfile: React.FC<PropTypes> = ({
   error,
   testid,
   size,
-  isAdmin,
-  isGerente,
-  isBasico
 }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -61,10 +55,8 @@ const SelectProfile: React.FC<PropTypes> = ({
                
           <MenuItem value={'basico'}>Básico</MenuItem>
           <MenuItem value={'consulta'}>Consulta</MenuItem>
-          {!isBasico &&
-            (<MenuItem value={'gerente'}>Gerente</MenuItem>)}
-          {!isGerente && !isBasico &&
-            (<MenuItem value={'administrador'}>Admin</MenuItem>)}
+          <MenuItem value={'gerente'}>Gerente</MenuItem>
+          <MenuItem value={'administrador'}>Admin</MenuItem>
 
         </StyledSelect>
       </FormControl>

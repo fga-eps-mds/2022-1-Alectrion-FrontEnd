@@ -206,7 +206,8 @@ const Form = ({ userId }: formProps) => {
             testid="jobSelect"
           />
 
-          <SelectProfile
+          {isSuperAdmin &&
+            (<SelectProfile
             size="small"
             labelId="demo-simple-select-profile-label"
             name="profile"
@@ -217,10 +218,7 @@ const Form = ({ userId }: formProps) => {
             onChange={formik.handleChange}
             error={formik.touched.profile && Boolean(formik.errors.profile)}
             testid="profileSelect"
-            isAdmin={isSuperAdmin}
-            isGerente={isGerente}
-            isBasico={isBasico}
-          />
+          />)}
 
           {isSuperAdmin &&
             (<BasicTextFields
