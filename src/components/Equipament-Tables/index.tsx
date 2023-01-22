@@ -5,16 +5,20 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import DeleteIcon from '@mui/icons-material/Delete'
+import GavelIcon from '@mui/icons-material/Gavel';
 import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import {
   ButtonDownloadEquipament,
   ButtonReservEquipament,
+  GerarTermos,
   StyledTableCell,
   StyledTableRow
 } from './style'
 import { EditButton } from './../edit-button/index'
 
 export interface equipament {
+  
   tippingNumber: string
 
   serialNumber: string
@@ -64,6 +68,7 @@ interface propType {
 }
 
 export default function EquipamentsTables({ equipaments }: propType) {
+  const navigate = useNavigate()
   return (
     <TableContainer
       sx={{
@@ -157,6 +162,9 @@ export default function EquipamentsTables({ equipaments }: propType) {
                 <StyledTableCell align="center">
                   <Button disabled>
                     <DeleteIcon />
+                  </Button>
+                  <Button onClick={() => navigate('/gerar-termo')}>
+                    <GavelIcon />
                   </Button>
                 </StyledTableCell>
                 <StyledTableCell align="center">
