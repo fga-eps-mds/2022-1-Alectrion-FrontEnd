@@ -275,7 +275,7 @@ export default function ScreenEquipaments() {
             id="searchField"
             name="search"
             sx={{ flex: 0.9 }}
-            placeholder="Campo de busca"
+            placeholder="Nº de Série/Tombamento"
             value={basicSearch}
             onChange={handleChange}
             onKeyPress={(ev) => {
@@ -498,6 +498,31 @@ export default function ScreenEquipaments() {
                 }}>
                 <StyledTextField
                   fullWidth
+                  id="tippingNumber"
+                  name="tippingNumber"
+                  label="Nº de tombamento"
+                  value={formik.values.tippingNumber}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '30px' }}
+                />
+                <StyledTextField
+                  fullWidth
+                  id="serialNumber"
+                  name="serialNumber" 
+                  label="Nº de série"
+                  value={formik.values.serialNumber}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '90px' }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '50px'
+                }}>
+                <StyledTextField
+                  fullWidth
                   id="model"
                   name="model"
                   label="Modelo"
@@ -581,12 +606,55 @@ export default function ScreenEquipaments() {
                   sx={{ ml: '30px' }}
                 />
                 <StyledTextField
-                  type="date"
-                  id="createdAt"
-                  name="createdAt"
-                  value={formik.values.initialUseDate}
+                  fullWidth
+                  id="storageAmount"
+                  name="storageAmount"
+                  label="Espaço de amarzenamento"
+                  value={formik.values.storageAmount}
                   onChange={formik.handleChange}
                   sx={{ ml: '90px' }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '50px'
+                }}>
+                <StyledSelect
+                  id="estado"
+                  name="estado"
+                  value={formik.values.storageType}
+                  onChange={formik.handleChange}
+                  displayEmpty
+                  sx={{
+                    marginLeft: '30px',
+                    textAlign: 'center'
+                  }}
+                  inputProps={{ 'aria-label': 'Without label' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
+                    <em>Estado</em>
+                  </MenuItem>
+                  <MenuItem 
+                    value="Novo" 
+                    sx={{ justifyContent: 'center' }}>
+                    Novo
+                  </MenuItem>
+                  <MenuItem 
+                    value="Usado" 
+                    sx={{ justifyContent: 'center' }}>
+                    Usado
+                  </MenuItem>
+                </StyledSelect>
+                <StyledTextField
+                  type="date"
+                  id="acquisitionDate"
+                  name="acquisitionDate"
+                  value={formik.values.acquisitionDate}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '95px' }}
                 />
               </Box>
             </FormControl>
