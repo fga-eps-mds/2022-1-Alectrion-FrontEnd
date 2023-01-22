@@ -186,7 +186,7 @@ const RegisterEquipForm = () => {
         brandName: values.brand,
         serialNumber: values.serialNumber,
         model: values.model,
-        status: 'Reserva Técnica',
+        situação: 'Reserva Técnica',
         acquisitionName: values.acquisitionType,
         acquisitionDate: values.acquisitionDate,
         invoiceNumber: values.invoiceNumber,
@@ -242,12 +242,12 @@ const RegisterEquipForm = () => {
               disablePortal
               id="productType-input"
               options={[
-                { value: 'CPU', label: 'CPU' },
-                { label: 'Monitor', value: 'Monitor' },
-                { label: 'Nobreak', value: 'Nobreak' },
+                { label: 'CPU', value: 'CPU' },
                 { label: 'Escaneador', value: 'Escaneador' },
                 { label: 'Estabilizador', value: 'Estabilizador' },
-                { value: 'Webcam', label: 'Webcam' }
+                { label: 'Monitor', value: 'Monitor' },
+                { label: 'Nobreak', value: 'Nobreak' },
+                { label: 'Webcam', value: 'Webcam' }
               ]}
               getOptionLabel={(option) => option.label}
               renderInput={(params) => (
@@ -477,8 +477,8 @@ const RegisterEquipForm = () => {
                 <Autocomplete
                   disablePortal
                   options={[
-                    { value: 'SSD', label: 'SSD' },
-                    { label: 'HD', value: 'HD' }
+                    { label: 'HD', value: 'HD' },
+                    { label: 'SSD', value: 'SSD' }
                   ]}
                   getOptionLabel={(option) => option.label}
                   renderInput={(params) => (
@@ -529,17 +529,18 @@ const RegisterEquipForm = () => {
                 />
               </>
             )}
-            {formik.values.productType === 'MONITOR' && (
+            
+            {formik.values.productType === 'Monitor' && (
               <>
                 <Autocomplete
                   disablePortal
                   options={[
+                    { label: 'IPS', value: 'IPS' },
                     { label: 'LCD', value: 'LCD' },
-                    { label: 'OLED', value: 'OLED' },
                     { label: 'LED', value: 'LED' },
+                    { label: 'OLED', value: 'OLED' },
                     { label: 'TN', value: 'TN' },
-                    { label: 'VA', value: 'VA' },
-                    { label: 'IPS', value: 'IPS' }
+                    { label: 'VA', value: 'VA' }                    
                   ]}
                   getOptionLabel={(option) => option.label}
                   renderInput={(params) => (
@@ -589,7 +590,7 @@ const RegisterEquipForm = () => {
               </>
             )}
             {(formik.values.productType === 'Nobreak' ||
-              formik.values.productType === 'Estabilizador') && (
+              formik.values.productType === 'Estabilizador') && ( 
               <StyledTextField
                 id="power-input"
                 data-testid="power-input"

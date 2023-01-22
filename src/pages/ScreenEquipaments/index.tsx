@@ -330,28 +330,40 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
                     <em>Tipo de Equipamento</em>
                   </MenuItem>
-                  <MenuItem value="CPU" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="CPU" 
+                    sx={{ justifyContent: 'center' }}>
                     CPU
                   </MenuItem>
-                  <MenuItem value="Webcam" sx={{ justifyContent: 'center' }}>
-                    WebCam
+                  <MenuItem 
+                    value="Escaneador" 
+                    sx={{ justifyContent: 'center' }}>
+                    Escaneador
                   </MenuItem>
-                  <MenuItem value="Monitor" sx={{ justifyContent: 'center' }}>
-                    Monitor
-                  </MenuItem>
-                  <MenuItem value="Nobreak" sx={{ justifyContent: 'center' }}>
-                    Nobreak
-                  </MenuItem>
-                  <MenuItem value="Escaneador" sx={{ justifyContent: 'center' }}>
-                  Escaneador
-                  </MenuItem>
-                  <MenuItem
-                    value="Estabilizador"
+                  <MenuItem 
+                    value="Estabilizador" 
                     sx={{ justifyContent: 'center' }}>
                     Estabilizador
+                  </MenuItem>
+                  <MenuItem 
+                    value="Monitor" 
+                    sx={{ justifyContent: 'center' }}>
+                    Monitor
+                  </MenuItem>
+                  <MenuItem 
+                    value="Nobreak" 
+                    sx={{ justifyContent: 'center' }}>
+                    Nobreak
+                  </MenuItem>
+                  <MenuItem 
+                    value="Webcam" 
+                    sx={{ justifyContent: 'center' }}>
+                    WebCam
                   </MenuItem>
                 </StyledSelect>
                 <StyledSelect
@@ -365,14 +377,18 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
                     <em>Situação</em>
                   </MenuItem>
-                  <MenuItem value="Ativo" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="Ativo" 
+                    sx={{ justifyContent: 'center' }}>
                     Ativo
                   </MenuItem>
-                  <MenuItem
-                    value="Ativo Empréstimo"
+                  <MenuItem 
+                    value="Ativo Empréstimo" 
                     sx={{ justifyContent: 'center' }}>
                     Ativo Empréstimo
                   </MenuItem>
@@ -410,13 +426,19 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
                     <em>Tipo de Armazenamento</em>
                   </MenuItem>
-                  <MenuItem value="HD" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="HD" 
+                    sx={{ justifyContent: 'center' }}>
                     HD
                   </MenuItem>
-                  <MenuItem value="SSD" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="SSD" 
+                    sx={{ justifyContent: 'center' }}>
                     SSD
                   </MenuItem>
                 </StyledSelect>
@@ -431,26 +453,40 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
                     <em>Tipo de Tela</em>
                   </MenuItem>
-                  <MenuItem value="LCD" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="IPS" 
+                    sx={{ justifyContent: 'center' }}>
+                    IPS
+                  </MenuItem>
+                  <MenuItem 
+                    value="LCD" 
+                    sx={{ justifyContent: 'center' }}>
                     LCD
                   </MenuItem>
-                  <MenuItem value="OLED" sx={{ justifyContent: 'center' }}>
-                    OLED
-                  </MenuItem>
-                  <MenuItem value="LED" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="LED" 
+                    sx={{ justifyContent: 'center' }}>
                     LED
                   </MenuItem>
-                  <MenuItem value="TN" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="OLED" 
+                    sx={{ justifyContent: 'center' }}>
+                    OLED
+                  </MenuItem>
+                  <MenuItem 
+                    value="TN" 
+                    sx={{ justifyContent: 'center' }}>
                     TN
                   </MenuItem>
-                  <MenuItem value="VA" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="VA" 
+                    sx={{ justifyContent: 'center' }}>
                     VA
-                  </MenuItem>
-                  <MenuItem value="IPS" sx={{ justifyContent: 'center' }}>
-                    IPS
                   </MenuItem>
                 </StyledSelect>
               </Box>

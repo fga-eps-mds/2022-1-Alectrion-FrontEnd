@@ -89,11 +89,11 @@ const FilterOrderService = ({
                 onChange={formik.handleChange}
                 value={formik.values.productType}>
                 <MenuItem value="CPU">CPU</MenuItem>
-                <MenuItem value="Nobreak">Nobreak</MenuItem>
-                <MenuItem value="Escaneador">Scanner</MenuItem>
-                <MenuItem value="Webcan">Webcan</MenuItem>
-                <MenuItem value="Monitor">Monitor</MenuItem>
+                <MenuItem value="Escaneador">Escaneador</MenuItem>
                 <MenuItem value="Estabilizador">Estabilizador</MenuItem>
+                <MenuItem value="Monitor">Monitor</MenuItem>
+                <MenuItem value="Nobreak">Nobreak</MenuItem>
+                <MenuItem value="Webcan">Webcan</MenuItem>
               </StyledSelect>
             </FormControl>
             <StyledTextField
