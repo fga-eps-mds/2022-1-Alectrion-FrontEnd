@@ -186,7 +186,7 @@ const RegisterEquipForm = () => {
         brandName: values.brand,
         serialNumber: values.serialNumber,
         model: values.model,
-        situação: 'Reserva Técnica',
+        situacao: 'Reserva Técnica',
         acquisitionName: values.acquisitionType,
         acquisitionDate: values.acquisitionDate,
         invoiceNumber: values.invoiceNumber,

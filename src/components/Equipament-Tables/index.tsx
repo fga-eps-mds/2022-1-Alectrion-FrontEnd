@@ -29,7 +29,7 @@ export interface equipament {
 
   type: string
 
-  situação: string
+  situacao: string
 
   estado: string
 
@@ -89,7 +89,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">N° Tombamento </StyledTableCell>
-            <StyledTableCell align="center">N° Serie</StyledTableCell>
+            <StyledTableCell align="center">N° Série</StyledTableCell>
             <StyledTableCell align="center">Situação</StyledTableCell> {/* renomeamos status para situação */}
             <StyledTableCell align="center">Unidade</StyledTableCell>
             <StyledTableCell align="center">Data de aquisição</StyledTableCell>
@@ -133,7 +133,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
                   {equipaments.serialNumber}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.situação}
+                  {equipaments.situacao}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {`${equipaments.unit.name} - ${equipaments.unit.localization}`}

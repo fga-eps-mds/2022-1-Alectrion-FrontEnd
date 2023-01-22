@@ -46,7 +46,7 @@ export interface SearchParams {
 
   type: string
 
-  situação: string
+  situacao: string
 
   estado: string
 
@@ -88,7 +88,7 @@ interface equipament {
 
   type: string
 
-  situação: string
+  situacao: string
 
   estado: string
 
@@ -147,7 +147,7 @@ export default function ScreenEquipaments() {
 
     estado: '',
 
-    situação: '',
+    situacao: '',
 
     model: '',
 
@@ -237,7 +237,7 @@ export default function ScreenEquipaments() {
   const cabecalhos = [
     { label: 'Nº de Tombamento', key: 'tippingNumber' },
     { label: 'Nº Série', key: 'serialNumber' },
-    { label: 'Situação', key: 'situação' },
+    { label: 'Situação', key: 'situacao' },
     { label: 'Unidade', key: 'unit.name' },
     { label: 'Unidade', key: 'unit.localization' },
     { label: 'Data de aquisição', key: 'createdAt' },
@@ -367,9 +367,9 @@ export default function ScreenEquipaments() {
                   </MenuItem>
                 </StyledSelect>
                 <StyledSelect
-                  id="situação"
-                  name="situação"
-                  value={formik.values.situação}
+                  id="situacao"
+                  name="situacao"
+                  value={formik.values.situacao}
                   onChange={formik.handleChange}
                   displayEmpty
                   sx={{

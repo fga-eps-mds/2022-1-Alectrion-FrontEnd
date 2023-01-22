@@ -29,7 +29,7 @@ const FilterOrderService = ({
     senderName: yup.string().trim(),
     date: yup.date(),
     tippingNumber: yup.string().trim(),
-    situação: yup.string().trim()
+    situacao: yup.string().trim()
   })
   const formik = useFormik({
     initialValues: {
@@ -37,7 +37,7 @@ const FilterOrderService = ({
       senderName: '',
       date: '',
       tippingNumber: '',
-      situação: '',
+      situacao: '',
       productType: ''
     },
     validationSchema,
@@ -149,15 +149,15 @@ const FilterOrderService = ({
             <FormControl fullWidth>
               <StyledInputLabel id="job-select-label">Situação</StyledInputLabel>
               <StyledSelect
-                id="situação-select-label"
-                data-testid="situação-select"
-                label="situação"
+                id="situacao-select-label"
+                data-testid="situacao-select"
+                label="Situação"
                 type="text"
-                name="situação"
+                name="situacao"
                 variant="outlined"
-                error={formik.touched.situação && Boolean(formik.errors.situação)}
+                error={formik.touched.situacao && Boolean(formik.errors.situacao)}
                 onChange={formik.handleChange}
-                value={formik.values.situação}>
+                value={formik.values.situacao}>
                 <MenuItem value="Ativo">Ativo</MenuItem>
                 <MenuItem value="Ativo Empréstimo">Ativo Empréstimo</MenuItem>
                 <MenuItem value="Baixado">Baixado</MenuItem>

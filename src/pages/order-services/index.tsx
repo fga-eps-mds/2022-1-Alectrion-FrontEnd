@@ -28,7 +28,7 @@ interface OrderService {
   equipment: {
     type: string
     tippingNumber: string
-    situação: string
+    situacao: string
   }
 }
 interface filterType {
@@ -37,7 +37,7 @@ interface filterType {
   equipment?: string
   serialNumber?: string
   type?: string
-  situação?: string
+  situacao?: string
   sender?: string
   date?: string
 }
@@ -59,7 +59,7 @@ export const OrderServices = () => {
       sender: values?.senderName,
       date: values?.date,
       tippingNumber: values?.tippingNumber,
-      situação: values?.situação,
+      situacao: values?.situacao,
       type: values?.productType
     })
   }

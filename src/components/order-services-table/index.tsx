@@ -19,7 +19,7 @@ interface OrderService {
   equipment: {
     type: string
     tippingNumber: string
-    situação: string
+    situacao: string
   }
 }
 interface OrderServicesProps {
@@ -60,7 +60,7 @@ export default function OderServiceTable({
                 {orderSerivce.equipment.tippingNumber}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {orderSerivce.equipment.situação}
+                {orderSerivce.equipment.situacao}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {orderSerivce.receiverName}

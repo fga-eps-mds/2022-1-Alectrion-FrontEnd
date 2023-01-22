@@ -18,7 +18,7 @@ export type Equipment = {
   tippingNumber: string
   serialNumber: string
   type: string
-  situação: string
+  situacao: string
   estado: string
   model: string
   description: string
@@ -61,8 +61,8 @@ const OrderRegister = () => {
     )
 
     let formattedStatus = ''
-    const { situação } = data
-    switch (situação) {
+    const { situacao } = data
+    switch (situacao) {
       case 'Ativo':
         formattedStatus = 'Ativo'
         break
