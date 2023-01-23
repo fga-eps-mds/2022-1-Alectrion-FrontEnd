@@ -22,7 +22,7 @@ test('should list equipament', async () => {
 
   render(
     <Providers>
-      <UserTables users={users} isEditor />
+      <UserTables users={users} isEditor isAdmin />
     </Providers>
   )
 
