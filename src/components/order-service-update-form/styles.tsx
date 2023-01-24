@@ -1,5 +1,5 @@
 import { styled as styledSystem } from '@mui/system'
-import { Card, TextField, Typography } from '@mui/material'
+import { Card, InputLabel, Select, TextField, Typography } from '@mui/material'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -68,10 +68,10 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
 
 export const StyledTextArea = styledSystem(TextField)(({ theme }) => ({
   background: '#fff',
-  borderRadius: 16,
+  borderRadius: 10,
   padding: 0,
   '& .MuiInputLabel-shrink': {
-    marginTop: '-7px',
+    marginTop: '-15px',
     color: theme.palette.background.default,
     textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
   },
@@ -79,10 +79,38 @@ export const StyledTextArea = styledSystem(TextField)(({ theme }) => ({
     borderRadius: 16
   },
   '& .MuiOutlinedInput-notchedOutline': {
-    borderRadius: 16
+    borderRadius: 10
   }
 }))
 
 export const StyledTypography = styledSystem(Typography)(({ theme }) => ({
   textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+}))
+
+export const StyledInputLabel = styledSystem(InputLabel)(({ theme }) => ({
+  transform: 'none',
+  position: 'relative',
+  marginBottom: '4px',
+  border: 'none',
+  color: theme.palette.background.default
+}))
+
+export const StyledSelect = styledSystem(Select)(({ theme }) => ({
+  '& .MuiSelect-select': {
+    backgroundColor: theme.palette.background.default,
+    padding: '8.5px',
+    borderRadius: '15px !important',
+    color: '#666666'
+  },
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '15px'
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px'
+  },
+  maxWidth: '416px',
+  height: '40px',
+  '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input': {
+    marginLeft: '2px'
+  }
 }))

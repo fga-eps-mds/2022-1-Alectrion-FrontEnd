@@ -46,14 +46,14 @@ export default function OderServiceTable({
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">ID</StyledTableCell>
-            <StyledTableCell align="center">Data Entrada</StyledTableCell>
+            <StyledTableCell align="center">Id</StyledTableCell>
+            <StyledTableCell align="center">Data de Entrada</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
-            <StyledTableCell align="center">N° tombamento</StyledTableCell>
-            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">N° de Tombamento</StyledTableCell>
+            <StyledTableCell align="center">Status do Equipamento</StyledTableCell>
             <StyledTableCell align="center">Recebedor</StyledTableCell>
             <StyledTableCell align="center">Entregador</StyledTableCell>
-            <StyledTableCell align="center">Editar</StyledTableCell>
+            <StyledTableCell align="center">Atualizar</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

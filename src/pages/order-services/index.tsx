@@ -97,7 +97,7 @@ export const OrderServices = () => {
             id="filter"
             type="text"
             name="tippingNumber"
-            label="Numero do tombamento"
+            label="Número de Tombamento"
             variant="outlined"
             onChange={(e) => {
               setTippingNumber(e.target.value)

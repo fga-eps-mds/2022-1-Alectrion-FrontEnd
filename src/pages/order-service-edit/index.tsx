@@ -63,7 +63,7 @@ const OrderEdit = () => {
     const { status } = data
     switch (status) {
       case 'MAINTENANCE':
-        formattedStatus = 'Em manutenção'
+        formattedStatus = 'Em Manutenção'
         break
       case 'ACTIVE':
         formattedStatus = 'Ativo'
@@ -78,7 +78,7 @@ const OrderEdit = () => {
         formattedStatus = 'Baixado'
         break
       case 'TECHNICAL_RESERVE':
-        formattedStatus = 'Reserva técnica'
+        formattedStatus = 'Reserva Técnica'
         break
       default:
         break
@@ -98,8 +98,8 @@ const OrderEdit = () => {
   return (
     <Container>
       <>
-        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-          Edição de ordem de serviço
+        <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+          Atualização de Ordem de Serviço
         </Typography>
         <OrderServiceUpdateForm
           units={units}
