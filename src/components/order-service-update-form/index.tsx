@@ -89,8 +89,9 @@ const OrderServiceUpdateForm = ({
         onSubmit: async (values) => {
             try {
                 await api.post(
-                    `equipment/create-order-service/${initialData?.id}`,
+                    `equipment/updateOrderService/${initialData?.id}`, // Colocar o id da O.S.
                     {
+                        equipmentId: formik.values.tippingNumber,
                         authorFunctionalNumber:
                             formik.values.authorFunctionalNumber,
                         destination: formik.values.destination,
@@ -102,7 +103,8 @@ const OrderServiceUpdateForm = ({
                         receiverName: formik.values.userName,
                         receiverFunctionalNumber:
                             formik.values.receiverFunctionalNumber,
-                        technicians: formik.values.userName,
+                        status: formik.values.orderStatus,
+                        technicians: formik.values.technicians
                     },
                     {
                         headers: {
@@ -111,7 +113,7 @@ const OrderServiceUpdateForm = ({
                     }
                 );
 
-                toast.success("Ordem de serviço criada.");
+                toast.success("Ordem de Serviço Atualizada.");
                 navigate("/order-services");
             } catch (error) {
                 console.log(`erro: ${error}`);
