@@ -9,14 +9,24 @@ import UserRegister from './index'
 jest.mock('axios')
 
 const mockedAxios = axios as jest.Mocked<typeof axios>
+const location = {
+    state: {
+        userId: "1",
+    },
+    key: "teste",
+    user: {
+        role: "gerente"
+    }
+};
 
 test('should register new user', async () => {
   mockedAxios.post.mockResolvedValue({
     email: 'elerzinho@teste.com',
-    job: 'Admin'
+    job: 'Admin',
+    role: 'gerente'
   })
   render(
-    <Providers>
+    <Providers location={location}>
       <UserRegister />
     </Providers>
   )
@@ -52,7 +62,7 @@ test('should register new user', async () => {
 
 test('should render register user page and back to users when back button clicked', async () => {
   render(
-    <Providers>
+    <Providers location={location}>
       <UserRegister />
     </Providers>
   )
