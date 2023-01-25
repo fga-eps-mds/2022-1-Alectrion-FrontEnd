@@ -111,7 +111,7 @@ const OrderEdit = () => {
 
   const { user } = useContext(AuthContext)
   const { state } = useLocation()
-
+  
   return (
     <Container>
       <>
@@ -119,7 +119,7 @@ const OrderEdit = () => {
           Atualização de Ordem de Serviço
         </Typography>
         <OrderServiceUpdateForm
-          orderId={state?.orderId}
+          order={state?.order}
           units={units}
           initialData={equipment}
           user={{

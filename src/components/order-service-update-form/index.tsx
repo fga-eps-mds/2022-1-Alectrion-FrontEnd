@@ -22,7 +22,7 @@ import { Autocomplete, FormControl, MenuItem } from "@mui/material";
 import { OrderService } from "../../pages/order-service-edit";
 
 type Props = {
-    orderId: string;
+    order: OrderService;
     user: {
         name: string;
         token: string;
@@ -33,14 +33,13 @@ type Props = {
 };
 
 const OrderServiceUpdateForm = ({
-    orderId,
+    order,
     initialData,
     user,
     handleTippingNumberChange,
     units,
 }: Props) => {
     const navigate = useNavigate();
-    console.log(orderId);
     const validationSchema = yup.object().shape({
         authorFunctionalNumber: yup
             .string()
@@ -76,12 +75,12 @@ const OrderServiceUpdateForm = ({
             tippingNumber: initialData?.tippingNumber,
             status: initialData?.formattedStatus,
             productType: initialData?.type,
-            senderName: "",
-            senderFunctionalNumber: "",
-            date: "",
+            senderName: order.sender,
+            senderFunctionalNumber: order.senderFunctionalNumber,
+            date: order.date,
             userName: user.name,
             authorFunctionalNumber: "",
-            receiverName: "",
+            receiverName: order.receiverName,
             receiverFunctionalNumber: "",
             orderStatus: "",
             destination: "",

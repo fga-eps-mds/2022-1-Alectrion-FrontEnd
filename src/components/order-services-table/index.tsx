@@ -83,7 +83,7 @@ export default function OderServiceTable({
                   align="center"
                   onClick={() =>
                     navigate('/order-service-update-form', {
-                      state: { orderId: orderSerivce.id }
+                      state: { order: orderSerivce }
                     })
                   }>
                   <EditOSButton/>
