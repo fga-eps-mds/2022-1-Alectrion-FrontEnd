@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import {
   Params,
+  useLocation,
   useNavigate,
   useParams,
   useSearchParams
@@ -33,6 +34,21 @@ export type Equipment = {
   createdAt: string
   updatedAt: string
   formattedStatus: string
+}
+
+export type OrderService = {
+  id: string
+  date: string
+  description: string
+  authorId: string
+  sender: string
+  senderFunctionalNumber: string
+  receiverName: string
+  equipment: {
+    type: string
+    tippingNumber: string
+    status: string
+  }
 }
 
 const OrderEdit = () => {
@@ -94,6 +110,7 @@ const OrderEdit = () => {
   }
 
   const { user } = useContext(AuthContext)
+  const { state } = useLocation()
 
   return (
     <Container>
@@ -102,6 +119,7 @@ const OrderEdit = () => {
           Atualização de Ordem de Serviço
         </Typography>
         <OrderServiceUpdateForm
+          orderId={state?.orderId}
           units={units}
           initialData={equipment}
           user={{

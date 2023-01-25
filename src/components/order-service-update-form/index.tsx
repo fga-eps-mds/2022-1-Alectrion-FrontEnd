@@ -17,10 +17,12 @@ import {
     StyledSelect,
 } from "./styles";
 import { theme } from "../../styles/theme";
-import { Equipment } from "../../pages/order-service";
+import { Equipment } from "../../pages/order-service-edit";
 import { Autocomplete, FormControl, MenuItem } from "@mui/material";
+import { OrderService } from "../../pages/order-service-edit";
 
 type Props = {
+    orderId: string;
     user: {
         name: string;
         token: string;
@@ -31,12 +33,14 @@ type Props = {
 };
 
 const OrderServiceUpdateForm = ({
+    orderId,
     initialData,
     user,
     handleTippingNumberChange,
     units,
 }: Props) => {
     const navigate = useNavigate();
+    console.log(orderId);
     const validationSchema = yup.object().shape({
         authorFunctionalNumber: yup
             .string()
