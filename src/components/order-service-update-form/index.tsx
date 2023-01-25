@@ -72,27 +72,27 @@ const OrderServiceUpdateForm = ({
     });
     const formik = useFormik({
         initialValues: {
-            tippingNumber: initialData?.tippingNumber,
-            status: initialData?.formattedStatus,
-            productType: initialData?.type,
+            tippingNumber: order.equipment.tippingNumber,
+            status: order.equipment.status,
+            productType: order.equipment.type,
             senderName: order.sender,
             senderFunctionalNumber: order.senderFunctionalNumber,
             date: order.date,
             userName: user.name,
-            authorFunctionalNumber: "",
+            authorFunctionalNumber: "", // Propriedade faltando na O.S.
             receiverName: order.receiverName,
-            receiverFunctionalNumber: "",
-            orderStatus: "",
-            destination: "",
-            technicians: "",
-            description: "",
+            receiverFunctionalNumber: "", // Propriedade faltando na O.S.
+            orderStatus: "", // Propriedade faltando na O.S.
+            destination: "", // Propriedade faltando na O.S.
+            technicians: "", // Propriedade faltando na O.S.
+            description: "", // Propriedade faltando na O.S.
         },
         validationSchema,
         enableReinitialize: true,
         onSubmit: async (values) => {
             try {
                 await api.post(
-                    `equipment/updateOrderService/${initialData?.id}`, // Colocar o id da O.S.
+                    `equipment/updateOrderService/${order.id}`,
                     {
                         equipmentId: formik.values.tippingNumber,
                         authorFunctionalNumber:
@@ -155,24 +155,34 @@ const OrderServiceUpdateForm = ({
                                 Boolean(formik.errors.tippingNumber)
                             }
                         />
-                        <StyledTextField
-                            id="status-input"
-                            label="Status do Equipamento"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            type="text"
-                            name="status"
-                            variant="outlined"
-                            aria-readonly
-                            value={formik.values.status}
-                            helperText={
-                                formik.touched.status && formik.errors.status
-                            }
-                            error={
-                                formik.touched.status &&
-                                Boolean(formik.errors.status)
-                            }
-                        />
+                        <FormControl>
+                            <StyledInputLabel id="status-input-label">
+                                Status da Ordem de Serviço
+                            </StyledInputLabel>
+                            <StyledSelect
+                                id="status-input"
+                                labelId="status-input-label"
+                                data-testid="status-input-select"
+                                label="Status do Equipamento"
+                                type="text"
+                                name="status"
+                                variant="outlined"
+                                error={
+                                    formik.touched.status &&
+                                    Boolean(formik.errors.status)
+                                }
+                                onChange={formik.handleChange}
+                                value={formik.values.status}
+                            >
+                                <MenuItem value="ACTIVE">Ativo</MenuItem>
+                                <MenuItem value="ACTIVE_LOAN">Ativo Empréstimo</MenuItem>
+                                <MenuItem value="DOWNGRADED">Baixado</MenuItem>
+                                <MenuItem value="MAINTENANCE">
+                                    Em Manuntenção
+                                </MenuItem>
+                                <MenuItem value="TECHNICAL_RESERVE">Reserva Técnica</MenuItem>
+                            </StyledSelect>
+                        </FormControl>
                         <StyledTextField
                             InputLabelProps={{ shrink: true }}
                             id="productType-input"
@@ -277,18 +287,18 @@ const OrderServiceUpdateForm = ({
                             aria-aria-readonly
                             label="N° Funcional do Recebedor"
                             type="text"
-                            name="authorFunctionalNumber"
+                            name="receiverFunctionalNumber"
                             variant="outlined"
                             fullWidth
                             onChange={formik.handleChange}
-                            value={formik.values.authorFunctionalNumber}
+                            value={formik.values.receiverFunctionalNumber}
                             helperText={
-                                formik.touched.authorFunctionalNumber &&
-                                formik.errors.authorFunctionalNumber
+                                formik.touched.receiverFunctionalNumber &&
+                                formik.errors.receiverFunctionalNumber
                             }
                             error={
-                                formik.touched.authorFunctionalNumber &&
-                                Boolean(formik.errors.authorFunctionalNumber)
+                                formik.touched.receiverFunctionalNumber &&
+                                Boolean(formik.errors.receiverFunctionalNumber)
                             }
                         />
 
