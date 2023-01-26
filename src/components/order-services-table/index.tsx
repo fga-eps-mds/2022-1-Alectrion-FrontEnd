@@ -17,9 +17,10 @@ interface OrderService {
   date: string
   description: string
   authorId: string
-  sender: string
+  senderName: string
   senderFunctionalNumber: string
   receiverName: string
+  status: string
   equipment: {
     type: string
     tippingNumber: string
@@ -30,11 +31,30 @@ interface OrderServicesProps {
   orderServices: OrderService[]
   isConsulta: boolean
 }
+
+function handleToStatus(status: string) {
+  switch(status){
+    case 'MAINTENANCE': {
+      return 'Em manuntenção';
+    }
+    case 'WARRANTY': {
+      return 'Garantia'
+    }
+    case 'CONCLUDED': {
+      return 'Concluido'
+    }
+    case 'CANCELED': {
+      return 'Cancelado'
+    }
+  }
+}
+
 export default function OderServiceTable({
   orderServices,
   isConsulta
 }: OrderServicesProps) {
   const navigate = useNavigate()
+
   return (
     <TableContainer
       sx={{
@@ -50,7 +70,7 @@ export default function OderServiceTable({
             <StyledTableCell align="center">Data de Entrada</StyledTableCell>
             <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
             <StyledTableCell align="center">N° de Tombamento</StyledTableCell>
-            <StyledTableCell align="center">Status do Equipamento</StyledTableCell>
+            <StyledTableCell align="center">Status</StyledTableCell>
             <StyledTableCell align="center">Recebedor</StyledTableCell>
             <StyledTableCell align="center">Entregador</StyledTableCell>
             <StyledTableCell align="center">Atualizar</StyledTableCell>
@@ -72,12 +92,12 @@ export default function OderServiceTable({
                 {orderSerivce.equipment.tippingNumber}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {orderSerivce.equipment.status}
+                {handleToStatus(orderSerivce.status)}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {orderSerivce.receiverName}
               </StyledTableCell>
-              <StyledTableCell align="center">{`${orderSerivce.sender} - ${orderSerivce.senderFunctionalNumber}`}</StyledTableCell>
+              <StyledTableCell align="center">{`${orderSerivce.senderName} - ${orderSerivce.senderFunctionalNumber}`}</StyledTableCell>
               {!isConsulta && (
                 <StyledTableCell
                   align="center"
