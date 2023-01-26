@@ -31,6 +31,17 @@ export const FindContainer = styled.div`
   margin-top: 40px;
   margin-bottom: 40px;
 `
+export const ContainerMov = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding-top: 32px;
+  margin: 40px auto;
+  max-width: 1024px;
+  `
+
+
+
 export const BoxInput = styledSystem(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
@@ -80,6 +91,26 @@ export const StyledGenerateButton = styledSystem(Button)(({ theme }) => ({
   display: 'flex',
   fontWeight: 'bold',
   alignSelf: 'center',
+
+  borderRadius: '10px',
+  '& 	.MuiButton-text': {
+    textColor: '#ffff'
+  },
+  '&:hover': {
+    backgroundColor: '#84b5db'
+  }
+}))
+export const StyledGenerateButton2 = styledSystem(Button)(({ theme }) => ({
+  backgroundColor: '#5289B5',
+  color: 'white',
+  marginTop: '47px',
+  width: '346px',
+  height: '74px',
+  display: 'flex',
+  fontWeight: 'bold',
+  alignSelf: 'center',
+
+
   borderRadius: '10px',
   '& 	.MuiButton-text': {
     textColor: '#ffff'
@@ -111,11 +142,24 @@ export const FilterScrenn = styledSystem(Dialog)(({ theme }) => ({
     height: '80%'
   }
 }))
+export const MovimentScrenn = styledSystem(Dialog)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    maxWidth: '790px !important',
+    borderRadius: '14px',
+    minHeight: '600px',
+    height: '80%'
+  }
+}))
 
 export const FilterScrennContent = styledSystem(DialogContent)(({ theme }) => ({
   width: '790px',
   backgroundColor: '#3C4B54'
 }))
+export const MovimentScrennContent = styledSystem(DialogContent)(({ theme }) => ({
+  width: '790px',
+  backgroundColor: '#3C4B54'
+}))
+
 
 export const StyledInputLabel = styledSystem(InputLabel)(({ theme }) => ({
   color: theme.palette.background.default,

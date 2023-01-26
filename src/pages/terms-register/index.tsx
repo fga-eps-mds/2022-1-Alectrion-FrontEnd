@@ -7,7 +7,6 @@ const RegisterTerms = () => {
     <>
       <Container>
         <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-          Cadastro de Termos
         </Typography>
         <GeraTermo />
       </Container>

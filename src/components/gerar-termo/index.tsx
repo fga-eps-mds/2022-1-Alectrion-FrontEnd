@@ -1,204 +1,271 @@
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import SearchIcon from '@mui/icons-material/Search'
+import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
+import EquipamentsTables from '../../components/Equipament-Tables'
+import Paper from '@mui/material/Paper'
 
-import * as yup from 'yup'
-import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import api from '../../api/config'
-import { useFormik } from 'formik'
-import { Button } from '../button'
-import { theme } from '../../styles/theme'
-import Autocomplete from '@mui/material/Autocomplete'
 import { AxiosResponse } from 'axios'
-import { Container } from '@mui/material'
-import { StyledCard } from '../gerar-termo/styles'
-import { StyledDescTextField } from '../gerar-termo/styles'
-import { FormContainer, ButtonContainer } from '../gerar-termo/styles'
-import { StyledForm } from '../gerar-termo/styles'
-import { StyledTextField } from '../gerar-termo/styles'
+import { useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import { Container, Typography, Input, Box, FormControl, MenuItem, Button } from '@mui/material'
+import React from 'react'
+import { CSVLink } from 'react-csv'
+import { BoxInput, ButtonClearFilters, ButtonFilters, ButtonCad, FilterScrenn, FilterScrennContent, StyledGenerateButton } from '../../pages/ScreenEquipaments/style'
+import { FindContainer } from '../../pages/user-screen/styles'
+import { dateFormat } from '../../utils/dateFormat'
+import { StyledSelect } from '../register-user-form/styles'
+import { StyledTextField } from '../text-field/styles'
+import MovimentTables from '../Movimentation'
 
-interface unit {
-  name: string
-  id: string
-  localization: string
+export interface SearchParams {
+  tippingNumber: string
+
+  serialNumber: string
+
+  type: string
+
+  status: string
+
+  model: string
+
+  acquisitionDate: Date
+
+  description?: string
+
+  initialUseDate: Date
+
+  screenSize?: string
+
+  invoiceNumber: string
+
+  power?: string
+
+  screenType?: string
+
+  processor?: string
+
+  storageType?: string
+
+  storageAmount?: string
+
+  brand: string
+
+  acquisitionId: string
+
+  unitId: string
+
+  ram_size?: string
 }
 
-const GeraTermo = () => {
-  const navigate = useNavigate()
+interface moviment {
+  id: string
+  tipo: string
+  unidade: string
+  qtdequipamentos: string
+}
+
+export default function ScreenMoviments() {
+  const [moviment, setMoviments] = useState<moviment[]>([])
+  const [basicSearch, setbasicSearch] = useState<string>('')
+
+  const initialValues = {
+    id: '001',
+
+    tipo: 'Empréstimo',
+
+    unidade: '11 DP',
+
+    qtdequipamentos: '2',
+
+  }
+
   const formik = useFormik({
-    initialValues: {
-      typeofterms: '',
-      destiny: '',
-      responsiblename: '',
-      responsibleposition: '',
-      bossname: '',
-      bossposition: '',
- 
-    },
-    onSubmit: async (values) => {
-      const body = {
-        typeofterms: values.typeofterms,
-        destiny: values.destiny,
-        responsiblename: values.responsiblename,
-        responsibleposition: values.responsibleposition,
-        bossname: values.bossname,
-        bossposition: values.bossposition,
-      }
-      const formattedBody = Object.entries(body)
-        .filter((object) => object[1] !== null)
-        .reduce((newObj, [key, val]) => {
-          return { ...newObj, [key]: val }
-        }, {})
-      try {
-        await api.post('equipment/createEquipment', formattedBody)
-        toast.success('Termo Gerado')
-      } catch (error) {
-        toast.error('Aconteceu algum erro.')
-      }
-      formik.resetForm()
+    initialValues,
+    onSubmit: (values: any) => {
+      Object.keys(values).forEach((param) => {
+        if (values[param] === '') {
+          delete values[param]
+        }
+      })
+      getEquipaments(values)
     }
   })
 
-  const [units, setUnits] = useState<unit[]>([])
-  useEffect(() => {
-    const getUnits = async () => {
-      try {
-        const { data }: AxiosResponse<unit[]> = await api.get(
-          '/equipment/getAllUnits'
+  const getEquipaments = async (query?: SearchParams) => {
+    try {
+      const queryParams = new URLSearchParams('')
+      if (query) {
+        Object.entries(query).forEach((value) =>
+          queryParams.append(value[0], value[1])
         )
-        setUnits(data)
-      } catch (error) {}
+      }
+
+      const { data }: AxiosResponse<moviment[]> = await api.get(
+        'equipment/find',
+        {
+          params: queryParams
+        }
+      )
+      setMoviments(data)
+    } catch (error) {
+      setMoviments([])
+      toast.error('Nenhum Equipamento encontrado')
     }
-    getUnits()
+  }
+  const renderEquipmentTable = React.useCallback(() => {
+    return <MovimentTables moviment={moviment} />
+  }, [moviment])
+  React.useEffect(() => {
+    getEquipaments()
   }, [])
+
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setbasicSearch(event.target.value)
+  }
+
+
 
   return (
     <Container>
-      <StyledCard>
-        <StyledForm onSubmit={formik.handleSubmit}>
-          <FormContainer>
-            <Autocomplete
-              disablePortal
-              id="unitId-input"
-              options={[
-                { value: 'Termo de Responsabilidade', label: 'RESPONSABILIDADE' },
-                { label: 'Termo de Empréstimo', value: 'EMPRESTIMO' },
-                { label: 'Termo de Baixa - BAIXADO', value: 'BAIXADO' },
-                { label: 'Termo de Baixa - RESERVA TÉCNICA', value: 'RESERVA_TECNICA' },
-              ]}
-              getOptionLabel={(option) => option.label}
-              renderInput={(params) => (
-                <StyledTextField
-                  {...params}
-                  label="Tipo de termo"
-                  id="typeofterms-select-label"
-                  data-testid="typeofterms-select"
-                  helperText={
-                    formik.touched.typeofterms && formik.errors.typeofterms
-                  }
-                  error={
-                    formik.touched.typeofterms &&
-                    Boolean(formik.errors.typeofterms)
-                  }
-                />
-              )}
-              onChange={(_, value) =>
-                formik.setFieldValue('typeofterms', value?.value)
-              }
-              fullWidth
-              className="autocomplete"
-              sx={{
-                padding: 0,
-                '& .MuiOutlinedInput-root': {
-                  padding: '0 !important'
-                },
-                '& .MuiAutocomplete-input': {
-                  padding: '16.5px !important'
-                }
-              }}
-            />
+      <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'black' }}>
+        Consultar Movimentações
+      </Typography>
 
-            <StyledTextField
-              id="destiny-input"
-              label="Unidade de destino"
-              type="text"
-              name="destiny"
-              variant="outlined"
-              onChange={formik.handleChange}
-              value={formik.values.destiny}
-            />
-            <StyledTextField
-              id="responsiblename-input"
-              label="Nome do Responsavel"
-              type="text"
-              name="responsiblename"
-              variant="outlined"
-              onChange={formik.handleChange}
-              value={formik.values.responsiblename}
-              helperText={formik.touched.responsiblename && formik.errors.responsiblename}
-              error={formik.touched.responsiblename && Boolean(formik.errors.responsiblename)}
-            />
-            <StyledTextField
-              id="responsibleposition-input"
-              label="Cargo do responsavel"
-              type="text"
-              name="responsibleposition"
-              variant="outlined"
-              onChange={formik.handleChange}
-              value={formik.values.responsibleposition}
-              helperText={
-                formik.touched.responsibleposition && formik.errors.responsibleposition
+      <FindContainer>
+        <BoxInput>
+          <SearchIcon sx={{ marginBottom: '3px' }} />
+          <Input
+            id="identificador"
+            name="identificador"
+            sx={{ flex: 0.9 }}
+            placeholder="Identificador"
+            value={basicSearch}
+            onChange={handleChange}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                // Do code here
+                if (basicSearch === '') {
+                  getEquipaments()
+                } else {
+                  const query = {
+                    serialNumber: basicSearch.toString()
+                  } as unknown as SearchParams
+                  getEquipaments(query)
+                }
               }
-              error={
-                formik.touched.responsibleposition &&
-                Boolean(formik.errors.responsibleposition)
-              }
-            />
-            <StyledTextField
-              id="bossname-input"
-              label="Nome do Chefe da DSTI"
-              type="text"
-              name="bossname"
-              variant="outlined"
-              onChange={formik.handleChange}
-              value={formik.values.bossname}
-              helperText={formik.touched.bossname && formik.errors.bossname}
-              error={formik.touched.bossname && Boolean(formik.errors.bossname)}
-            />
-            <StyledTextField
-              id="bossposition"
-              label="Cargo do chefe da DSTI"
-              type="text"
-              name="bossposition"
-              variant="outlined"
-              onChange={formik.handleChange}
-              value={formik.values.bossposition}
-              helperText={
-                formik.touched.bossposition && formik.errors.bossposition
-              }
-              error={
-                formik.touched.bossposition &&
-                Boolean(formik.errors.bossposition)
-              }
-            />
-          </FormContainer>
-          <ButtonContainer>
-            <Button
-              variant="contained"
-              styledColor={theme.palette.grey[100]}
-              textColor={theme.palette.grey[900]}
-              onClick={() => navigate('/equipaments')}>
-              Voltar
-            </Button>{' '}
-            <Button
-              variant="contained"
-              type="submit"
-              styledColor={theme.palette.primary.main}>
-              Gerar Termo
-            </Button>
-          </ButtonContainer>
-        </StyledForm>
-      </StyledCard>
+            }}
+          />
+        </BoxInput>
+
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <ButtonFilters onClick={handleClickOpen} variant="contained">
+            Filtros
+            <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
+          </ButtonFilters>
+        </Box>
+      </FindContainer>
+      {renderEquipmentTable()}
+      <FilterScrenn open={open}>
+        <FilterScrennContent>
+          <form onSubmit={formik.handleSubmit}>
+            <FormControl>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '25px'
+                }}>
+                <StyledTextField
+                  fullWidth
+                  id="id"
+                  name="id"
+                  label="Id"
+
+                  onChange={formik.handleChange}
+                  sx={{ ml: '30px' }}
+                />
+                <StyledTextField
+                  fullWidth
+                  id="tipo"
+                  name="tipo"
+                  label="Tipo"
+
+                  onChange={formik.handleChange}
+                  sx={{ ml: '90px' }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '50px'
+                }}>
+                <StyledTextField
+                  fullWidth
+                  id="unidade"
+                  name="unidade"
+                  label="Unidade"
+
+                  onChange={formik.handleChange}
+                  sx={{ ml: '30px' }}
+                />
+                <StyledTextField
+                  fullWidth
+                  id="qtd"
+                  name="qtd"
+                  label="Quantidade"
+
+                  onChange={formik.handleChange}
+                  sx={{ ml: '90px' }}
+                />
+              </Box>
+            </FormControl>
+            <Box
+              sx={{
+                marginTop: '50px',
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
+              <Button
+                variant="contained"
+                onClick={handleClose}
+                sx={{
+                  backgroundColor: 'white',
+                  color: '#666666',
+                  width: '224px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px'
+                }}>
+                Voltar
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                onClick={handleClose}
+                sx={{
+                  marginLeft: '150px',
+                  width: '224px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px'
+                }}>
+                Buscar
+              </Button>
+            </Box>
+          </form>
+        </FilterScrennContent>
+      </FilterScrenn>
     </Container>
   )
 }
-export default GeraTermo

@@ -130,6 +130,7 @@ const NavBar = () => {
                   </Button>
                 </MenuItem>
 
+
             </Menu>
           </Box>
           <Typography
@@ -179,7 +180,12 @@ const NavBar = () => {
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
-            
+            <Button
+              data-testid="buttonMovimentsPC"
+              onClick={() => navigate('/movimentacoes')}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              Movimentações
+            </Button>            
               <Button
                 data-testid="buttonUsersPC"
                 key={''}
@@ -187,6 +193,7 @@ const NavBar = () => {
                 sx={{ my: 2, color: 'white', display: 'block' }}>
                 Usuários
               </Button>
+
  
           </Box>
           <Box sx={{ flexGrow: 0 }}>

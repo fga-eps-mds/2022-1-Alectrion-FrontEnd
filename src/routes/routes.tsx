@@ -100,7 +100,7 @@ export const SignRoutes = () => {
           }
         />
         <Route
-          path="/gerar-termo"
+          path="/movimentacoes"
           element={
             <AuthRoutes>
               <NavBar />

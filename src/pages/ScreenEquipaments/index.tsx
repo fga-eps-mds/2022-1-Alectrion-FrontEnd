@@ -10,7 +10,12 @@ import {
   StyledSelect,
   StyledTextField,
   ButtonClearFilters,
-  StyledGenerateButton
+  StyledGenerateButton,
+  StyledGenerateButton2,
+  MovimentScrenn,
+  MovimentScrennContent,
+  ContainerMov,
+
 } from './style'
 import * as React from 'react'
 import { CSVLink } from 'react-csv'
@@ -32,6 +37,7 @@ import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { StyledTestButton } from '../../components/button/styles'
 
 export interface SearchParams {
   tippingNumber: string
@@ -207,13 +213,20 @@ export default function ScreenEquipaments() {
   }, [])
 
   const [open, setOpen] = React.useState(false)
+  const [open2, setOpen2] = React.useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
+  const handleClickOpen2 = () => {
+    setOpen2(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
+  }
+  const handleClose2 = () => {
+    setOpen2(false)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -578,6 +591,159 @@ export default function ScreenEquipaments() {
       <StyledGenerateButton>
         <CSVLink {...csvReport}>Gerar Relatório</CSVLink>
       </StyledGenerateButton>
+      <StyledGenerateButton2 onClick={handleClickOpen2}>
+        Gerar Movimentação
+      </StyledGenerateButton2>
+      <MovimentScrenn open={open2}>
+        <MovimentScrennContent>
+        <FormControl>
+          <ContainerMov>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#ffffff'}}>
+            Movimentação
+          </Typography>
+          </ContainerMov>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <StyledSelect
+                  id="type"
+                  name="type"
+                  value={formik.values.type}
+                  onChange={formik.handleChange}
+                  displayEmpty
+                  sx={{
+                    marginLeft: '30px',
+                    textAlign: 'center'
+                  }}
+                  inputProps={{ 'aria-label': 'Without label' }}>
+                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                    <em>Tipo de Movimentação</em>
+                  </MenuItem>
+                  <MenuItem value="EMPRESTIMO" sx={{ justifyContent: 'center' }}>
+                    Empréstimo
+                  </MenuItem>
+                  <MenuItem value="RESERVA" sx={{ justifyContent: 'center' }}>
+                    Baixa: Reserva Técnica
+                  </MenuItem>
+                  <MenuItem value="SUCATA" sx={{ justifyContent: 'center' }}>
+                    Baixa: Sucata
+                  </MenuItem>
+                  <MenuItem value="RESPONSABILIDADE" sx={{ justifyContent: 'center' }}>
+                    Responsabilidade
+                  </MenuItem>
+                </StyledSelect>
+                <StyledSelect
+                  id="status"
+                  name="status"
+                  value={formik.values.status}
+                  onChange={formik.handleChange}
+                  displayEmpty
+                  sx={{
+                    marginLeft: '100px',
+                    textAlign: 'center'
+                  }}
+                  inputProps={{ 'aria-label': 'Without label' }}>
+                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                    <em>Unidade de Destino</em>
+                  </MenuItem>
+                  <MenuItem value="UNIDADE1" sx={{ justifyContent: 'center' }}>
+                    1
+                  </MenuItem>
+                  <MenuItem
+                    value="UNIDADE2"
+                    sx={{ justifyContent: 'center' }}>
+                    2
+                  </MenuItem>
+                  <MenuItem value="UNIDADE3" sx={{ justifyContent: 'center' }}>
+                    3
+                  </MenuItem>
+                  <MenuItem
+                    value="UNIDADE4"
+                    sx={{ justifyContent: 'center' }}>
+                    4
+                  </MenuItem>
+                </StyledSelect>
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '25px'
+                }}>
+                <StyledTextField
+                  fullWidth
+                  id="nome"
+                  name="nome"
+                  label="Nome do responsável"
+                  onChange={formik.handleChange}
+                  sx={{ ml: '30px' }}
+                />
+                <StyledTextField
+                  fullWidth
+                  id="cargo"
+                  name="cargo"
+                  label="Cargo do responsável"
+                  onChange={formik.handleChange}
+                  sx={{ ml: '90px' }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '50px'
+                }}>
+                <StyledTextField
+                  fullWidth
+                  id="nomechefe"
+                  name="nomechefe"
+                  label="Nome do chefe da DSTI"
+                  value={formik.values.brand}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '30px' }}
+                />
+                <StyledTextField
+                  fullWidth
+                  id="cargochefe"
+                  name="cargochefe"
+                  label="Cargo do chefe da DSTI"
+                  value={formik.values.processor}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '90px' }}
+                />
+              </Box>
+            </FormControl>
+            <Box
+              sx={{
+                marginTop: '50px',
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
+              <Button
+                variant="contained"
+                onClick={handleClose2}
+                sx={{
+                  backgroundColor: 'white',
+                  color: '#666666',
+                  width: '224px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px'
+                }}>
+                Voltar
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{
+                  marginLeft: '150px',
+                  width: '224px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px'
+                }}>
+                Gerar
+              </Button>
+            </Box>
+        </MovimentScrennContent>
+
+      </MovimentScrenn>
     </Container>
   )
 }
