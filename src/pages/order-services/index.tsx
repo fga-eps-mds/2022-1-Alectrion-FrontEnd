@@ -22,8 +22,9 @@ interface OrderService {
   date: string
   description: string
   authorId: string
-  sender: string
+  senderName: string
   senderFunctionalNumber: string
+  status: string
   receiverName: string
   equipment: {
     type: string
