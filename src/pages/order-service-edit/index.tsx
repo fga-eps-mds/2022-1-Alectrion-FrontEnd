@@ -41,14 +41,25 @@ export type OrderService = {
   date: string
   description: string
   authorId: string
-  sender: string
+  senderName: string
   senderFunctionalNumber: string
   receiverName: string
+  receiverFunctionalNumber: string
+  authorFunctionalNumber: string
+  status: string 
   equipment: {
+    id: string
     type: string
     tippingNumber: string
     status: string
   }
+  destination: {
+    id: string,
+    localization: string
+    name: string
+  },
+  technicians: [],
+  receiverDate: string
 }
 
 const OrderEdit = () => {

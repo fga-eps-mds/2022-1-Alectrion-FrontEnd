@@ -68,51 +68,48 @@ const OrderServiceUpdateForm = ({
         description: yup.string().trim().max(250),
         receiverName: yup.string().trim(),
         receiverFunctionalNumber: yup.string().trim(),
-        technicians: yup.string().trim(),
+        receiverDate: yup.date(),
+        technicians: yup.array(),
     });
     const formik = useFormik({
         initialValues: {
             tippingNumber: order.equipment.tippingNumber,
             status: order.equipment.status,
             productType: order.equipment.type,
-            senderName: order.sender,
+            senderName: order.senderName,
             senderFunctionalNumber: order.senderFunctionalNumber,
             date: order.date,
             userName: user.name,
-            authorFunctionalNumber: "", // Propriedade faltando na O.S.
+            authorFunctionalNumber: order.authorFunctionalNumber,
             receiverName: order.receiverName,
-            receiverFunctionalNumber: "", // Propriedade faltando na O.S.
-            orderStatus: "", // Propriedade faltando na O.S.
-            destination: "", // Propriedade faltando na O.S.
-            technicians: "", // Propriedade faltando na O.S.
-            description: "", // Propriedade faltando na O.S.
+            receiverFunctionalNumber: order.receiverFunctionalNumber, 
+            receiverDate: order.receiverDate,
+            orderStatus: order.status, 
+            destination: order.destination.name, 
+            technicians: order.technicians,
+            description: order.description
         },
         validationSchema,
         enableReinitialize: true,
         onSubmit: async (values) => {
             try {
-                await api.post(
-                    `equipment/updateOrderService/${order.id}`,
+                await api.put(
+                    `equipment/updateOrderService`,
                     {
-                        equipmentId: formik.values.tippingNumber,
-                        authorFunctionalNumber:
-                            formik.values.authorFunctionalNumber,
-                        destination: formik.values.destination,
+                        id: order.id,
+                        equipmentId: order.equipment.id,
+                        userId: user.token,
+                        receiverName: formik.values.receiverName,
+                        authorFunctionalNumber: formik.values.authorFunctionalNumber,
+                        destination: order.destination.id,
                         senderName: formik.values.senderName,
-                        senderFunctionalNumber:
-                            formik.values.senderFunctionalNumber,
-                        date: formik.values.date,
+                        senderFunctionalNumber: formik.values.senderFunctionalNumber,
                         description: formik.values.description,
-                        receiverName: formik.values.userName,
-                        receiverFunctionalNumber:
-                            formik.values.receiverFunctionalNumber,
+                        date: order.date,
+                        recieverFunctionalNumber: formik.values.receiverFunctionalNumber,
                         status: formik.values.orderStatus,
-                        technicians: formik.values.technicians
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user.token}`,
-                        },
+                        techinicias: formik.values.technicians,
+                        recieverDate: formik.values.receiverDate,
                     }
                 );
 
@@ -137,6 +134,7 @@ const OrderServiceUpdateForm = ({
                             type="text"
                             name="tippingNumber"
                             variant="outlined"
+                            disabled
                             fullWidth
                             onChange={(ev) => {
                                 formik.setFieldValue(
@@ -156,31 +154,30 @@ const OrderServiceUpdateForm = ({
                             }
                         />
                         <FormControl>
-                            <StyledInputLabel id="status-input-label">
+                            <StyledInputLabel id="orderStatus-select-label">
                                 Status da Ordem de Serviço
                             </StyledInputLabel>
                             <StyledSelect
-                                id="status-input"
-                                labelId="status-input-label"
-                                data-testid="status-input-select"
-                                label="Status do Equipamento"
+                                id="orderStatus-select-label"
+                                labelId="orderStatus-select-label"
+                                data-testid="orderStatus-select"
+                                label="Status da O.S."
                                 type="text"
-                                name="status"
+                                name="orderStatus"
                                 variant="outlined"
                                 error={
-                                    formik.touched.status &&
-                                    Boolean(formik.errors.status)
+                                    formik.touched.orderStatus &&
+                                    Boolean(formik.errors.orderStatus)
                                 }
                                 onChange={formik.handleChange}
-                                value={formik.values.status}
+                                value={formik.values.orderStatus}
                             >
-                                <MenuItem value="ACTIVE">Ativo</MenuItem>
-                                <MenuItem value="ACTIVE_LOAN">Ativo Empréstimo</MenuItem>
-                                <MenuItem value="DOWNGRADED">Baixado</MenuItem>
                                 <MenuItem value="MAINTENANCE">
                                     Em Manuntenção
                                 </MenuItem>
-                                <MenuItem value="TECHNICAL_RESERVE">Reserva Técnica</MenuItem>
+                                <MenuItem value="WARRANTY">Garantia</MenuItem>
+                                <MenuItem value="CONCLUDED">Concluída</MenuItem>
+                                <MenuItem value="CANCELED">Cancelado</MenuItem>
                             </StyledSelect>
                         </FormControl>
                         <StyledTextField
@@ -189,6 +186,7 @@ const OrderServiceUpdateForm = ({
                             label="Tipo de equipamento"
                             type="text"
                             fullWidth
+                            disabled
                             name="productType"
                             variant="outlined"
                             aria-readonly
@@ -249,6 +247,7 @@ const OrderServiceUpdateForm = ({
                             label="Data"
                             type="date"
                             name="date"
+                            disabled
                             fullWidth
                             variant="outlined"
                             onChange={formik.handleChange}
@@ -269,18 +268,18 @@ const OrderServiceUpdateForm = ({
                             id="brand-input"
                             label="Nome do Recebedor"
                             type="text"
-                            name="userName"
+                            name="receiverName"
                             fullWidth
                             variant="outlined"
                             onChange={formik.handleChange}
-                            value={formik.values.userName}
+                            value={formik.values.receiverName}
                             helperText={
-                                formik.touched.userName &&
-                                formik.errors.userName
+                                formik.touched.receiverName &&
+                                formik.errors.receiverName
                             }
                             error={
-                                formik.touched.userName &&
-                                Boolean(formik.errors.userName)
+                                formik.touched.receiverName &&
+                                Boolean(formik.errors.receiverName)
                             }
                         />
                         <StyledTextField
@@ -301,90 +300,66 @@ const OrderServiceUpdateForm = ({
                                 Boolean(formik.errors.receiverFunctionalNumber)
                             }
                         />
-
-                        <FormControl>
-                            <StyledInputLabel id="orderStatus-select-label">
-                                Status da Ordem de Serviço
-                            </StyledInputLabel>
-                            <StyledSelect
-                                id="orderStatus-select-label"
-                                labelId="orderStatus-select-label"
-                                data-testid="orderStatus-select"
-                                label="Status da O.S."
-                                type="text"
-                                name="orderStatus"
-                                variant="outlined"
-                                error={
-                                    formik.touched.orderStatus &&
-                                    Boolean(formik.errors.orderStatus)
-                                }
-                                onChange={formik.handleChange}
-                                value={formik.values.orderStatus}
-                            >
-                                <MenuItem value="MAINTENANCE">
-                                    Em Manuntenção
-                                </MenuItem>
-                                <MenuItem value="WARRANTY">Garantia</MenuItem>
-                                <MenuItem value="CONCLUDED">Concluído</MenuItem>
-                            </StyledSelect>
-                        </FormControl>
+                        <StyledTextField
+                            InputLabelProps={{ shrink: true }}
+                            id="reciver-data-input"
+                            label="Data de recebimento"
+                            type="date"
+                            name="receiverDate"
+                            fullWidth
+                            variant="outlined"
+                            onChange={formik.handleChange}
+                            value={formik.values.receiverDate}
+                            helperText={
+                                formik.touched.receiverDate && formik.errors.receiverDate
+                            }
+                            error={
+                                formik.touched.receiverDate &&
+                                Boolean(formik.errors.date)
+                            }
+                        />
                     </FormContainer>
 
-                    <Autocomplete
-                        disablePortal
-                        options={units ?? []}
-                        getOptionLabel={(option) =>
-                            `${option.name} - ${option.localization}`
-                        }
-                        onChange={(_, value) =>
-                            formik.setFieldValue("destination", value?.id)
-                        }
-                        fullWidth
-                        className="autocomplete"
-                        sx={{
-                            padding: 0,
-                            "& .MuiOutlinedInput-root": {
-                                padding: "0 !important",
-                            },
-                            "& .MuiAutocomplete-input": {
-                                padding: "16.5px !important",
-                            },
-                        }}
-                        renderInput={(params) => (
-                            <StyledTextField
-                                {...params}
-                                label="Destino"
-                                helperText={
-                                    formik.touched.destination &&
-                                    formik.errors.destination
-                                }
-                                error={
-                                    formik.touched.destination &&
-                                    Boolean(formik.errors.destination)
-                                }
-                            />
-                        )}
-                    />
+                    <FormContainer>
+                        <StyledTextField
+                            label="Destino"
+                            id="destination-input"
+                            type="text"
+                            name="destination"
+                            fullWidth
+                            disabled
+                            variant="outlined"
+                            value={formik.values.destination}
+                            helperText={
+                                formik.touched.destination &&
+                                formik.errors.destination
+                            }
+                            error={
+                                formik.touched.destination &&
+                                Boolean(formik.errors.destination)
+                            }
+                        />
 
-                    <StyledTextField
-                        label="Técnicos"
-                        aria-readonly
-                        id="technicians-input"
-                        type="text"
-                        name="technicians"
-                        fullWidth
-                        variant="outlined"
-                        onChange={formik.handleChange}
-                        value={formik.values.technicians}
-                        helperText={
-                            formik.touched.technicians &&
-                            formik.errors.technicians
-                        }
-                        error={
-                            formik.touched.technicians &&
-                            Boolean(formik.errors.technicians)
-                        }
-                    />
+                        <StyledTextField
+                            label="Técnicos"
+                            id="technicians-input"
+                            type="text"
+                            name="technicians"
+                            fullWidth
+                            variant="outlined"
+                            placeholder="Maria, João, Pedro"
+                            onChange={formik.handleChange}
+                            value={formik.values.technicians}
+                            helperText={
+                                formik.touched.technicians &&
+                                formik.errors.technicians
+                            }
+                            error={
+                                formik.touched.technicians &&
+                                Boolean(formik.errors.technicians)
+                            }
+                        />
+                    </FormContainer>
 
                     <StyledTextArea
                         label="Descrição"
@@ -416,10 +391,9 @@ const OrderServiceUpdateForm = ({
                         </Button>{" "}
                         <Button
                             variant="contained"
-                            data-testid="register-button"
+                            data-testid="update-button"
                             type="submit"
-                            styledColor={theme.palette.primary.main}
-                        >
+                            styledColor={theme.palette.primary.main}>
                             Atualizar
                         </Button>
                     </ButtonContainer>
