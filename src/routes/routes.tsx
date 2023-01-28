@@ -15,6 +15,7 @@ import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
 import ScreenEquipaments from '../pages/ScreenEquipaments'
 import OrderRegister from '../pages/order-service'
+import OrderPrint from '../pages/order-service-print'
 import { CircularProgress } from '@mui/material'
 import EquipRegister from '../pages/equipment-register'
 import { OrderServices } from '../pages/order-services'
@@ -69,6 +70,15 @@ export const SignRoutes = () => {
             <AuthRoutes>
               <NavBar />
               <OrderServices />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/order-services-print"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <OrderPrint />
             </AuthRoutes>
           }
         />
