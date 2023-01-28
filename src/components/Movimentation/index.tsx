@@ -6,36 +6,37 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-
-
 import { EditButton } from '../edit-button/index'
 import { StyledTableCell, StyledTableRow, ButtonDownloadEquipament, ButtonReservEquipament } from './styles'
 import { Button, IconButton } from '@mui/material'
 import Edit from '@mui/icons-material/Edit'
 
-export interface moviment {
-    id: string
-    tipo: string
-    unidade: string
-    qtdequipamentos: string
-
+export interface Movement {
+  id: string
+  date: Date
+  userId: string
+  equipments: any[]
+  type: Number
+  inChargeName: string
+  inChargeRole: string
+  chiefName: string
+  chiefRole: string
+  equipmentSnapshots?: any
+  description?: string
+  destination?: any
 }
 
 interface propType {
-  moviment: moviment[]
+  movements: Movement[]
 }
-const mocktable = {
-    id: '001',
 
-    tipo: 'Empréstimo',
+const TYPES = [
+  'Empréstimo',
+  'Baixa',
+  'Responsabilidade'
+]
 
-    unidade: '11 DP',
-
-    qtdequipamentos: '2',
-
-  }
-
-export default function MovimentTables({moviment}: propType) {
+export default function MovimentTables({movements}: propType) {
   return (
     <TableContainer
       sx={{
@@ -56,20 +57,20 @@ export default function MovimentTables({moviment}: propType) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {moviment.map((moviment, index) => {
+          {movements.map((movement, index) => {
             return (
-              <StyledTableRow key={index + moviment.id}>
+              <StyledTableRow key={index + movement.id}>
                 <StyledTableCell align="center" component="th">
-                  {mocktable.id}
+                  {movement.id}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {mocktable.tipo}
+                  {TYPES[movement.type]}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {mocktable.unidade}
+                  {movement.destination ? movement.destination.name : '-'}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {mocktable.qtdequipamentos}
+                  {movement.equipments.length}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                     <IconButton aria-label="delete" size="large" disabled>

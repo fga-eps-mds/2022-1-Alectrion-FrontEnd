@@ -20,46 +20,17 @@ import { StyledTextField } from '../text-field/styles'
 import MovimentTables from '../Movimentation'
 
 export interface SearchParams {
-  tippingNumber: string
-
-  serialNumber: string
-
-  type: string
-
-  status: string
-
-  model: string
-
-  acquisitionDate: Date
-
-  description?: string
-
-  initialUseDate: Date
-
-  screenSize?: string
-
-  invoiceNumber: string
-
-  power?: string
-
-  screenType?: string
-
-  processor?: string
-
-  storageType?: string
-
-  storageAmount?: string
-
-  brand: string
-
-  acquisitionId: string
-
-  unitId: string
-
-  ram_size?: string
+  id?: string
+  userid?: string
+  equipmentid?: string
+  type?: Number
+  lowerdate?: Date
+  higherdate?: Date
+  page?: Number
+  resultquantity?: Number
 }
 
-interface moviment {
+interface movement {
   id: string
   tipo: string
   unidade: string
@@ -67,17 +38,17 @@ interface moviment {
 }
 
 export default function ScreenMoviments() {
-  const [moviment, setMoviments] = useState<moviment[]>([])
+  const [movements, setMovements] = useState<movement[]>([])
   const [basicSearch, setbasicSearch] = useState<string>('')
 
   const initialValues = {
-    id: '001',
+    id: '',
 
-    tipo: 'Empréstimo',
+    tipo: '',
 
-    unidade: '11 DP',
+    unidade: '',
 
-    qtdequipamentos: '2',
+    qtdequipamentos: '',
 
   }
 
@@ -89,11 +60,11 @@ export default function ScreenMoviments() {
           delete values[param]
         }
       })
-      getEquipaments(values)
+      getMovements(values)
     }
   })
 
-  const getEquipaments = async (query?: SearchParams) => {
+  const getMovements = async (query?: SearchParams) => {
     try {
       const queryParams = new URLSearchParams('')
       if (query) {
@@ -102,23 +73,24 @@ export default function ScreenMoviments() {
         )
       }
 
-      const { data }: AxiosResponse<moviment[]> = await api.get(
-        'equipment/find',
+      const { data }: AxiosResponse<movement[]> = await api.get(
+        'equipment/findMovements',
         {
           params: queryParams
         }
       )
-      setMoviments(data)
+      setMovements(data)
     } catch (error) {
-      setMoviments([])
-      toast.error('Nenhum Equipamento encontrado')
+      setMovements([])
+      toast.error('Nenhuma movimentação encontrada')
     }
   }
   const renderEquipmentTable = React.useCallback(() => {
-    return <MovimentTables moviment={moviment} />
-  }, [moviment])
+    return <MovimentTables movements={movements} />
+  }, [movements])
+
   React.useEffect(() => {
-    getEquipaments()
+    getMovements()
   }, [])
 
   const [open, setOpen] = React.useState(false)
@@ -134,8 +106,6 @@ export default function ScreenMoviments() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setbasicSearch(event.target.value)
   }
-
-
 
   return (
     <Container>
@@ -157,12 +127,12 @@ export default function ScreenMoviments() {
               if (ev.key === 'Enter') {
                 // Do code here
                 if (basicSearch === '') {
-                  getEquipaments()
+                  getMovements()
                 } else {
                   const query = {
                     serialNumber: basicSearch.toString()
                   } as unknown as SearchParams
-                  getEquipaments(query)
+                  getMovements(query)
                 }
               }
             }}
@@ -176,7 +146,9 @@ export default function ScreenMoviments() {
           </ButtonFilters>
         </Box>
       </FindContainer>
+
       {renderEquipmentTable()}
+
       <FilterScrenn open={open}>
         <FilterScrennContent>
           <form onSubmit={formik.handleSubmit}>
