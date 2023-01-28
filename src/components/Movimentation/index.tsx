@@ -16,7 +16,7 @@ export interface Movement {
   date: Date
   userId: string
   equipments: any[]
-  type: Number
+  type: number
   inChargeName: string
   inChargeRole: string
   chiefName: string

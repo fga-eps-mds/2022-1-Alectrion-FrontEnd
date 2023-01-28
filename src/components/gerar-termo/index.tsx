@@ -17,7 +17,7 @@ import { FindContainer } from '../../pages/user-screen/styles'
 import { dateFormat } from '../../utils/dateFormat'
 import { StyledSelect } from '../register-user-form/styles'
 import { StyledTextField } from '../text-field/styles'
-import MovimentTables from '../Movimentation'
+import MovimentTables, { Movement } from '../Movimentation'
 
 export interface SearchParams {
   id?: string
@@ -30,15 +30,8 @@ export interface SearchParams {
   resultquantity?: Number
 }
 
-interface movement {
-  id: string
-  tipo: string
-  unidade: string
-  qtdequipamentos: string
-}
-
 export default function ScreenMoviments() {
-  const [movements, setMovements] = useState<movement[]>([])
+  const [movements, setMovements] = useState<Movement[]>([])
   const [basicSearch, setbasicSearch] = useState<string>('')
 
   const initialValues = {
@@ -73,7 +66,7 @@ export default function ScreenMoviments() {
         )
       }
 
-      const { data }: AxiosResponse<movement[]> = await api.get(
+      const { data }: AxiosResponse<Movement[]> = await api.get(
         'equipment/findMovements',
         {
           params: queryParams

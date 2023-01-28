@@ -206,3 +206,25 @@ export const StyledTextField = styledSystem(TextField)(({ theme }) => ({
     textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
   }
 }))
+
+export const StyledDescTextField = styledSystem(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderRadius: '15px !important'
+  },
+  '& .MuiOutlinedInput-input': {
+    borderRadius: '15px !important',
+    backgroundColor: theme.palette.background.default,
+    height: '110px'
+  },
+  width: '100%',
+  marginLeft: '30px',
+  '& .MuiFormControl-root': {
+    marginTop: '-7px',
+    color: theme.palette.background.default,
+    textShadow: '0 0px 1px rgba(0,0,0,1), 0 0px 1px rgba(0,0,0,1)'
+  },
+  '& .MuiInputLabel-root': {
+    marginTop: '40px',
+    marginLeft: '40px'
+  }
+}))
