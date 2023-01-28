@@ -33,7 +33,6 @@ export type Equipment = {
   ram_size: string
   createdAt: string
   updatedAt: string
-  formattedStatus: string
 }
 
 export type OrderService = {
@@ -86,32 +85,7 @@ const OrderEdit = () => {
       `equipment/listOne/?tippingNumber=${tippingNumber}`
     )
 
-    let formattedStatus = ''
-    const { status } = data
-    switch (status) {
-      case 'MAINTENANCE':
-        formattedStatus = 'Em Manutenção'
-        break
-      case 'ACTIVE':
-        formattedStatus = 'Ativo'
-        break
-      case 'ACTIVE_BY_DEMISE':
-        formattedStatus = 'Ativo'
-        break
-      case 'INACTIVE':
-        formattedStatus = 'Inativo'
-        break
-      case 'DOWNGRADED':
-        formattedStatus = 'Baixado'
-        break
-      case 'TECHNICAL_RESERVE':
-        formattedStatus = 'Reserva Técnica'
-        break
-      default:
-        break
-    }
-
-    setEquipment({ ...data, formattedStatus })
+    setEquipment(data)
   }
 
   const handleTippingNumberChange = (data: string) => {
@@ -126,7 +100,7 @@ const OrderEdit = () => {
   return (
     <Container>
       <>
-        <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
           Atualização de Ordem de Serviço
         </Typography>
         <OrderServiceUpdateForm

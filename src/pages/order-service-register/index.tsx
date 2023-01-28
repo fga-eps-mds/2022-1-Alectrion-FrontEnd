@@ -32,7 +32,6 @@ export type Equipment = {
     ram_size: string;
     createdAt: string;
     updatedAt: string;
-    formattedStatus: string;
 };
 
 const OrderRegister = () => {
@@ -61,32 +60,7 @@ const OrderRegister = () => {
             `equipment/listOne/?tippingNumber=${tippingNumber}`
         );
 
-        let formattedStatus = "";
-        const { status } = data;
-        switch (status) {
-            case "MAINTENANCE":
-                formattedStatus = "Em manutenção";
-                break;
-            case "ACTIVE":
-                formattedStatus = "Ativo";
-                break;
-            case "ACTIVE_BY_DEMISE":
-                formattedStatus = "Ativo";
-                break;
-            case "INACTIVE":
-                formattedStatus = "Inativo";
-                break;
-            case "DOWNGRADED":
-                formattedStatus = "Baixado";
-                break;
-            case "TECHNICAL_RESERVE":
-                formattedStatus = "Reserva técnica";
-                break;
-            default:
-                break;
-        }
-
-        setEquipment({ ...data, formattedStatus });
+        setEquipment(data);
     };
 
     const handleTippingNumberChange = (data: string) => {
@@ -101,7 +75,7 @@ const OrderRegister = () => {
         <Container>
             <>
                 <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-                    Cadastro de ordem de serviço
+                    Cadastro de Ordem de Serviço
                 </Typography>
                 <RegisterOrderServiceForm
                     units={units}

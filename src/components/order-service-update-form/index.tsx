@@ -17,9 +17,9 @@ import {
     StyledSelect,
 } from "./styles";
 import { theme } from "../../styles/theme";
-import { Equipment } from "../../pages/order-service-edit";
+import { Equipment } from "../../pages/order-service-update";
 import { Autocomplete, FormControl, MenuItem } from "@mui/material";
-import { OrderService } from "../../pages/order-service-edit";
+import { OrderService } from "../../pages/order-service-update";
 
 type Props = {
     order: OrderService;
@@ -244,7 +244,7 @@ const OrderServiceUpdateForm = ({
                         <StyledTextField
                             InputLabelProps={{ shrink: true }}
                             id="data-input"
-                            label="Data"
+                            label="Data de Entrada"
                             type="date"
                             name="date"
                             disabled
@@ -303,7 +303,7 @@ const OrderServiceUpdateForm = ({
                         <StyledTextField
                             InputLabelProps={{ shrink: true }}
                             id="reciver-data-input"
-                            label="Data de recebimento"
+                            label="Data de Recebimento"
                             type="date"
                             name="receiverDate"
                             fullWidth

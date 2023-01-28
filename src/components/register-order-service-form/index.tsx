@@ -15,7 +15,7 @@ import {
   StyledTextArea
 } from './styles'
 import { theme } from '../../styles/theme'
-import { Equipment } from '../../pages/order-service'
+import { Equipment } from '../../pages/order-service-register'
 import { Autocomplete } from '@mui/material'
 
 type Props = {
@@ -69,7 +69,7 @@ const RegisterOrderServiceForm = ({
       senderFunctionalNumber: '',
       date: new Date().toISOString().split('T')[0],
       tippingNumber: initialData?.tippingNumber,
-      status: initialData?.formattedStatus,
+      status: initialData?.status,
       productType: initialData?.type,
       description: '',
       userName: user.name,
@@ -110,64 +110,11 @@ const RegisterOrderServiceForm = ({
     <Container>
       <StyledCard>
         <StyledForm onSubmit={formik.handleSubmit}>
-          <FormContainer>
-            <Column>
-              <StyledTextField
-                id="senderName-select-label"
-                data-testid="senderName-select"
-                label="Nome do entregador"
-                type="text"
-                name="senderName"
-                fullWidth
-                variant="outlined"
-                onChange={formik.handleChange}
-                value={formik.values.senderName}
-                helperText={
-                  formik.touched.senderName && formik.errors.senderName
-                }
-                error={
-                  formik.touched.senderName && Boolean(formik.errors.senderName)
-                }
-              />
-              <StyledTextField
-                aria-readonly
-                id="senderFunctionalNumber-input"
-                label="N° funcional do entregador"
-                type="text"
-                fullWidth
-                name="senderFunctionalNumber"
-                variant="outlined"
-                onChange={formik.handleChange}
-                value={formik.values.senderFunctionalNumber}
-                helperText={
-                  formik.touched.senderFunctionalNumber &&
-                  formik.errors.senderFunctionalNumber
-                }
-                error={
-                  formik.touched.senderFunctionalNumber &&
-                  Boolean(formik.errors.senderFunctionalNumber)
-                }
-              />
-
-              <StyledTextField
-                InputLabelProps={{ shrink: true }}
-                id="data-input"
-                label="Data"
-                type="date"
-                name="date"
-                fullWidth
-                variant="outlined"
-                onChange={formik.handleChange}
-                value={formik.values.date}
-                helperText={formik.touched.date && formik.errors.date}
-                error={formik.touched.date && Boolean(formik.errors.date)}
-              />
-            </Column>
-            <Column>
+            <FormContainer>
               <StyledTextField
                 id="tippingNumber-input"
                 data-testid="tippingNumber-input"
-                label="N° Tombamento"
+                label="Nº de Tombamento do Equipamento"
                 type="text"
                 name="tippingNumber"
                 variant="outlined"
@@ -188,7 +135,7 @@ const RegisterOrderServiceForm = ({
 
               <StyledTextField
                 id="status-input"
-                label="Status do equipamento"
+                label="Status do Equipamento"
                 fullWidth
                 InputLabelProps={{ shrink: true }}
                 type="text"
@@ -202,7 +149,7 @@ const RegisterOrderServiceForm = ({
               <StyledTextField
                 InputLabelProps={{ shrink: true }}
                 id="productType-input"
-                label="Tipo de equipamento"
+                label="Tipo de Equipamento"
                 type="text"
                 fullWidth
                 name="productType"
@@ -217,12 +164,64 @@ const RegisterOrderServiceForm = ({
                   Boolean(formik.errors.productType)
                 }
               />
-            </Column>
-            <Column>
+            </FormContainer>
+            <FormContainer>
+              <StyledTextField
+                id="senderName-select-label"
+                data-testid="senderName-select"
+                label="Nome do Entregador"
+                type="text"
+                name="senderName"
+                fullWidth
+                variant="outlined"
+                onChange={formik.handleChange}
+                value={formik.values.senderName}
+                helperText={
+                  formik.touched.senderName && formik.errors.senderName
+                }
+                error={
+                  formik.touched.senderName && Boolean(formik.errors.senderName)
+                }
+              />
+              <StyledTextField
+                aria-readonly
+                id="senderFunctionalNumber-input"
+                label="Número Funcional do Entregador"
+                type="text"
+                fullWidth
+                name="senderFunctionalNumber"
+                variant="outlined"
+                onChange={formik.handleChange}
+                value={formik.values.senderFunctionalNumber}
+                helperText={
+                  formik.touched.senderFunctionalNumber &&
+                  formik.errors.senderFunctionalNumber
+                }
+                error={
+                  formik.touched.senderFunctionalNumber &&
+                  Boolean(formik.errors.senderFunctionalNumber)
+                }
+              />
+
+              <StyledTextField
+                InputLabelProps={{ shrink: true }}
+                id="data-input"
+                label="Data de Entrada"
+                type="date"
+                name="date"
+                fullWidth
+                variant="outlined"
+                onChange={formik.handleChange}
+                value={formik.values.date}
+                helperText={formik.touched.date && formik.errors.date}
+                error={formik.touched.date && Boolean(formik.errors.date)}
+              />
+            </FormContainer>
+            <FormContainer>
               <StyledTextField
                 aria-readonly
                 id="brand-input"
-                label="Nome do recebedor"
+                label="Nome do Recebedor"
                 type="text"
                 name="userName"
                 fullWidth
@@ -236,7 +235,7 @@ const RegisterOrderServiceForm = ({
               />
               <StyledTextField
                 aria-aria-readonly
-                label="N° funcional do recebedor"
+                label="N° Funcional do Recebedor"
                 type="text"
                 name="authorFunctionalNumber"
                 variant="outlined"
@@ -287,8 +286,10 @@ const RegisterOrderServiceForm = ({
                   />
                 )}
               />
-            </Column>
-          </FormContainer>
+
+
+            </FormContainer>
+
 
           <StyledTextArea
             label="Descrição"

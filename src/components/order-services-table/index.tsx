@@ -20,6 +20,7 @@ interface OrderService {
   senderName: string
   senderFunctionalNumber: string
   receiverName: string
+  receiverFunctionalNumber: string
   status: string
   equipment: {
     type: string
@@ -35,16 +36,16 @@ interface OrderServicesProps {
 function handleToStatus(status: string) {
   switch(status){
     case 'MAINTENANCE': {
-      return 'Em manuntenção';
+      return 'Em Manuntenção';
     }
     case 'WARRANTY': {
       return 'Garantia'
     }
     case 'CONCLUDED': {
-      return 'Concluido'
+      return 'Concluída'
     }
     case 'CANCELED': {
-      return 'Cancelado'
+      return 'Cancelada'
     }
   }
 }
@@ -66,14 +67,14 @@ export default function OderServiceTable({
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Id</StyledTableCell>
-            <StyledTableCell align="center">Data de Entrada</StyledTableCell>
-            <StyledTableCell align="center">Tipo Equipamento</StyledTableCell>
+            <StyledTableCell align="center">ID da O.S.</StyledTableCell>
             <StyledTableCell align="center">N° de Tombamento</StyledTableCell>
-            <StyledTableCell align="center">Status</StyledTableCell>
-            <StyledTableCell align="center">Recebedor</StyledTableCell>
+            <StyledTableCell align="center">Tipo de Equipamento</StyledTableCell>
+            <StyledTableCell align="center">Data de Entrada</StyledTableCell>
             <StyledTableCell align="center">Entregador</StyledTableCell>
-            <StyledTableCell align="center">Atualizar</StyledTableCell>
+            <StyledTableCell align="center">Recebedor</StyledTableCell>
+            <StyledTableCell align="center">Status da O.S.</StyledTableCell>
+            {!isConsulta && (<StyledTableCell align="center">Atualizar</StyledTableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -83,21 +84,21 @@ export default function OderServiceTable({
                 {orderSerivce.id}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {dateFormat(orderSerivce.date)}
+                {orderSerivce.equipment.tippingNumber}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {orderSerivce.equipment.type}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {orderSerivce.equipment.tippingNumber}
+                {dateFormat(orderSerivce.date)}
+              </StyledTableCell>
+              <StyledTableCell align="center">{`${orderSerivce.senderName} - ${orderSerivce.senderFunctionalNumber}`}</StyledTableCell>
+              <StyledTableCell align="center">
+                {`${orderSerivce.receiverName} - ${orderSerivce.receiverFunctionalNumber}`}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {handleToStatus(orderSerivce.status)}
               </StyledTableCell>
-              <StyledTableCell align="center">
-                {orderSerivce.receiverName}
-              </StyledTableCell>
-              <StyledTableCell align="center">{`${orderSerivce.senderName} - ${orderSerivce.senderFunctionalNumber}`}</StyledTableCell>
               {!isConsulta && (
                 <StyledTableCell
                   align="center"

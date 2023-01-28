@@ -26,6 +26,7 @@ interface OrderService {
   senderFunctionalNumber: string
   status: string
   receiverName: string
+  receiverFunctionalNumber: string
   equipment: {
     type: string
     tippingNumber: string
@@ -90,7 +91,7 @@ export const OrderServices = () => {
     <>
       <Container>
         <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-          Ordem de serviço
+          Ordem de Serviço
         </Typography>
         <StyledCard>
           <StyledTextField
@@ -140,7 +141,7 @@ export const OrderServices = () => {
                 styledColor="#16878C"
                 onClick={() => navigate('/create-order-service')}
                 borderRadius="10px">
-                Cadastrar OS
+                Cadastrar O.S.
               </Button>
             )}
           </ButtonGroup>

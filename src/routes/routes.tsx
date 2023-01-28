@@ -14,11 +14,11 @@ import ScreenUser from '../pages/user-screen'
 import EditUser from '../pages/EditUser'
 import NavBar from '../components/NavBar'
 import ScreenEquipaments from '../pages/ScreenEquipaments'
-import OrderRegister from '../pages/order-service'
+import OrderRegister from '../pages/order-service-register'
 import { CircularProgress } from '@mui/material'
 import EquipRegister from '../pages/equipment-register'
 import { OrderServices } from '../pages/order-services'
-import OrderServiceUpdateForm from '../pages/order-service-edit'
+import OrderServiceUpdateForm from '../pages/order-service-update'
 type AuthRouteProps = {
   children: ReactNode
 }
@@ -73,6 +73,15 @@ export const SignRoutes = () => {
           }
         />
         <Route
+          path="/create-order-service"
+          element={
+            <AuthRoutes>
+              <NavBar />
+              <OrderRegister />
+            </AuthRoutes>
+          }
+        />
+        <Route
           path="/order-service-update-form"
           element={
             <AuthRoutes>
@@ -105,15 +114,6 @@ export const SignRoutes = () => {
             <AuthRoutes>
               <NavBar />
               <EquipRegister />
-            </AuthRoutes>
-          }
-        />
-        <Route
-          path="/create-order-service"
-          element={
-            <AuthRoutes>
-              <NavBar />
-              <OrderRegister />
             </AuthRoutes>
           }
         />
