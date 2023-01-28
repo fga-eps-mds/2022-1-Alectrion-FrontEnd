@@ -27,9 +27,12 @@ interface user {
 
 export default function ScreenUser() {
   const { user } = useContext(AuthContext) as AuthContextType
-  const isAdmin = user.role === 'gerente' || user.role === 'administrador' || user.role === 'basico'
+  const isAdmin =
+    user.role === 'gerente' ||
+    user.role === 'administrador' ||
+    user.role === 'basico'
+  const isSuperAdmin = user.role === 'administrador'
   const isEditor = user.role === 'gerente' || user.role === 'administrador'
-
 
   const navigate = useNavigate()
   const [users, setUsers] = useState<user[]>([])
@@ -74,7 +77,7 @@ export default function ScreenUser() {
           )}
         </FindContainer>
         <div></div>
-        <UserTables users={users} isEditor={isEditor} />
+        <UserTables users={users} isEditor={isEditor} isAdmin={isSuperAdmin} />
       </Container>
     </div>
   )
