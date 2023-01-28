@@ -147,6 +147,7 @@ interface unit {
 export default function ScreenEquipaments() {
   const [equipaments, setEquipaments] = useState<equipament[]>([])
   const [basicSearch, setbasicSearch] = useState<string>('')
+  const [selectedEquipments, setSelectedEquipments] = useState<Object>({})
   const [units, setUnits] = useState<unit[]>([])
 
   const navigate = useNavigate()
@@ -221,7 +222,32 @@ export default function ScreenEquipaments() {
     },
 
     onSubmit: async (values) => {
-      console.log(values)
+      const mockedUserId = '1f0fba7b-b937-4793-bc35-8f476e9e76e2'
+      const status = values.type == 1 ? 'Reserva Técnica' : 'Baixado'
+      const type = values.type == 3 ? 1 : values.type
+      const equipments = Object.keys(selectedEquipments)
+
+      const body = {
+        ...values,
+        status,
+        type,
+        equipments,
+        userid: mockedUserId,
+      }
+
+      const { data }: AxiosResponse<any> = await api.post(
+        'equipment/createMovement',
+        body
+      )
+
+      if(data.error)
+        toast.error(data.error)
+      else {
+        toast.success('Movimentação realizada com sucesso.')
+        getEquipaments()
+        setIsMovementModalOpen(false)
+        setSelectedEquipments({})
+      }
     },
 
     validateOnChange: false
@@ -248,9 +274,6 @@ export default function ScreenEquipaments() {
       toast.error('Nenhum Equipamento encontrado')
     }
   }
-  const renderEquipmentTable = React.useCallback(() => {
-    return <EquipamentsTables equipaments={equipaments} />
-  }, [equipaments])
 
   useEffect(() => {
     const getUnits = async () => {
@@ -366,7 +389,9 @@ export default function ScreenEquipaments() {
           )}
         </Box>
       </FindContainer>
-      {renderEquipmentTable()}
+
+      <EquipamentsTables equipaments={equipaments} selectedEquipments={selectedEquipments} setSelectedEquipments={setSelectedEquipments} />
+      
       <FilterScrenn open={open}>
         <FilterScrennContent>
           <form onSubmit={formik.handleSubmit}>

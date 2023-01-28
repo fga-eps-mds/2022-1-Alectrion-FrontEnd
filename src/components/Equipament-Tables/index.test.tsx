@@ -76,10 +76,13 @@ test("should list equipament", async () => {
           acquisitionDate: new Date()
         }
       ] as unknown as equipament[]
+    
+    const selectedEquipments = {}
+    const setSelectedEquipments = () => {}
 
     render(
         <Providers location={location}>
-            <EquipamentsTables equipaments={equipaments} />
+            <EquipamentsTables equipaments={equipaments} selectedEquipments={selectedEquipments} setSelectedEquipments={setSelectedEquipments} />
         </Providers>
     );
 

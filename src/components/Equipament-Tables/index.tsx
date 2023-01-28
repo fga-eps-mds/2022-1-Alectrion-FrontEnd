@@ -75,12 +75,24 @@ export interface equipament {
 }
 
 interface propType {
-  equipaments: equipament[]
+  equipaments: equipament[],
+  selectedEquipments: any,
+  setSelectedEquipments: Function
 }
 
-export default function EquipamentsTables({ equipaments }: propType) {
+export default function EquipamentsTables({ equipaments, selectedEquipments, setSelectedEquipments }: propType) {
   const { user } = useContext(AuthContext) as AuthContextType
   const role = user?.role
+
+  function toggleSelectedEquipment(id: string) {
+    const auxEquipments = {...selectedEquipments}
+    if(selectedEquipments[id])
+      delete auxEquipments[id]
+    else
+      auxEquipments[id] = true
+    setSelectedEquipments(auxEquipments)
+  }
+
   return (
     <TableContainer
       sx={{
@@ -128,57 +140,57 @@ export default function EquipamentsTables({ equipaments }: propType) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {equipaments.map((equipaments, index) => {
+          {equipaments.map((equipment, index) => {
             return (
-              <StyledTableRow key={index + equipaments.id}>
+              <StyledTableRow key={index + equipment.id}>
                 <StyledTableCell align="center" component="th">
-                  {equipaments.tippingNumber}
+                  {equipment.tippingNumber}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.serialNumber}
+                  {equipment.serialNumber}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.situacao}
+                  {equipment.situacao}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {`${equipaments.unit.name} - ${equipaments.unit.localization}`}
+                  {`${equipment.unit.name} - ${equipment.unit.localization}`}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {dateFormat(equipaments.acquisitionDate)}
+                  {dateFormat(equipment.acquisitionDate)}
                   {/* Corrige data que estava errada na tabela */}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.type}
+                  {equipment.type}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.estado}
+                  {equipment.estado}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.brand.name}
+                  {equipment.brand.name}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.model}
+                  {equipment.model}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.processor}
+                  {equipment.processor}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.storageType}
+                  {equipment.storageType}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.storageAmount}
+                  {equipment.storageAmount}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.ram_size}
+                  {equipment.ram_size}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.screenType}
+                  {equipment.screenType}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.screenSize}
+                  {equipment.screenSize}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {equipaments.power}
+                  {equipment.power}
                 </StyledTableCell>
                 <>
                   {(role === 'administrador' || role === 'gerente') && ( // Os perfis de administrador e de gerente irão ter acesso ao botão de edição do equipamento
@@ -197,8 +209,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
                   )}
                 </>
                 <StyledTableCell align="center">
-                  <IconButton aria-label="trade" size="large" disabled>
-                    <SwapHorizIcon />
+                  <IconButton aria-label="swap" size="large" onClick={() => toggleSelectedEquipment(equipment.id)}>
+                    { selectedEquipments[equipment.id]
+                      ? <CheckIcon />
+                      : <SwapHorizIcon />
+                    }
                   </IconButton>
                 </StyledTableCell>
                 <StyledTableCell align="center">
