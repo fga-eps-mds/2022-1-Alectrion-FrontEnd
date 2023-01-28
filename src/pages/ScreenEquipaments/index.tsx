@@ -705,12 +705,15 @@ export default function ScreenEquipaments() {
           </form>
         </FilterScrennContent>
       </FilterScrenn>
-      <StyledGenerateButton>
-        <CSVLink {...csvReport}>Gerar Relatório</CSVLink>
-      </StyledGenerateButton>
-      <StyledGenerateButton2 onClick={handleClickOpen2}>
-        Gerar Movimentação
-      </StyledGenerateButton2>
+      <div>
+        <StyledGenerateButton>
+          <CSVLink {...csvReport}>Gerar Relatório</CSVLink>
+        </StyledGenerateButton>
+        <StyledGenerateButton2 onClick={handleClickOpen2}>
+          Gerar Movimentação
+        </StyledGenerateButton2>
+      </div>
+
       <MovimentScrenn open={open2}>
         <MovimentScrennContent>
         <FormControl>

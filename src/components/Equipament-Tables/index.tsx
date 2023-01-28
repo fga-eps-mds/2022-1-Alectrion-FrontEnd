@@ -5,8 +5,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import DeleteIcon from '@mui/icons-material/Delete'
-
-import { Button } from '@mui/material'
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz'
+import { Button, IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import {
   ButtonDownloadEquipament,
@@ -195,6 +195,11 @@ export default function EquipamentsTables({ equipaments }: propType) {
                     </StyledTableCell>
                   )}
                 </>
+                <StyledTableCell align="center">
+                  <IconButton aria-label="trade" size="large" disabled>
+                    <SwapHorizIcon />
+                  </IconButton>
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   <ButtonDownloadEquipament disabled>
                     Baixar
