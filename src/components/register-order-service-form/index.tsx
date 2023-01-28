@@ -67,7 +67,7 @@ const RegisterOrderServiceForm = ({
       authorFunctionalNumber: '',
       senderName: '',
       senderFunctionalNumber: '',
-      date: '',
+      date: new Date().toISOString().split('T')[0],
       tippingNumber: initialData?.tippingNumber,
       status: initialData?.formattedStatus,
       productType: initialData?.type,
@@ -188,7 +188,7 @@ const RegisterOrderServiceForm = ({
 
               <StyledTextField
                 id="status-input"
-                label="Status"
+                label="Status do equipamento"
                 fullWidth
                 InputLabelProps={{ shrink: true }}
                 type="text"

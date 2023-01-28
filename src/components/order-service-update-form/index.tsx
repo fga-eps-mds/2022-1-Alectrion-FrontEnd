@@ -68,8 +68,8 @@ const OrderServiceUpdateForm = ({
         description: yup.string().trim().max(250),
         receiverName: yup.string().trim(),
         receiverFunctionalNumber: yup.string().trim(),
-        receiverDate: yup.date(),
-        technicians: yup.array(),
+        receiverDate: yup.date().nullable(),
+        technicians: yup.string().nullable(),
     });
     const formik = useFormik({
         initialValues: {
@@ -86,7 +86,7 @@ const OrderServiceUpdateForm = ({
             receiverDate: order.receiverDate,
             orderStatus: order.status, 
             destination: order.destination.name, 
-            technicians: order.technicians,
+            technicians: order.technicians.toString(),
             description: order.description
         },
         validationSchema,
@@ -108,8 +108,8 @@ const OrderServiceUpdateForm = ({
                         date: order.date,
                         recieverFunctionalNumber: formik.values.receiverFunctionalNumber,
                         status: formik.values.orderStatus,
-                        techinicias: formik.values.technicians,
-                        recieverDate: formik.values.receiverDate,
+                        techinicias: formik.values.technicians.split(','),
+                        recieverDate: formik.values.receiverDate || order.receiverDate,
                     }
                 );
 
