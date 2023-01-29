@@ -10,6 +10,8 @@ import './styles.css'
 
 export interface TermProps {
     movement: Movement
+    unit: string
+    deliveryDate: string
 }
 
 const TYPES = [
@@ -18,10 +20,11 @@ const TYPES = [
     'Responsabilidade'
 ]
 
-export default function Term({ movement }: TermProps) {
+export default function Term({ movement, unit, deliveryDate }: TermProps) {
     const [ now, setNow ] = useState<Date>(new Date())
 
-    function getFormattedDate(date: Date) {
+
+    function getFormattedDate(date: Date, full?: boolean) {
         const day = date.getDate().toLocaleString('pt-BR', {
             minimumIntegerDigits: 2,
             useGrouping: false
@@ -47,21 +50,23 @@ export default function Term({ movement }: TermProps) {
             useGrouping: false
         })
 
-        return `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`
+        if(full)
+            return `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`
+        return `${day}/${month}/${year}`
     }
 
     function generatePDF() {
         const term = document.getElementById('term')
         const options = {
-        margin: 0,
-        filename: 'termo.pdf',
-        image: {
-            type: 'jpeg',
-            quality: 1
-        },
-        html2canvas: {
-            scale: 2
-        }
+            margin: 0,
+            filename: `termo-${movement.id}.pdf`,
+            image: {
+                type: 'jpeg',
+                quality: 1
+            },
+            html2canvas: {
+                scale: 2
+            }
         }
 
         html2pdf().set(options).from(term).toPdf().get('pdf').then((pdf: any) => {
@@ -104,7 +109,7 @@ export default function Term({ movement }: TermProps) {
 
                 <thead>
                     <tr className="emission">
-                        <td colSpan={6}><span>Orgão:</span> 04° Delegacia Distrital</td>
+                        <td colSpan={6}><span>Orgão:</span> { unit }</td>
                     </tr>
 
                     { movement.destination
@@ -135,7 +140,7 @@ export default function Term({ movement }: TermProps) {
                         return (
                             <tr>
                                 <td>{ equipment.type }</td>
-                                <td>{ equipment.model }</td>
+                                <td>{ equipment.brand.name }</td>
                                 <td>{ equipment.model }</td>
                                 <td>{ equipment.tippingNumber }</td>
                                 <td>{ equipment.serialNumber }</td>
@@ -162,8 +167,8 @@ export default function Term({ movement }: TermProps) {
 
                 <tbody>
                     <tr>
-                        <td>{ getFormattedDate(now) }</td>
-                        <td>Em 24/12/2022</td>
+                        <td>{ getFormattedDate(now, true) }</td>
+                        <td>{ getFormattedDate(new Date(deliveryDate)) }</td>
                     </tr>
 
                     <tr className="space">

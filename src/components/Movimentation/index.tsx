@@ -17,7 +17,8 @@ import { toast } from 'react-toastify'
 import Term from '../Term'
 
 import { Movement } from '../../utils/types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import TermModal from '../TermModal'
 
 interface propType {
   movements: Movement[]
@@ -42,6 +43,21 @@ export default function MovimentTables({movements, setMovements}: propType) {
     chiefName: '',
     chiefRole: ''
   })
+  const [ auxMovement, setAuxMovement ] = useState<Movement>({
+    id: '',
+    date: new Date(),
+    userId: '',
+    equipments: [],
+    type: 0,
+    inChargeName: '',
+    inChargeRole: '',
+    chiefName: '',
+    chiefRole: ''
+  })
+  const [ unit, setUnit ] = useState<string>('')
+  const [ units, setUnits ] = useState<any[]>([])
+  const [ deliveryDate, setDeliveryDate ] = useState<any>('')
+  const [ isTermModalOpen, setIsTermModalOpen ] = useState<boolean>(false)
 
   async function deleteMovement() {
     try {
@@ -72,6 +88,31 @@ export default function MovimentTables({movements, setMovements}: propType) {
   async function generateTerm(movement: Movement) {
     setMovement(movement)
   }
+
+  function openTermModal(movement: Movement) {
+    setAuxMovement(movement)
+    setIsTermModalOpen(true)
+  }
+
+  useEffect(() => {
+    async function getUnits() {
+      try {
+        const { data } = await api.get('equipment/getAllUnits')
+  
+        if(data.error) {
+          toast.error(data.error)
+          setUnits([])
+        }
+  
+        else
+          setUnits(data)
+      } catch(e: any) {
+        toast.error(e.response.data.error)
+      }
+    }
+
+    getUnits()
+  }, [])
 
   return (
     <>
@@ -111,7 +152,7 @@ export default function MovimentTables({movements, setMovements}: propType) {
                     {movement.equipments.length}
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                      <IconButton aria-label="pdf" size="large" onClick={() => {generateTerm(movement)}}>
+                      <IconButton aria-label="pdf" size="large" onClick={() => {openTermModal(movement)}}>
                           <PictureAsPdfIcon />
                       </IconButton>
                   </StyledTableCell>
@@ -127,8 +168,10 @@ export default function MovimentTables({movements, setMovements}: propType) {
         </Table>
       </TableContainer>
 
+      <TermModal units={units} setUnit={setUnit} setDeliveryDate={setDeliveryDate} isOpen={isTermModalOpen} setIsOpen={setIsTermModalOpen} generateTerm={generateTerm} movement={auxMovement} />
+
       <div style={{position: 'fixed', left: 0, top: 0, opacity: 0, pointerEvents: 'none'}}>
-        <Term movement={movement} />
+        <Term movement={movement} unit={unit} deliveryDate={deliveryDate} />
       </div>
     </>
   )
