@@ -69,10 +69,10 @@ const OrderServiceUpdateForm = ({
             senderFunctionalNumber: order.senderFunctionalNumber,
             date: order.date,
             userName: user.name,
-            authorFunctionalNumber: order.authorFunctionalNumber,
+            authorFunctionalNumber: order.senderFunctionalNumber,
             receiverName: order.receiverName,
             receiverFunctionalNumber: order.receiverFunctionalNumber, 
-            receiverDate: order.receiverDate,
+            receiverDate: (new Date(order.receiverDate) < new Date(order.date)) ? null : order.receiverDate,
             status: order.status, 
             destination: order.destination.name, 
             technicians: order.technicians.toString(),
@@ -82,6 +82,7 @@ const OrderServiceUpdateForm = ({
         enableReinitialize: true,
         onSubmit: async (values) => {
             try {
+                console.log(formik)
                 await api.put(
                     `equipment/updateOrderService`,
                     {
@@ -98,7 +99,7 @@ const OrderServiceUpdateForm = ({
                         recieverFunctionalNumber: formik.values.receiverFunctionalNumber,
                         status: formik.values.status,
                         techinicias: formik.values.technicians.split(','),
-                        recieverDate: formik.values.receiverDate || order.receiverDate,
+                        recieverDate: formik.values.receiverDate || null,
                     }
                 );
 
@@ -110,7 +111,7 @@ const OrderServiceUpdateForm = ({
             }
         },
     });
-
+    console.log(formik)
     return (
         <Container>
             <StyledCard>
