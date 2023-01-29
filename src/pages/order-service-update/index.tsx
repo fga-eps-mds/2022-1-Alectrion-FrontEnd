@@ -1,13 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { CircularProgress, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { AxiosResponse } from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import {
-  Params,
   useLocation,
   useNavigate,
-  useParams,
-  useSearchParams
 } from 'react-router-dom'
 import api from '../../api/config'
 import { AuthContext } from '../../contexts/auth'

@@ -1,13 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useContext, useEffect, useState } from "react";
-import {
-    Params,
-    useNavigate,
-    useParams,
-    useSearchParams,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/config";
 import RegisterOrderServiceForm from "../../components/register-order-service-form";
 import { AuthContext } from "../../contexts/auth";

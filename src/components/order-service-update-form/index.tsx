@@ -11,15 +11,13 @@ import {
     StyledTextField,
     FormContainer,
     ButtonContainer,
-    Column,
     StyledTextArea,
     StyledInputLabel,
     StyledSelect,
 } from "./styles";
 import { theme } from "../../styles/theme";
-import { Equipment } from "../../pages/order-service-update";
-import { Autocomplete, FormControl, MenuItem } from "@mui/material";
-import { OrderService } from "../../pages/order-service-update";
+import { Equipment, OrderService } from "../../pages/order-service-update";
+import { FormControl, MenuItem } from "@mui/material";
 
 type Props = {
     order: OrderService;

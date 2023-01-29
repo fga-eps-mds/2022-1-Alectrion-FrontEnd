@@ -10,7 +10,6 @@ import { StyledTableCell, StyledTableRow } from './styles'
 import { dateFormat } from '../../utils/dateFormat'
 import { useNavigate } from 'react-router-dom'
 import { EditOSButton } from '../edit-os-button'
-import OrderServiceUpdateForm  from '../order-service-update-form'
 
 interface OrderService {
   id: string
