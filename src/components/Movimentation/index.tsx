@@ -14,20 +14,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 
-export interface Movement {
-  id: string
-  date: Date
-  userId: string
-  equipments: any[]
-  type: number
-  inChargeName: string
-  inChargeRole: string
-  chiefName: string
-  chiefRole: string
-  equipmentSnapshots?: any
-  description?: string
-  destination?: any
-}
+import Term from '../Term'
+
+import { Movement } from '../../utils/types'
+import { useState } from 'react'
 
 interface propType {
   movements: Movement[]
@@ -41,6 +31,18 @@ const TYPES = [
 ]
 
 export default function MovimentTables({movements, setMovements}: propType) {
+  const [ movement, setMovement ] = useState<Movement>({
+    id: '',
+    date: new Date(),
+    userId: '',
+    equipments: [],
+    type: 0,
+    inChargeName: '',
+    inChargeRole: '',
+    chiefName: '',
+    chiefRole: ''
+  })
+
   async function deleteMovement() {
     try {
       const { data } = await api.delete('equipment/deleteMovement',
@@ -67,57 +69,67 @@ export default function MovimentTables({movements, setMovements}: propType) {
     }
   }
 
+  async function generateTerm(movement: Movement) {
+    setMovement(movement)
+  }
+
   return (
-    <TableContainer
-      sx={{
-        minWidth: '80%',
-        margin: '0 auto',
-        maxWidth: '1180px',
-        textAlign: 'center'
-      }}
-      component={Paper}>
-      <Table aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="center">ID </StyledTableCell>
-            <StyledTableCell align="center">Tipo</StyledTableCell>
-            <StyledTableCell align="center">Unidade destino</StyledTableCell>
-            <StyledTableCell align="center">Quantidade</StyledTableCell>
-            <StyledTableCell align="center" />
-            <StyledTableCell align="center" />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {movements.map((movement, index) => {
-            return (
-              <StyledTableRow key={index + movement.id}>
-                <StyledTableCell align="center" component="th">
-                  {movement.id}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {TYPES[movement.type]}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {movement.destination ? movement.destination.name : '-'}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {movement.equipments.length}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                    <IconButton aria-label="pdf" size="large" disabled>
-                        <PictureAsPdfIcon />
-                    </IconButton>
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                    <IconButton aria-label="delete" size="large" disabled={index != 0} onClick={() => deleteMovement()}>
-                        <DeleteForeverIcon />
-                    </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer
+        sx={{
+          minWidth: '80%',
+          margin: '0 auto',
+          maxWidth: '1180px',
+          textAlign: 'center'
+        }}
+        component={Paper}>
+        <Table aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="center">ID </StyledTableCell>
+              <StyledTableCell align="center">Tipo</StyledTableCell>
+              <StyledTableCell align="center">Unidade destino</StyledTableCell>
+              <StyledTableCell align="center">Quantidade</StyledTableCell>
+              <StyledTableCell align="center" />
+              <StyledTableCell align="center" />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {movements.map((movement, index) => {
+              return (
+                <StyledTableRow key={index + movement.id}>
+                  <StyledTableCell align="center" component="th">
+                    {movement.id}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {TYPES[movement.type]}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {movement.destination ? movement.destination.name : '-'}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {movement.equipments.length}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                      <IconButton aria-label="pdf" size="large" onClick={() => {generateTerm(movement)}}>
+                          <PictureAsPdfIcon />
+                      </IconButton>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                      <IconButton aria-label="delete" size="large" disabled={index != 0} onClick={() => deleteMovement()}>
+                          <DeleteForeverIcon />
+                      </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <div style={{position: 'fixed', left: 0, top: 0, opacity: 0, pointerEvents: 'none'}}>
+        <Term movement={movement} />
+      </div>
+    </>
   )
 }
