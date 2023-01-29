@@ -12,6 +12,8 @@ import api from "../../api/config";
 import RegisterOrderServiceForm from "../../components/register-order-service-form";
 import { AuthContext } from "../../contexts/auth";
 import { Container } from "../user-register/styles";
+import { toast } from 'react-toastify'
+
 
 export type Equipment = {
     id: string;
@@ -44,11 +46,16 @@ const OrderRegister = () => {
     >(undefined);
 
     const fetchUnits = async () => {
-        const {
-            data,
-        }: AxiosResponse<{ id: string; name: string; localization: string }[]> =
-            await api.get(`equipment/getAllUnits`);
-        setUnits(data);
+        try{
+            const {
+                data,
+            }: AxiosResponse<{ id: string; name: string; localization: string }[]> =
+                await api.get(`equipment/getAllUnits`);
+            setUnits(data);
+        } catch (error) {
+            toast.error('Aconteceu algum erro.')
+        }
+        
     };
 
     useEffect(() => {
@@ -56,11 +63,15 @@ const OrderRegister = () => {
     }, []);
 
     const fetchEquipment = async (tippingNumber: string) => {
-        const { data }: AxiosResponse<Equipment> = await api.get(
-            `equipment/listOne/?tippingNumber=${tippingNumber}`
-        );
+        try{
+            const { data }: AxiosResponse<Equipment> = await api.get(
+                `equipment/listOne/?tippingNumber=${tippingNumber}`
+            );
 
-        setEquipment(data);
+            setEquipment(data);
+        } catch (error) {
+            toast.error('Aconteceu algum erro.')
+        }
     };
 
     const handleTippingNumberChange = (data: string) => {
