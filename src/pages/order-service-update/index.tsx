@@ -19,7 +19,7 @@ export type Equipment = {
   tippingNumber: string
   serialNumber: string
   type: string
-  status: string
+  situacao: string
   model: string
   description: string
   initialUseDate: string
@@ -68,31 +68,18 @@ const OrderEdit = () => {
     { id: string; name: string; localization: string }[] | undefined
   >(undefined)
 
-  const fetchUnits = async () => {
-    const {
-      data
-    }: AxiosResponse<{ id: string; name: string; localization: string }[]> =
-      await api.get(`equipment/getAllUnits`)
-    setUnits(data)
-  }
-
-  useEffect(() => {
-    fetchUnits()
-  }, [])
-
-  const fetchEquipment = async (tippingNumber: string) => {
-    const { data }: AxiosResponse<Equipment> = await api.get(
-      `equipment/listOne/?tippingNumber=${tippingNumber}`
-    )
-
-    setEquipment(data)
-  }
-
-  const handleTippingNumberChange = (data: string) => {
-    if (data.length) {
-      fetchEquipment(data)
+    const fetchUnits = async () => {
+        try {
+            const {
+                data
+            }: AxiosResponse<{ id: string; name: string; localization: string }[]> =
+                await api.get(`equipment/getAllUnits`)
+            setUnits(data)
+        } catch (error) {
+            console.log(`order-service: fechUnits error => ${error}`)
+        }
     }
-  }
+  
 
   const { user } = useContext(AuthContext)
   const { state } = useLocation()
@@ -104,15 +91,15 @@ const OrderEdit = () => {
           Atualização de Ordem de Serviço
         </Typography>
         <OrderServiceUpdateForm
-          order={state?.order}
-          units={units}
-          initialData={equipment}
-          user={{
-            token: user?.token ?? '',
-            name: user?.name ?? ''
-          }}
-          handleTippingNumberChange={handleTippingNumberChange}
-        />{' '}
+                  order={state?.order}
+                  units={units}
+                  initialData={equipment}
+                  user={{
+                      token: user?.token ?? '',
+                      name: user?.name ?? ''
+                  }} handleTippingNumberChange={function (data: string): void {
+                      throw new Error('Function not implemented.')
+                  } }        />{' '}
       </>
     </Container>
   )
