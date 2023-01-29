@@ -10,6 +10,9 @@ import { EditButton } from '../edit-button/index'
 import { StyledTableCell, StyledTableRow, ButtonDownloadEquipament, ButtonReservEquipament } from './styles'
 import { Button, IconButton } from '@mui/material'
 import Edit from '@mui/icons-material/Edit'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import api from '../../api/config'
+import { toast } from 'react-toastify'
 
 export interface Movement {
   id: string
@@ -28,6 +31,7 @@ export interface Movement {
 
 interface propType {
   movements: Movement[]
+  setMovements: Function
 }
 
 const TYPES = [
@@ -36,7 +40,33 @@ const TYPES = [
   'Responsabilidade'
 ]
 
-export default function MovimentTables({movements}: propType) {
+export default function MovimentTables({movements, setMovements}: propType) {
+  async function deleteMovement() {
+    try {
+      const { data } = await api.delete('equipment/deleteMovement',
+      {
+        params: {
+          id: movements[0].id
+        }
+      })
+  
+      if(data.error)
+        toast.error('Tempo limite de exclusão excedido.')
+      else {
+        const updatedMovements = [...movements]
+        updatedMovements.shift()
+  
+        setMovements(updatedMovements)
+        toast.success('Movimentação excluída com sucesso.')
+      }
+    } catch(e: any) {
+        if(e.response.status == 401)
+          toast.error('Tempo limite de exclusão excedido.')
+        else
+          toast.error(e.response.data.error)
+    }
+  }
+
   return (
     <TableContainer
       sx={{
@@ -53,6 +83,7 @@ export default function MovimentTables({movements}: propType) {
             <StyledTableCell align="center">Tipo</StyledTableCell>
             <StyledTableCell align="center">Unidade destino</StyledTableCell>
             <StyledTableCell align="center">Quantidade</StyledTableCell>
+            <StyledTableCell align="center" />
             <StyledTableCell align="center" />
           </TableRow>
         </TableHead>
@@ -73,8 +104,13 @@ export default function MovimentTables({movements}: propType) {
                   {movement.equipments.length}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                    <IconButton aria-label="delete" size="large" disabled>
-                        <PictureAsPdfIcon/>
+                    <IconButton aria-label="pdf" size="large" disabled>
+                        <PictureAsPdfIcon />
+                    </IconButton>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                    <IconButton aria-label="delete" size="large" disabled={index != 0} onClick={() => deleteMovement()}>
+                        <DeleteForeverIcon />
                     </IconButton>
                 </StyledTableCell>
               </StyledTableRow>

@@ -158,7 +158,7 @@ export default function ScreenMoviments() {
         </Box>
       </FindContainer>
 
-      <MovimentTables movements={movements} />
+      <MovimentTables movements={movements} setMovements={setMovements} />
 
       <div style={{
         display: 'flex',
