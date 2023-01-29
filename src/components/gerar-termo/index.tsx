@@ -42,7 +42,9 @@ export default function ScreenMoviments() {
     id: '',
     userid: '',
     equipmentid: '',
-    type: -1
+    type: -1,
+    lowerdate: new Date(0).toISOString().split('T')[0],
+    higherdate: new Date().toISOString().split('T')[0]
   }
 
   const formik = useFormik({
@@ -54,6 +56,21 @@ export default function ScreenMoviments() {
         if (query[param] === '' || query[param] == -1)
           delete query[param]
       })
+
+      const lowerdate = new Date(query.lowerdate)
+      lowerdate.setHours(0)
+      lowerdate.setMinutes(0)
+      lowerdate.setSeconds(0)
+      lowerdate.setMilliseconds(0)
+
+      const higherdate = new Date(query.higherdate)
+      higherdate.setHours(23)
+      higherdate.setMinutes(59)
+      higherdate.setSeconds(59)
+      higherdate.setMilliseconds(999)
+
+      query.lowerdate = lowerdate.toISOString()
+      query.higherdate = higherdate.toISOString()
 
       getMovements(query)
     }
@@ -229,6 +246,42 @@ export default function ScreenMoviments() {
                       Responsabilidade
                     </MenuItem>
                 </StyledSelect>
+              </Box>
+
+              <Box sx={{
+                flexGrow: 1,
+                display: { xs: 'none', md: 'flex' },
+                mt: '50px'
+              }}>
+                <StyledTextField
+                  id="lowerdate"
+                  name="lowerdate"
+                  label="Data inicial"
+                  type="date"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  value={formik.values.lowerdate}
+                  sx={{
+                    marginLeft: '30px',
+                    textAlign: 'center',
+                    width: '50%'
+                  }}
+                />
+
+                <StyledTextField
+                  id="higherdate"
+                  name="higherdate"
+                  label="Data final"
+                  type="date"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  value={formik.values.higherdate}
+                  sx={{
+                    marginLeft: '30px',
+                    textAlign: 'center',
+                    width: '50%'
+                  }}
+                />
               </Box>
             </FormControl>
             <Box
