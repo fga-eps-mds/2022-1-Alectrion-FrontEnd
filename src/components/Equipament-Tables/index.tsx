@@ -125,8 +125,6 @@ export default function EquipamentsTables({ equipaments, selectedEquipments, set
             <StyledTableCell align="center">Modelo de Tela</StyledTableCell>
             <StyledTableCell align="center">Tamanho da tela</StyledTableCell>
             <StyledTableCell align="center">Potência</StyledTableCell>
-            <StyledTableCell align="center" />
-            <StyledTableCell align="center" />
             <>
               {role === 'administrador' && ( // Ajusta espaço da tabela do Administrador
                 <StyledTableCell align="center" />
@@ -137,6 +135,7 @@ export default function EquipamentsTables({ equipaments, selectedEquipments, set
                 <StyledTableCell align="center" />
               )}
             </>
+            <StyledTableCell align="center" />
           </TableRow>
         </TableHead>
         <TableBody>
