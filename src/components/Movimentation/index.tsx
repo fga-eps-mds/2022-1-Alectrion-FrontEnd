@@ -171,7 +171,7 @@ export default function MovimentTables({movements, setMovements}: propType) {
       <TermModal units={units} setUnit={setUnit} setDeliveryDate={setDeliveryDate} isOpen={isTermModalOpen} setIsOpen={setIsTermModalOpen} generateTerm={generateTerm} movement={auxMovement} />
 
       <div style={{position: 'fixed', left: 0, top: 0, opacity: 0, pointerEvents: 'none'}}>
-        <Term movement={movement} unit={unit} deliveryDate={deliveryDate} />
+        <Term movement={movement} setMovement={setMovement} unit={unit} deliveryDate={deliveryDate} />
       </div>
     </>
   )

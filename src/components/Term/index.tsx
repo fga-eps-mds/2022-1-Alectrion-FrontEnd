@@ -10,6 +10,7 @@ import './styles.css'
 
 export interface TermProps {
     movement: Movement
+    setMovement: Function
     unit: string
     deliveryDate: string
 }
@@ -20,9 +21,8 @@ const TYPES = [
     'Responsabilidade'
 ]
 
-export default function Term({ movement, unit, deliveryDate }: TermProps) {
+export default function Term({ movement, setMovement, unit, deliveryDate }: TermProps) {
     const [ now, setNow ] = useState<Date>(new Date())
-
 
     function getFormattedDate(date: Date, full?: boolean) {
         const day = date.getDate().toLocaleString('pt-BR', {
@@ -71,6 +71,18 @@ export default function Term({ movement, unit, deliveryDate }: TermProps) {
 
         html2pdf().set(options).from(term).toPdf().get('pdf').then((pdf: any) => {
             window.open(pdf.output('bloburl'), '_blank')
+
+            setMovement({
+                id: '',
+                date: new Date(),
+                userId: '',
+                equipments: [],
+                type: 0,
+                inChargeName: '',
+                inChargeRole: '',
+                chiefName: '',
+                chiefRole: ''
+            })
         });
     }
     
