@@ -216,16 +216,6 @@ export default function EquipamentsTables({ equipaments, selectedEquipments, set
                     }
                   </IconButton>
                 </StyledTableCell>
-                <StyledTableCell align="center">
-                  <ButtonDownloadEquipament disabled>
-                    Baixar
-                  </ButtonDownloadEquipament>
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <ButtonReservEquipament disabled>
-                    Reserva
-                  </ButtonReservEquipament>
-                </StyledTableCell>
               </StyledTableRow>
             )
           })}

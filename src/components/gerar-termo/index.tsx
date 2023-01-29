@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search'
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
-import EquipamentsTables from '../../components/Equipament-Tables'
 import Paper from '@mui/material/Paper'
 
 import { toast } from 'react-toastify'
@@ -9,7 +10,7 @@ import api from '../../api/config'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { Container, Typography, Input, Box, FormControl, MenuItem, Button } from '@mui/material'
+import { Container, Typography, Input, Box, FormControl, MenuItem, Button, IconButton } from '@mui/material'
 import React from 'react'
 import { CSVLink } from 'react-csv'
 import { BoxInput, ButtonClearFilters, ButtonFilters, ButtonCad, FilterScrenn, FilterScrennContent, StyledGenerateButton } from '../../pages/ScreenEquipaments/style'
@@ -31,59 +32,51 @@ export interface SearchParams {
 }
 
 export default function ScreenMoviments() {
-  const [movements, setMovements] = useState<Movement[]>([])
-  const [basicSearch, setbasicSearch] = useState<string>('')
+  const [ movements, setMovements ] = useState<Movement[]>([])
+  const [ basicSearch, setbasicSearch ] = useState<string>('')
+  const [ page, setPage ] = useState(0)
+
+  const resultQuantity =  20
 
   const initialValues = {
     id: '',
-
-    tipo: '',
-
-    unidade: '',
-
-    qtdequipamentos: '',
-
+    userid: '',
+    equipmentid: '',
+    type: -1
   }
 
   const formik = useFormik({
     initialValues,
     onSubmit: (values: any) => {
+      const query = {...values}
+
       Object.keys(values).forEach((param) => {
-        if (values[param] === '') {
-          delete values[param]
-        }
+        if (query[param] === '' || query[param] == -1)
+          delete query[param]
       })
-      getMovements(values)
+
+      getMovements(query)
     }
   })
 
   const getMovements = async (query?: SearchParams) => {
     try {
-      const queryParams = new URLSearchParams('')
-      if (query) {
-        Object.entries(query).forEach((value) =>
-          queryParams.append(value[0], value[1])
-        )
-      }
-
       const { data }: AxiosResponse<Movement[]> = await api.get(
         'equipment/findMovements',
         {
-          params: queryParams
+          params: query
         }
       )
+
       setMovements(data)
     } catch (error) {
       setMovements([])
-      toast.error('Nenhuma movimentação encontrada')
+      toast.error('Nenhuma movimentação encontrada.')
     }
   }
-  const renderEquipmentTable = React.useCallback(() => {
-    return <MovimentTables movements={movements} />
-  }, [movements])
 
   React.useEffect(() => {
-    getMovements()
+    getMovements({resultquantity: resultQuantity})
   }, [])
 
   const [open, setOpen] = React.useState(false)
@@ -98,6 +91,15 @@ export default function ScreenMoviments() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setbasicSearch(event.target.value)
+  }
+
+  const updatePage = async (page: number) => {
+    await getMovements({
+      page,
+      resultquantity: resultQuantity
+    })
+
+    setPage(page)
   }
 
   return (
@@ -118,7 +120,6 @@ export default function ScreenMoviments() {
             onChange={handleChange}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
-                // Do code here
                 if (basicSearch === '') {
                   getMovements()
                 } else {
@@ -140,12 +141,29 @@ export default function ScreenMoviments() {
         </Box>
       </FindContainer>
 
-      {renderEquipmentTable()}
+      <MovimentTables movements={movements} />
+
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '1.5em',
+        marginBottom: '1.5em'
+      }}>
+            <IconButton disabled={!page} onClick={() => updatePage(page - 1)}>
+              <ArrowBackIosNewIcon />
+            </IconButton>
+            <span>{ page + 1 }</span>
+            <IconButton disabled={movements.length < resultQuantity} onClick={() => updatePage(page + 1)}>
+              <ArrowForwardIosIcon />
+            </IconButton>
+      </div>
 
       <FilterScrenn open={open}>
         <FilterScrennContent>
           <form onSubmit={formik.handleSubmit}>
-            <FormControl>
+            <FormControl sx={{width: '100%'}}>
               <Box
                 sx={{
                   flexGrow: 1,
@@ -156,21 +174,22 @@ export default function ScreenMoviments() {
                   fullWidth
                   id="id"
                   name="id"
-                  label="Id"
-
+                  label="ID da movimentação"
+                  value={formik.values.id}
                   onChange={formik.handleChange}
-                  sx={{ ml: '30px' }}
+                  sx={{ ml: '30px', width: '50%' }}
                 />
                 <StyledTextField
                   fullWidth
-                  id="tipo"
-                  name="tipo"
-                  label="Tipo"
-
+                  id="userid"
+                  name="userid"
+                  label="ID do usuário"
+                  value={formik.values.userid}
                   onChange={formik.handleChange}
-                  sx={{ ml: '90px' }}
+                  sx={{ ml: '30px', width: '50%' }}
                 />
               </Box>
+
               <Box
                 sx={{
                   flexGrow: 1,
@@ -179,22 +198,37 @@ export default function ScreenMoviments() {
                 }}>
                 <StyledTextField
                   fullWidth
-                  id="unidade"
-                  name="unidade"
-                  label="Unidade"
-
+                  id="equipmentid"
+                  name="equipmentid"
+                  label="ID do equipamento"
+                  value={formik.values.equipmentid}
                   onChange={formik.handleChange}
-                  sx={{ ml: '30px' }}
+                  sx={{ ml: '30px', width: '50%' }}
                 />
-                <StyledTextField
-                  fullWidth
-                  id="qtd"
-                  name="qtd"
-                  label="Quantidade"
-
-                  onChange={formik.handleChange}
-                  sx={{ ml: '90px' }}
-                />
+                <StyledSelect
+                    id="type"
+                    name="type"
+                    onChange={formik.handleChange}
+                    value={formik.values.type}
+                    sx={{
+                      marginLeft: '30px',
+                      textAlign: 'center',
+                      width: '50%'
+                    }}
+                    inputProps={{ 'aria-label': 'Without label' }}>
+                    <MenuItem value={-1} sx={{ justifyContent: 'center' }}>
+                      <em>Tipo de Movimentação</em>
+                    </MenuItem>
+                    <MenuItem value={0} sx={{ justifyContent: 'center' }}>
+                      Empréstimo
+                    </MenuItem>
+                    <MenuItem value={1} sx={{ justifyContent: 'center' }}>
+                      Baixa
+                    </MenuItem>
+                    <MenuItem value={2} sx={{ justifyContent: 'center' }}>
+                      Responsabilidade
+                    </MenuItem>
+                </StyledSelect>
               </Box>
             </FormControl>
             <Box
