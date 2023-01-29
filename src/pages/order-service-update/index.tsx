@@ -33,6 +33,7 @@ export type Equipment = {
   ram_size: string
   createdAt: string
   updatedAt: string
+  formattedStatus: string
 }
 
 export type OrderService = {
@@ -50,7 +51,7 @@ export type OrderService = {
     id: string
     type: string
     tippingNumber: string
-    status: string
+    situacao: string
   }
   destination: {
     id: string,
@@ -68,18 +69,56 @@ const OrderEdit = () => {
     { id: string; name: string; localization: string }[] | undefined
   >(undefined)
 
-    const fetchUnits = async () => {
-        try {
-            const {
-                data
-            }: AxiosResponse<{ id: string; name: string; localization: string }[]> =
-                await api.get(`equipment/getAllUnits`)
-            setUnits(data)
-        } catch (error) {
-            console.log(`order-service: fechUnits error => ${error}`)
-        }
+  const fetchUnits = async () => {
+    const {
+      data
+    }: AxiosResponse<{ id: string; name: string; localization: string }[]> =
+      await api.get(`equipment/getAllUnits`)
+    setUnits(data)
+  }
+
+  useEffect(() => {
+    fetchUnits()
+  }, [])
+
+  const fetchEquipment = async (tippingNumber: string) => {
+    const { data }: AxiosResponse<Equipment> = await api.get(
+      `equipment/listOne/?tippingNumber=${tippingNumber}`
+    )
+
+    let formattedStatus = ''
+    const { situacao } = data
+    switch (situacao) {
+      case 'MAINTENANCE':
+        formattedStatus = 'Em Manutenção'
+        break
+      case 'ACTIVE':
+        formattedStatus = 'Ativo'
+        break
+      case 'ACTIVE_BY_DEMISE':
+        formattedStatus = 'Ativo'
+        break
+      case 'INACTIVE':
+        formattedStatus = 'Inativo'
+        break
+      case 'DOWNGRADED':
+        formattedStatus = 'Baixado'
+        break
+      case 'TECHNICAL_RESERVE':
+        formattedStatus = 'Reserva Técnica'
+        break
+      default:
+        break
     }
-  
+
+    setEquipment({ ...data, formattedStatus })
+  }
+
+  const handleTippingNumberChange = (data: string) => {
+    if (data.length) {
+      fetchEquipment(data)
+    }
+  }
 
   const { user } = useContext(AuthContext)
   const { state } = useLocation()
@@ -87,19 +126,19 @@ const OrderEdit = () => {
   return (
     <Container>
       <>
-        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+        <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
           Atualização de Ordem de Serviço
         </Typography>
         <OrderServiceUpdateForm
-                  order={state?.order}
-                  units={units}
-                  initialData={equipment}
-                  user={{
-                      token: user?.token ?? '',
-                      name: user?.name ?? ''
-                  }} handleTippingNumberChange={function (data: string): void {
-                      throw new Error('Function not implemented.')
-                  } }        />{' '}
+          order={state?.order}
+          units={units}
+          initialData={equipment}
+          user={{
+            token: user?.token ?? '',
+            name: user?.name ?? ''
+          }}
+          handleTippingNumberChange={handleTippingNumberChange}
+        />{' '}
       </>
     </Container>
   )

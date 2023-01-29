@@ -18,7 +18,7 @@ export type Equipment = {
     tippingNumber: string;
     serialNumber: string;
     type: string;
-    status: string;
+    situacao: string;
     model: string;
     description: string;
     initialUseDate: string;

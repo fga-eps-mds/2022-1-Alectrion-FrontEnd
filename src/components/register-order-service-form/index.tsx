@@ -69,7 +69,7 @@ const RegisterOrderServiceForm = ({
       senderFunctionalNumber: '',
       date: new Date().toISOString().split('T')[0],
       tippingNumber: initialData?.tippingNumber,
-      status: initialData?.status,
+      situacao: initialData?.situacao,
       productType: initialData?.type,
       description: '',
       userName: user.name,
@@ -88,7 +88,8 @@ const RegisterOrderServiceForm = ({
             senderFunctionalNumber: formik.values.senderFunctionalNumber,
             date: formik.values.date,
             description: formik.values.description,
-            receiverName: formik.values.userName
+            receiverName: formik.values.userName,
+            recieverFunctionalNumber: formik.values.authorFunctionalNumber
           },
           {
             headers: {

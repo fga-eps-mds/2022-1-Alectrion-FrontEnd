@@ -52,29 +52,20 @@ const OrderServiceUpdateForm = ({
             .required("Esse campo é obrigatório"),
         date: yup
             .date()
-            .required("Esse campo é obrigatório")
-            .test("teste", "Data inválida", (value) => {
-                if (value) {
-                    const date = new Date(value);
-                    if (date > new Date()) {
-                        return false;
-                    } else return true;
-                } else return false;
-            }),
+            .required("Esse campo é obrigatório"),
         tippingNumber: yup.string().trim().required("Esse campo é obrigatório"),
         status: yup.string().trim(),
         destination: yup.string().trim().required("Esse campo é obrigatório"),
         productType: yup.string().trim(),
         description: yup.string().trim().max(250),
         receiverName: yup.string().trim(),
-        receiverFunctionalNumber: yup.string().trim(),
+        receiverFunctionalNumber: yup.string(),
         receiverDate: yup.date().nullable(),
         technicians: yup.string().nullable(),
     });
     const formik = useFormik({
         initialValues: {
             tippingNumber: order.equipment.tippingNumber,
-            status: order.equipment.status,
             productType: order.equipment.type,
             senderName: order.senderName,
             senderFunctionalNumber: order.senderFunctionalNumber,
@@ -84,7 +75,7 @@ const OrderServiceUpdateForm = ({
             receiverName: order.receiverName,
             receiverFunctionalNumber: order.receiverFunctionalNumber, 
             receiverDate: order.receiverDate,
-            orderStatus: order.status, 
+            status: order.status, 
             destination: order.destination.name, 
             technicians: order.technicians.toString(),
             description: order.description
@@ -107,7 +98,7 @@ const OrderServiceUpdateForm = ({
                         description: formik.values.description,
                         date: order.date,
                         recieverFunctionalNumber: formik.values.receiverFunctionalNumber,
-                        status: formik.values.orderStatus,
+                        status: formik.values.status,
                         techinicias: formik.values.technicians.split(','),
                         recieverDate: formik.values.receiverDate || order.receiverDate,
                     }
@@ -154,23 +145,23 @@ const OrderServiceUpdateForm = ({
                             }
                         />
                         <FormControl>
-                            <StyledInputLabel id="orderStatus-select-label">
+                            <StyledInputLabel id="status-select-label">
                                 Status da Ordem de Serviço
                             </StyledInputLabel>
                             <StyledSelect
-                                id="orderStatus-select-label"
-                                labelId="orderStatus-select-label"
-                                data-testid="orderStatus-select"
+                                id="status-select-label"
+                                labelId="status-select-label"
+                                data-testid="status-select"
                                 label="Status da O.S."
                                 type="text"
-                                name="orderStatus"
+                                name="status"
                                 variant="outlined"
                                 error={
-                                    formik.touched.orderStatus &&
-                                    Boolean(formik.errors.orderStatus)
+                                    formik.touched.status &&
+                                    Boolean(formik.errors.status)
                                 }
                                 onChange={formik.handleChange}
-                                value={formik.values.orderStatus}
+                                value={formik.values.status}
                             >
                                 <MenuItem value="MAINTENANCE">
                                     Em Manuntenção
@@ -244,7 +235,7 @@ const OrderServiceUpdateForm = ({
                         <StyledTextField
                             InputLabelProps={{ shrink: true }}
                             id="data-input"
-                            label="Data de Entrada"
+                            label="Data"
                             type="date"
                             name="date"
                             disabled
@@ -303,7 +294,7 @@ const OrderServiceUpdateForm = ({
                         <StyledTextField
                             InputLabelProps={{ shrink: true }}
                             id="reciver-data-input"
-                            label="Data de Recebimento"
+                            label="Data de recebimento"
                             type="date"
                             name="receiverDate"
                             fullWidth
@@ -380,21 +371,20 @@ const OrderServiceUpdateForm = ({
                         }
                     />
 
-                    <ButtonContainer>
+                <ButtonContainer>
                         <Button
-                            variant="contained"
-                            styledColor={theme.palette.grey[100]}
-                            textColor={theme.palette.grey[900]}
-                            onClick={() => navigate("/order-services")}
-                        >
-                            Voltar
-                        </Button>{" "}
+                        variant="contained"
+                        styledColor={theme.palette.grey[100]}
+                        textColor={theme.palette.grey[900]}
+                        onClick={() => navigate('/order-services')}>
+                        Voltar
+                        </Button>{' '}
                         <Button
-                            variant="contained"
-                            data-testid="update-button"
-                            type="submit"
-                            styledColor={theme.palette.primary.main}>
-                            Atualizar
+                        variant="contained"
+                        data-testid="update-button"
+                        type="submit"
+                        styledColor={theme.palette.primary.main}>
+                        Atualizar
                         </Button>
                     </ButtonContainer>
                 </StyledForm>
