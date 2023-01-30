@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import {
   Container,
   FindContainer,
@@ -10,7 +10,12 @@ import {
   StyledSelect,
   StyledTextField,
   ButtonClearFilters,
-  StyledGenerateButton
+  StyledGenerateButton,
+  StyledGenerateButton2,
+  MovimentScrenn,
+  MovimentScrennContent,
+  ContainerMov,
+  StyledDescTextField
 } from './style'
 import * as React from 'react'
 import { CSVLink } from 'react-csv'
@@ -32,6 +37,13 @@ import { toast } from 'react-toastify'
 import api from '../../api/config'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { StyledTestButton } from '../../components/button/styles'
+import { AuthContext } from '../../contexts/auth'
+interface AuthContextType {
+  user: {
+    role: string
+  }
+}
 
 export interface SearchParams {
   tippingNumber: string
@@ -40,7 +52,9 @@ export interface SearchParams {
 
   type: string
 
-  status: string
+  situacao: string
+
+  estado: string
 
   model: string
 
@@ -80,7 +94,9 @@ interface equipament {
 
   type: string
 
-  status: string
+  situacao: string
+
+  estado: string
 
   model: string
 
@@ -122,10 +138,21 @@ interface equipament {
   id: string
 }
 
+interface unit {
+  name: string
+  id: string
+  localization: string
+}
+
 export default function ScreenEquipaments() {
   const [equipaments, setEquipaments] = useState<equipament[]>([])
   const [basicSearch, setbasicSearch] = useState<string>('')
+  const [selectedEquipments, setSelectedEquipments] = useState<Object>({})
+  const [units, setUnits] = useState<unit[]>([])
+
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext) as AuthContextType
+  const role = user?.role
   const initialValues = {
     tippingNumber: '',
 
@@ -133,7 +160,9 @@ export default function ScreenEquipaments() {
 
     type: '',
 
-    status: '',
+    estado: '',
+
+    situacao: '',
 
     model: '',
 
@@ -178,6 +207,52 @@ export default function ScreenEquipaments() {
     }
   })
 
+  const movementFormik = useFormik({
+    initialValues: {
+      userid: '',
+      equipments: [],
+      type: -1,
+      inchargename: '',
+      inchargerole: '',
+      chiefname: '',
+      chiefrole: '',
+      destination: '',
+      status: '',
+      description: ''
+    },
+
+    onSubmit: async (values) => {
+      const mockedUserId = '1f0fba7b-b937-4793-bc35-8f476e9e76e2'
+      const status = values.type == 1 ? 'Reserva Técnica' : 'Baixado'
+      const type = values.type == 3 ? 1 : values.type
+      const equipments = Object.keys(selectedEquipments)
+
+      const body = {
+        ...values,
+        status,
+        type,
+        equipments,
+        userid: mockedUserId,
+      }
+
+      const { data }: AxiosResponse<any> = await api.post(
+        'equipment/createMovement',
+        body
+      )
+
+      if(data.error)
+        toast.error(data.error)
+      else {
+        toast.success('Movimentação realizada com sucesso.')
+        getEquipaments()
+        setIsMovementModalOpen(false)
+        setSelectedEquipments({})
+      }
+    },
+
+    validateOnChange: false
+  })
+
   const getEquipaments = async (query?: SearchParams) => {
     try {
       const queryParams = new URLSearchParams('')
@@ -199,21 +274,36 @@ export default function ScreenEquipaments() {
       toast.error('Nenhum Equipamento encontrado')
     }
   }
-  const renderEquipmentTable = React.useCallback(() => {
-    return <EquipamentsTables equipaments={equipaments} />
-  }, [equipaments])
-  React.useEffect(() => {
+
+  useEffect(() => {
+    const getUnits = async () => {
+      try {
+        const { data }: AxiosResponse<unit[]> = await api.get(
+          '/equipment/getAllUnits'
+        )
+        setUnits(data)
+      } catch (error) {}
+    }
+
     getEquipaments()
+    getUnits()
   }, [])
 
   const [open, setOpen] = React.useState(false)
+  const [isMovementModalOpen, setIsMovementModalOpen] = React.useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
+  const handleClickOpen2 = () => {
+    setIsMovementModalOpen(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
+  }
+  const handleClose2 = () => {
+    setIsMovementModalOpen(false)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -223,11 +313,12 @@ export default function ScreenEquipaments() {
   const cabecalhos = [
     { label: 'Nº de Tombamento', key: 'tippingNumber' },
     { label: 'Nº Série', key: 'serialNumber' },
-    { label: 'Status', key: 'status' },
+    { label: 'Situação', key: 'situacao' },
     { label: 'Unidade', key: 'unit.name' },
     { label: 'Unidade', key: 'unit.localization' },
     { label: 'Data de aquisição', key: 'createdAt' },
-    { label: 'Tipo Equipamento', key: 'type' },
+    { label: 'Tipo Equipamento', key: 'type' },    
+    { label: 'Estado', key: 'estado' },
     { label: 'Marca', key: 'brand.name' },
     { label: 'Modelo', key: 'model' },
     { label: 'Processador', key: 'processor' },
@@ -257,15 +348,14 @@ export default function ScreenEquipaments() {
         <BoxInput>
           <SearchIcon sx={{ marginBottom: '3px' }} />
           <Input
-            id="serialNumber"
-            name="serialNumber"
+            id="searchField"
+            name="search"
             sx={{ flex: 0.9 }}
-            placeholder="N° Tombamento ou N° serie"
+            placeholder="Nº de Série/Tombamento"
             value={basicSearch}
             onChange={handleChange}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
-                // Do code here
                 if (basicSearch === '') {
                   getEquipaments()
                 } else {
@@ -292,12 +382,16 @@ export default function ScreenEquipaments() {
             Filtros
             <FilterListOutlinedIcon sx={{ ml: '70px', color: '#A1A5BC' }} />
           </ButtonFilters>
-          <ButtonCad onClick={() => navigate('/equipment-register')}>
-            Cadastrar Equipamento
-          </ButtonCad>
+          {role !== 'consulta' && ( // Apenas o perfil de consulta não tem acesso ao botao de cadastro de equipamento
+            <ButtonCad onClick={() => navigate('/equipment-register')}>
+              Cadastrar Equipamento
+            </ButtonCad>
+          )}
         </Box>
       </FindContainer>
-      {renderEquipmentTable()}
+
+      <EquipamentsTables equipaments={equipaments} selectedEquipments={selectedEquipments} setSelectedEquipments={setSelectedEquipments} />
+      
       <FilterScrenn open={open}>
         <FilterScrennContent>
           <form onSubmit={formik.handleSubmit}>
@@ -314,34 +408,46 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
                     <em>Tipo de Equipamento</em>
                   </MenuItem>
-                  <MenuItem value="CPU" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="CPU" 
+                    sx={{ justifyContent: 'center' }}>
                     CPU
                   </MenuItem>
-                  <MenuItem value="WEBCAM" sx={{ justifyContent: 'center' }}>
-                    WebCam
+                  <MenuItem 
+                    value="Escaneador" 
+                    sx={{ justifyContent: 'center' }}>
+                    Escaneador
                   </MenuItem>
-                  <MenuItem value="MONITOR" sx={{ justifyContent: 'center' }}>
-                    Monitor
-                  </MenuItem>
-                  <MenuItem value="NOBREAK" sx={{ justifyContent: 'center' }}>
-                    Nobreak
-                  </MenuItem>
-                  <MenuItem value="SCANNER" sx={{ justifyContent: 'center' }}>
-                    Scanner
-                  </MenuItem>
-                  <MenuItem
-                    value="STABILIZER"
+                  <MenuItem 
+                    value="Estabilizador" 
                     sx={{ justifyContent: 'center' }}>
                     Estabilizador
                   </MenuItem>
+                  <MenuItem 
+                    value="Monitor" 
+                    sx={{ justifyContent: 'center' }}>
+                    Monitor
+                  </MenuItem>
+                  <MenuItem 
+                    value="Nobreak" 
+                    sx={{ justifyContent: 'center' }}>
+                    Nobreak
+                  </MenuItem>
+                  <MenuItem 
+                    value="Webcam" 
+                    sx={{ justifyContent: 'center' }}>
+                    WebCam
+                  </MenuItem>
                 </StyledSelect>
                 <StyledSelect
-                  id="status"
-                  name="status"
-                  value={formik.values.status}
+                  id="situacao"
+                  name="situacao"
+                  value={formik.values.situacao}
                   onChange={formik.handleChange}
                   displayEmpty
                   sx={{
@@ -349,34 +455,35 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
-                    <em>Status</em>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
+                    <em>Situação</em>
                   </MenuItem>
-                  <MenuItem value="ACTIVE" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="Ativo" 
+                    sx={{ justifyContent: 'center' }}>
                     Ativo
                   </MenuItem>
-                  <MenuItem
-                    value="ACTIVE_BY_DEMISE"
+                  <MenuItem 
+                    value="Ativo Empréstimo" 
                     sx={{ justifyContent: 'center' }}>
-                    Ativo mas quebrado
-                  </MenuItem>
-                  <MenuItem value="INACTIVE" sx={{ justifyContent: 'center' }}>
-                    Inativo
+                    Ativo Empréstimo
                   </MenuItem>
                   <MenuItem
-                    value="MAINTENANCE"
+                    value="Baixado"
+                    sx={{ justifyContent: 'center' }}>
+                    Baixado
+                  </MenuItem>
+                  <MenuItem
+                    value="Manutenção"
                     sx={{ justifyContent: 'center' }}>
                     Manutenção
                   </MenuItem>
                   <MenuItem
-                    value="TECHNICAL_RESERVE"
+                    value="Reserva Técnica"
                     sx={{ justifyContent: 'center' }}>
                     Reserva Técnica
-                  </MenuItem>
-                  <MenuItem
-                    value="DOWNGRADED"
-                    sx={{ justifyContent: 'center' }}>
-                    Baixado
                   </MenuItem>
                 </StyledSelect>
               </Box>
@@ -397,13 +504,19 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
                     <em>Tipo de Armazenamento</em>
                   </MenuItem>
-                  <MenuItem value="HD" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="HD" 
+                    sx={{ justifyContent: 'center' }}>
                     HD
                   </MenuItem>
-                  <MenuItem value="SSD" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="SSD" 
+                    sx={{ justifyContent: 'center' }}>
                     SSD
                   </MenuItem>
                 </StyledSelect>
@@ -418,26 +531,40 @@ export default function ScreenEquipaments() {
                     textAlign: 'center'
                   }}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
                     <em>Tipo de Tela</em>
                   </MenuItem>
-                  <MenuItem value="LCD" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="IPS" 
+                    sx={{ justifyContent: 'center' }}>
+                    IPS
+                  </MenuItem>
+                  <MenuItem 
+                    value="LCD" 
+                    sx={{ justifyContent: 'center' }}>
                     LCD
                   </MenuItem>
-                  <MenuItem value="OLED" sx={{ justifyContent: 'center' }}>
-                    OLED
-                  </MenuItem>
-                  <MenuItem value="LED" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="LED" 
+                    sx={{ justifyContent: 'center' }}>
                     LED
                   </MenuItem>
-                  <MenuItem value="TN" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="OLED" 
+                    sx={{ justifyContent: 'center' }}>
+                    OLED
+                  </MenuItem>
+                  <MenuItem 
+                    value="TN" 
+                    sx={{ justifyContent: 'center' }}>
                     TN
                   </MenuItem>
-                  <MenuItem value="VA" sx={{ justifyContent: 'center' }}>
+                  <MenuItem 
+                    value="VA" 
+                    sx={{ justifyContent: 'center' }}>
                     VA
-                  </MenuItem>
-                  <MenuItem value="IPS" sx={{ justifyContent: 'center' }}>
-                    IPS
                   </MenuItem>
                 </StyledSelect>
               </Box>
@@ -446,6 +573,31 @@ export default function ScreenEquipaments() {
                   flexGrow: 1,
                   display: { xs: 'none', md: 'flex' },
                   mt: '25px'
+                }}>
+                <StyledTextField
+                  fullWidth
+                  id="tippingNumber"
+                  name="tippingNumber"
+                  label="Nº de tombamento"
+                  value={formik.values.tippingNumber}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '30px' }}
+                />
+                <StyledTextField
+                  fullWidth
+                  id="serialNumber"
+                  name="serialNumber" 
+                  label="Nº de série"
+                  value={formik.values.serialNumber}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '90px' }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '50px'
                 }}>
                 <StyledTextField
                   fullWidth
@@ -532,12 +684,55 @@ export default function ScreenEquipaments() {
                   sx={{ ml: '30px' }}
                 />
                 <StyledTextField
-                  type="date"
-                  id="createdAt"
-                  name="createdAt"
-                  value={formik.values.initialUseDate}
+                  fullWidth
+                  id="storageAmount"
+                  name="storageAmount"
+                  label="Espaço de amarzenamento"
+                  value={formik.values.storageAmount}
                   onChange={formik.handleChange}
                   sx={{ ml: '90px' }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '50px'
+                }}>
+                <StyledSelect
+                  id="estado"
+                  name="estado"
+                  value={formik.values.storageType}
+                  onChange={formik.handleChange}
+                  displayEmpty
+                  sx={{
+                    marginLeft: '30px',
+                    textAlign: 'center'
+                  }}
+                  inputProps={{ 'aria-label': 'Without label' }}>
+                  <MenuItem 
+                    value="" 
+                    sx={{ justifyContent: 'center' }}>
+                    <em>Estado</em>
+                  </MenuItem>
+                  <MenuItem 
+                    value="Novo" 
+                    sx={{ justifyContent: 'center' }}>
+                    Novo
+                  </MenuItem>
+                  <MenuItem 
+                    value="Usado" 
+                    sx={{ justifyContent: 'center' }}>
+                    Usado
+                  </MenuItem>
+                </StyledSelect>
+                <StyledTextField
+                  type="date"
+                  id="acquisitionDate"
+                  name="acquisitionDate"
+                  value={formik.values.acquisitionDate}
+                  onChange={formik.handleChange}
+                  sx={{ ml: '95px' }}
                 />
               </Box>
             </FormControl>
@@ -575,9 +770,179 @@ export default function ScreenEquipaments() {
           </form>
         </FilterScrennContent>
       </FilterScrenn>
-      <StyledGenerateButton>
-        <CSVLink {...csvReport}>Gerar Relatório</CSVLink>
-      </StyledGenerateButton>
+      <div>
+        <StyledGenerateButton>
+          <CSVLink {...csvReport}>Gerar Relatório</CSVLink>
+        </StyledGenerateButton>
+        <StyledGenerateButton2 onClick={handleClickOpen2}>
+          Gerar Movimentação
+        </StyledGenerateButton2>
+      </div>
+
+      <MovimentScrenn open={isMovementModalOpen}>
+        <MovimentScrennContent>
+        <form onSubmit={movementFormik.handleSubmit}>
+          <FormControl>
+            <ContainerMov>
+            <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#ffffff'}}>
+              Movimentação
+            </Typography>
+            </ContainerMov>
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                  <StyledSelect
+                    id="type"
+                    name="type"
+                    value={movementFormik.values.type}
+                    onChange={movementFormik.handleChange}
+                    displayEmpty
+                    sx={{
+                      marginLeft: '30px',
+                      textAlign: 'center'
+                    }}
+                    inputProps={{ 'aria-label': 'Without label' }}>
+                    <MenuItem value={-1} sx={{ justifyContent: 'center' }}>
+                      <em>Tipo de Movimentação</em>
+                    </MenuItem>
+                    <MenuItem value={0} sx={{ justifyContent: 'center' }}>
+                      Empréstimo
+                    </MenuItem>
+                    <MenuItem value={1} sx={{ justifyContent: 'center' }}>
+                      Baixa: Reserva Técnica
+                    </MenuItem>
+                    <MenuItem value={3} sx={{ justifyContent: 'center' }}>
+                      Baixa: Sucata
+                    </MenuItem>
+                    <MenuItem value={2} sx={{ justifyContent: 'center' }}>
+                      Responsabilidade
+                    </MenuItem>
+                  </StyledSelect>
+                  <StyledSelect
+                    id="destination"
+                    name="destination"
+                    value={movementFormik.values.destination}
+                    onChange={movementFormik.handleChange}
+                    displayEmpty
+                    sx={{
+                      marginLeft: '100px',
+                      textAlign: 'center'
+                    }}
+                    inputProps={{ 'aria-label': 'Without label' }}>
+                      <MenuItem value="" sx={{ justifyContent: 'center' }}>
+                        <em>Unidade de Destino</em>
+                      </MenuItem>
+
+                      { units.map((unit) => {
+                        return (
+                          <MenuItem value={unit.id} sx={{ justifyContent: 'center' }}>
+                            <em>{ unit.name }</em>
+                          </MenuItem>
+                        )
+                      })}
+                  </StyledSelect>
+                </Box>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: 'none', md: 'flex' },
+                    mt: '25px'
+                  }}>
+                  <StyledTextField
+                    fullWidth
+                    id="inchargename"
+                    name="inchargename"
+                    label="Nome do responsável"
+                    value={movementFormik.values.inchargename}
+                    onChange={movementFormik.handleChange}
+                    sx={{ ml: '30px' }}
+                  />
+                  <StyledTextField
+                    fullWidth
+                    id="inchargerole"
+                    name="inchargerole"
+                    label="Cargo do responsável"
+                    value={movementFormik.values.inchargerole}
+                    onChange={movementFormik.handleChange}
+                    sx={{ ml: '90px' }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: 'none', md: 'flex' },
+                    mt: '50px'
+                  }}>
+                  <StyledTextField
+                    fullWidth
+                    id="chiefname"
+                    name="chiefname"
+                    label="Nome do chefe da DSTI"
+                    value={movementFormik.values.chiefname}
+                    onChange={movementFormik.handleChange}
+                    sx={{ ml: '30px' }}
+                  />
+                  <StyledTextField
+                    fullWidth
+                    id="chiefrole"
+                    name="chiefrole"
+                    label="Cargo do chefe da DSTI"
+                    value={movementFormik.values.chiefrole}
+                    onChange={movementFormik.handleChange}
+                    sx={{ ml: '90px' }}
+                  />
+                </Box>
+
+                <Box sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  mt: '50px'
+                }}>
+                  <StyledDescTextField
+                      id="description"
+                      label="Descrição"
+                      type="text"
+                      name="description"
+                      variant="outlined"
+                      onChange={movementFormik.handleChange}
+                      value={movementFormik.values.description}
+                    />
+                </Box>
+          </FormControl>
+
+          <Box
+            sx={{
+              marginTop: '50px',
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+            <Button
+              variant="contained"
+              onClick={handleClose2}
+              sx={{
+                backgroundColor: 'white',
+                color: '#666666',
+                width: '224px',
+                fontWeight: 'bold',
+                borderRadius: '10px'
+              }}>
+              Voltar
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{
+                marginLeft: '150px',
+                width: '224px',
+                fontWeight: 'bold',
+                borderRadius: '10px'
+              }}>
+              Gerar
+            </Button>
+          </Box>
+        </form>
+        </MovimentScrennContent>
+
+      </MovimentScrenn>
+
     </Container>
   )
 }

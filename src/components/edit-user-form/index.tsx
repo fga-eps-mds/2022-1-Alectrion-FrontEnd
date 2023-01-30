@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+// eslint-disable-next-line prettier/prettier
+import { useContext,useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import BasicTextFields from '../text-field'
@@ -13,6 +14,7 @@ import SelectJob from '../select-job'
 import { theme } from '../../styles/theme'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/auth'
 
 interface UserData {
   createdAt: string
@@ -36,8 +38,17 @@ interface objProps {
   password?: string
   userId?: string
 }
+interface AuthContextType2 {
+  user: {
+    role: string
+  }
+}
 
 const Form = ({ userId }: formProps) => {
+  const { user } = useContext(AuthContext) as AuthContextType2
+  const isSuperAdmin = user.role === 'administrador'
+  const isGerente = user.role === 'gerente'
+  const isBasico = user.role === 'basico'
   const navigate = useNavigate()
   const validationSchema = yup.object().shape({
     name: yup
@@ -45,7 +56,7 @@ const Form = ({ userId }: formProps) => {
       .required('O campo é obrigatório.')
       .min(3, 'Digite pelo menos 3 caracteres')
       .trim(),
-    email: yup.string().email('E-mail inválido.').trim().required(),
+    email: yup.string().email('E-mail inválido.').trim().required('O campo é obrigatório.'),
     job: yup.string().required('O campo é obrigatório.'),
     profile: yup.string().required('O campo é obrigatório.'),
     username: yup
@@ -195,7 +206,8 @@ const Form = ({ userId }: formProps) => {
             testid="jobSelect"
           />
 
-          <SelectProfile
+          {isSuperAdmin &&
+            (<SelectProfile
             size="small"
             labelId="demo-simple-select-profile-label"
             name="profile"
@@ -206,9 +218,10 @@ const Form = ({ userId }: formProps) => {
             onChange={formik.handleChange}
             error={formik.touched.profile && Boolean(formik.errors.profile)}
             testid="profileSelect"
-          />
+          />)}
 
-          <BasicTextFields
+          {isSuperAdmin &&
+            (<BasicTextFields
             size="small"
             data-testid="password"
             name="password"
@@ -220,7 +233,7 @@ const Form = ({ userId }: formProps) => {
             color="primary"
             helperText={formik.touched.password && formik.errors.password}
             error={formik.touched.password && Boolean(formik.errors.password)}
-          />
+          />)}
 
           <Button
             id="editar"
@@ -241,24 +254,26 @@ const Form = ({ userId }: formProps) => {
             onClick={() => navigate('/users')}>
             Voltar
           </Button>
-          <Button
-            name="removeButton"
-            id="remover"
-            variant="contained"
-            styledColor={theme.palette.error.main}
-            textColor="white"
-            classes={{ root: 'rootRemove' }}
-            onClick={async () => {
-              try {
-                await api.delete(`/user/delete?userId=${userId}`)
-                toast.success('Usuário excluido.')
-              } catch (error) {
-                toast.error('Aconteceu algum erro.')
-              }
-              navigate('/users')
-            }}>
-            Remover
-          </Button>
+          {isSuperAdmin && (
+            <Button
+              name="removeButton"
+              id="remover"
+              variant="contained"
+              styledColor={theme.palette.error.main}
+              textColor="white"
+              classes={{ root: 'rootRemove' }}
+              onClick={async () => {
+                try {
+                  await api.delete(`/user/delete?userId=${userId}`)
+                  toast.success('Usuário excluido.')
+                } catch (error) {
+                  toast.error('Aconteceu algum erro.')
+                }
+                navigate('/users')
+              }}>
+              Remover
+            </Button>
+          )}
         </FormStyled>
       </CardContent>
     </StyledCard>

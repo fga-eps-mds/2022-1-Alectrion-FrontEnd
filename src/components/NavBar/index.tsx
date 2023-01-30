@@ -16,6 +16,7 @@ import Stack from '@mui/material/Stack'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import img from './assets/AlectrionLogo2.png'
 import { AuthContext } from '../../contexts/auth'
+import { stringAvatar } from '../../utils/utils'
 
 interface AuthContextType {
   user: {
@@ -37,17 +38,6 @@ const NavBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
-  }
-
-  function stringAvatar(name: string) {
-    let word = ''
-    name.split(' ').forEach((name) => (word += name[0]))
-    return {
-      sx: {
-        color: '#000'
-      },
-      children: word
-    }
   }
 
   return (
@@ -118,18 +108,16 @@ const NavBar = () => {
                   Ordem de Serviço
                 </Button>
               </MenuItem>
-              {user.role === 'administrador' && (
-                <MenuItem key={''} onClick={handleCloseNavMenu}>
-                  <Button
-                    data-testid="buttonUsers"
-                    key={''}
-                    href="/users"
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'black', display: 'block' }}>
-                    Usuários
-                  </Button>
-                </MenuItem>
-              )}
+              <MenuItem key={''} onClick={handleCloseNavMenu}>
+                <Button
+                  data-testid="buttonUsers"
+                  key={''}
+                  href="/users"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block' }}>
+                  Usuários
+                </Button>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -179,7 +167,12 @@ const NavBar = () => {
               sx={{ my: 2, color: 'white', display: 'block' }}>
               Ordem de Serviço
             </Button>
-            {user.role === 'administrador' && (
+            <Button
+              data-testid="buttonMovimentsPC"
+              onClick={() => navigate('/movimentacoes')}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              Movimentações
+            </Button>            
               <Button
                 data-testid="buttonUsersPC"
                 key={''}
@@ -187,7 +180,8 @@ const NavBar = () => {
                 sx={{ my: 2, color: 'white', display: 'block' }}>
                 Usuários
               </Button>
-            )}
+
+ 
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Sair">
