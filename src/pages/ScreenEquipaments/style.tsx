@@ -89,10 +89,10 @@ export const StyledGenerateButton = styledSystem(Button)(({ theme }) => ({
   width: '346px',
   height: '74px',
   display: 'flex',
-  float: 'left',
+  float: 'right',
   fontWeight: 'bold',
   borderRadius: '10px',
-  marginLeft: '40px',
+  marginRight: '40px',
   '& 	.MuiButton-text': {
     textColor: '#ffff'
   },
@@ -102,9 +102,9 @@ export const StyledGenerateButton = styledSystem(Button)(({ theme }) => ({
 }))
 export const StyledGenerateButton2 = styledSystem(Button)(({ theme }) => ({
   backgroundColor: '#5289B5',
-  float: 'right',
+  float: 'left',
   color: 'white',
-  marginRight: '40px',
+  marginLeft: '40px',
   marginTop: '47px',
   width: '346px',
   height: '74px',

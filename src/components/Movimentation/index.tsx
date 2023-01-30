@@ -5,19 +5,21 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
-import { EditButton } from '../edit-button/index'
-import { StyledTableCell, StyledTableRow, ButtonDownloadEquipament, ButtonReservEquipament } from './styles'
-import { Button, IconButton } from '@mui/material'
-import Edit from '@mui/icons-material/Edit'
+import { useEffect, useCallback, useState } from "react";
+import { StyledTableCell, StyledTableRow, ButtonDownloadEquipament, ButtonReservEquipament, StyledTableCell2, StyledTableRow2 } from './styles'
+import { Box, Button, Collapse, IconButton, Typography } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import api from '../../api/config'
 import { toast } from 'react-toastify'
 
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { width } from '@mui/system'
+
 import Term from '../Term'
 
 import { Movement } from '../../utils/types'
-import { useEffect, useState } from 'react'
 import TermModal from '../TermModal'
 
 interface propType {
@@ -84,6 +86,8 @@ export default function MovimentTables({movements, setMovements}: propType) {
           toast.error(e.response.data.error)
     }
   }
+  const [open,setOpen] = useState(-1);
+  
 
   async function generateTerm(movement: Movement) {
     setMovement(movement)
@@ -127,6 +131,7 @@ export default function MovimentTables({movements, setMovements}: propType) {
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
+              <StyledTableCell align="center" />
               <StyledTableCell align="center">ID </StyledTableCell>
               <StyledTableCell align="center">Tipo</StyledTableCell>
               <StyledTableCell align="center">Unidade destino</StyledTableCell>
@@ -138,30 +143,108 @@ export default function MovimentTables({movements, setMovements}: propType) {
           <TableBody>
             {movements.map((movement, index) => {
               return (
-                <StyledTableRow key={index + movement.id}>
-                  <StyledTableCell align="center" component="th">
-                    {movement.id}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {TYPES[movement.type]}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {movement.destination ? movement.destination.name : '-'}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {movement.equipments.length}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                <>
+                  <StyledTableRow key={index + movement.id}>
+                    <StyledTableCell align="center" onClick={() => setOpen(open === index ? -1 : index)}>
+                      {open === index ? (
+                        <KeyboardArrowDownIcon />
+                      ) : (
+                        <KeyboardArrowRightIcon />
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell align="center" component="th">
+                      {movement.id}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {TYPES[movement.type]}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {movement.destination ? movement.destination.name : '-'}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {movement.equipments.length}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
                       <IconButton aria-label="pdf" size="large" onClick={() => {openTermModal(movement)}}>
                           <PictureAsPdfIcon />
                       </IconButton>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
                       <IconButton aria-label="delete" size="large" disabled={index != 0} onClick={() => deleteMovement()}>
-                          <DeleteForeverIcon />
+                        <DeleteForeverIcon />
                       </IconButton>
-                  </StyledTableCell>
-                </StyledTableRow>
+                    </StyledTableCell>
+                  </StyledTableRow>
+
+                  <StyledTableRow2>
+                    <StyledTableCell colSpan={5} sx={{padding:0,paddingBottom: 0, paddingTop: 0, width:'100%'  }}>
+                      <Collapse in={open === index} timeout="auto" unmountOnExit                         
+                          sx={{
+                            width: "100%",  
+                            minHeight: 36,
+                            fontSize: 18,
+                            marginLeft:10
+                          }}
+                        >
+                        <Box
+                          sx={{
+                            width: "100%",
+                            backgroundColor: 'rgba(50,50,50,0.2)',
+                            minHeight: 36,
+                            textAlign: 'center',
+                            alignItems: 'center',
+                            fontSize: 22,
+                          }}
+                        >
+                        Equipamentos
+                        </Box>
+                          <TableContainer aria-label="container2"
+                            sx={{
+                              minWidth: '100%',
+                              margin: '0 ',
+                              textAlign: 'center',
+                            }}
+                            component={Paper}>
+                            <Table aria-label="customized table2">
+                              <TableHead>
+                                <TableRow>
+                                  <StyledTableCell2 align="center">N° Tombamento </StyledTableCell2>
+                                  <StyledTableCell2 align="center">N° Série</StyledTableCell2>
+                                  <StyledTableCell2 align="center">Situação</StyledTableCell2>
+                                  <StyledTableCell2 align="center">Tipo de equipamento</StyledTableCell2>
+                                  <StyledTableCell2 align="center">Localidade</StyledTableCell2>
+                                </TableRow>
+                              </TableHead>
+
+                              <TableBody>
+                                {movement.equipments.map((equipment) => {
+                                  return (
+                                    <StyledTableRow key={ equipment.id}>
+                                      <StyledTableCell align="center" component="th">
+                                        {equipment.tippingNumber}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {equipment.serialNumber}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {equipment.situacao}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {equipment.type}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {equipment.unit.name}
+                                      </StyledTableCell>
+                                    </StyledTableRow>
+                                  )
+                              })}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </Collapse>
+                      </StyledTableCell>
+                    </StyledTableRow2>
+                  </>
               )
             })}
           </TableBody>
