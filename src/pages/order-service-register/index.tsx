@@ -2,7 +2,6 @@
 import { Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../../api/config";
 import RegisterOrderServiceForm from "../../components/register-order-service-form";
 import { AuthContext } from "../../contexts/auth";
@@ -32,7 +31,6 @@ export type Equipment = {
 };
 
 const OrderRegister = () => {
-    const navigate = useNavigate();
     const [equipment, setEquipment] = useState<Equipment | undefined>(
         undefined
     );

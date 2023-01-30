@@ -4,7 +4,6 @@ import { AxiosResponse } from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import {
   useLocation,
-  useNavigate,
 } from 'react-router-dom'
 import api from '../../api/config'
 import { AuthContext } from '../../contexts/auth'
@@ -60,7 +59,6 @@ export type OrderService = {
 }
 
 const OrderEdit = () => {
-  const navigate = useNavigate()
   const [equipment, setEquipment] = useState<Equipment | undefined>(undefined)
   const [units, setUnits] = useState<
     { id: string; name: string; localization: string }[] | undefined
