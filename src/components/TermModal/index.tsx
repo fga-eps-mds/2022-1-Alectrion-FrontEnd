@@ -27,11 +27,13 @@ export default function TermModal({ units, setUnit, setDeliveryDate, isOpen, set
             if(['Órgão', ''].includes(values.unit))
                 toast.error('Selecione um órgão.')
 
-            setDeliveryDate(values.deliveryDate)
-            setUnit(values.unit)
-            setIsOpen(false)
-
-            generateTerm(movement)
+            else {
+                setDeliveryDate(values.deliveryDate)
+                setUnit(values.unit)
+                setIsOpen(false)
+    
+                generateTerm(movement)
+            }
         }
     })
     
