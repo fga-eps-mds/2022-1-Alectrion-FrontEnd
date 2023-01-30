@@ -47,6 +47,7 @@
     "date-fns": "^2.29.2",
     "dayjs": "^1.11.5",
     "formik": "^2.2.9",
+    "html2pdf.js": "^0.10.1",
     "i": "^0.3.7",
     "jest-mock-axios": "^4.7.0-beta",
     "pdfmake": "^0.2.7",

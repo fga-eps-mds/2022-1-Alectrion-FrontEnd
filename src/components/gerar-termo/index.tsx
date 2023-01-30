@@ -18,7 +18,9 @@ import { FindContainer } from '../../pages/user-screen/styles'
 import { dateFormat } from '../../utils/dateFormat'
 import { StyledSelect } from '../register-user-form/styles'
 import { StyledTextField } from '../text-field/styles'
-import MovimentTables, { Movement } from '../Movimentation'
+import MovimentTables from '../Movimentation'
+
+import { Movement } from '../../utils/types'
 
 export interface SearchParams {
   id?: string
