@@ -73,23 +73,6 @@ interface propType {
   equipaments: equipament[]
 }
 
-function handleStatus(situacao: string){
-  switch (situacao) {
-    case 'MAINTENANCE':
-      return 'Em Manutenção'
-    case 'ACTIVE':
-      return 'Ativo'
-    case 'ACTIVE_BY_DEMISE':
-      return 'Ativo'
-    case 'INACTIVE':
-      return 'Inativo'
-    case 'DOWNGRADED':
-      return 'Baixado'
-    case 'TECHNICAL_RESERVE':
-      return 'Reserva Técnica'
-  }
-}
-
 export default function EquipamentsTables({ equipaments }: propType) {
   const { user } = useContext(AuthContext) as AuthContextType
   const role = user?.role
@@ -150,7 +133,7 @@ export default function EquipamentsTables({ equipaments }: propType) {
                   {equipaments.serialNumber}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {handleStatus(equipaments.situacao)}
+                  {equipaments.situacao}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {`${equipaments.unit.name} - ${equipaments.unit.localization}`}

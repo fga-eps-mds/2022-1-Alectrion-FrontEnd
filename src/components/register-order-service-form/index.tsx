@@ -28,23 +28,6 @@ type Props = {
   units: { id: string; name: string; localization: string }[] | undefined
 }
 
-function handleStatus(situacao: string | undefined){
-  switch (situacao) {
-    case 'MAINTENANCE':
-      return 'Em Manutenção'
-    case 'ACTIVE':
-      return 'Ativo'
-    case 'ACTIVE_BY_DEMISE':
-      return 'Ativo'
-    case 'INACTIVE':
-      return 'Inativo'
-    case 'DOWNGRADED':
-      return 'Baixado'
-    case 'TECHNICAL_RESERVE':
-      return 'Reserva Técnica'
-  }
-}
-
 const RegisterOrderServiceForm = ({
   initialData,
   user,
@@ -86,7 +69,7 @@ const RegisterOrderServiceForm = ({
       senderFunctionalNumber: '',
       date: new Date().toISOString().split('T')[0],
       tippingNumber: initialData?.tippingNumber,
-      situacao: handleStatus(initialData?.situacao),
+      situacao: initialData?.situacao,
       productType: initialData?.type,
       description: '',
       userName: user.name,

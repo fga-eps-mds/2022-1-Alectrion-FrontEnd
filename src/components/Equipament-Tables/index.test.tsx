@@ -86,10 +86,10 @@ test("should list equipament", async () => {
     expect(screen.getByText("MONITOR")).toBeInTheDocument();
     expect(screen.getByText("123456")).toBeInTheDocument();
     expect(screen.getByText("10030")).toBeInTheDocument();
-    expect(screen.getByText("Ativo")).toBeInTheDocument();
+    expect(screen.getByText("ACTIVE")).toBeInTheDocument();
 
     expect(screen.getByText("CPU")).toBeInTheDocument();
     expect(screen.getByText("654321")).toBeInTheDocument();
     expect(screen.getByText("10031")).toBeInTheDocument();
-    expect(screen.getByText("Reserva Técnica")).toBeInTheDocument();
+    expect(screen.getByText("TECHNICAL_RESERVE")).toBeInTheDocument();
 });
