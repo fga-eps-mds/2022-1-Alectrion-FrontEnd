@@ -53,7 +53,6 @@ const OrderServiceUpdateForm = ({
             .required("Esse campo é obrigatório"),
         tippingNumber: yup.string().trim().required("Esse campo é obrigatório"),
         status: yup.string().trim(),
-        destination: yup.string().trim().required("Esse campo é obrigatório"),
         productType: yup.string().trim(),
         description: yup.string().trim().max(250),
         receiverName: yup.string().trim(),
@@ -74,7 +73,6 @@ const OrderServiceUpdateForm = ({
             receiverFunctionalNumber: order.receiverFunctionalNumber, 
             receiverDate: (new Date(order.receiverDate) < new Date(order.date)) ? null : order.receiverDate,
             status: order.status, 
-            destination: order.destination.name, 
             technicians: order.technicians.toString(),
             description: order.description
         },
@@ -91,7 +89,6 @@ const OrderServiceUpdateForm = ({
                         userId: user.token,
                         receiverName: formik.values.receiverName,
                         authorFunctionalNumber: formik.values.authorFunctionalNumber,
-                        destination: order.destination.id,
                         senderName: formik.values.senderName,
                         senderFunctionalNumber: formik.values.senderFunctionalNumber,
                         description: formik.values.description,
@@ -311,25 +308,6 @@ const OrderServiceUpdateForm = ({
                     </FormContainer>
 
                     <FormContainer>
-                        <StyledTextField
-                            label="Destino"
-                            id="destination-input"
-                            type="text"
-                            name="destination"
-                            fullWidth
-                            disabled
-                            variant="outlined"
-                            value={formik.values.destination}
-                            helperText={
-                                formik.touched.destination &&
-                                formik.errors.destination
-                            }
-                            error={
-                                formik.touched.destination &&
-                                Boolean(formik.errors.destination)
-                            }
-                        />
-
                         <StyledTextField
                             label="Técnicos"
                             id="technicians-input"

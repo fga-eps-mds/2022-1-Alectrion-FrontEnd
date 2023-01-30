@@ -58,7 +58,6 @@ const RegisterOrderServiceForm = ({
       }),
     tippingNumber: yup.string().trim().required('Esse campo é obrigatório'),
     situacao: yup.string().trim(),
-    destination: yup.string().trim().required('Esse campo é obrigatório'),
     productType: yup.string().trim(),
     description: yup.string().trim().max(250)
   })
@@ -73,7 +72,6 @@ const RegisterOrderServiceForm = ({
       productType: initialData?.type,
       description: '',
       userName: user.name,
-      destination: ''
     },
     validationSchema,
     enableReinitialize: true,
@@ -83,7 +81,6 @@ const RegisterOrderServiceForm = ({
           `equipment/create-order-service/${initialData?.id}`,
           {
             authorFunctionalNumber: formik.values.authorFunctionalNumber,
-            destination: formik.values.destination,
             senderName: formik.values.senderName,
             senderFunctionalNumber: formik.values.senderFunctionalNumber,
             date: formik.values.date,
@@ -253,44 +250,7 @@ const RegisterOrderServiceForm = ({
                 }
               />
 
-              <Autocomplete
-                disablePortal
-                options={units ?? []}
-                getOptionLabel={(option) =>
-                  `${option.name} - ${option.localization}`
-                }
-                onChange={(_, value) =>
-                  formik.setFieldValue('destination', value?.id)
-                }
-                fullWidth
-                className="autocomplete"
-                sx={{
-                  padding: 0,
-                  '& .MuiOutlinedInput-root': {
-                    padding: '0 !important'
-                  },
-                  '& .MuiAutocomplete-input': {
-                    padding: '16.5px !important'
-                  }
-                }}
-                renderInput={(params) => (
-                  <StyledTextField
-                    {...params}
-                    label="Destino"
-                    helperText={
-                      formik.touched.destination && formik.errors.destination
-                    }
-                    error={
-                      formik.touched.destination &&
-                      Boolean(formik.errors.destination)
-                    }
-                  />
-                )}
-              />
-
-
             </FormContainer>
-
 
           <StyledTextArea
             label="Descrição"

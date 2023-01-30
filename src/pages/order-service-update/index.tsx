@@ -49,11 +49,6 @@ export type OrderService = {
     tippingNumber: string
     situacao: string
   }
-  destination: {
-    id: string,
-    localization: string
-    name: string
-  },
   technicians: [],
   receiverDate: string
 }
