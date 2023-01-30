@@ -49,6 +49,7 @@
     "formik": "^2.2.9",
     "i": "^0.3.7",
     "jest-mock-axios": "^4.7.0-beta",
+    "pdfmake": "^0.2.7",
     "react": "^18.2.0",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
