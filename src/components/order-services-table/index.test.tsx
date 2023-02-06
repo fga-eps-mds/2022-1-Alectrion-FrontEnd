@@ -44,7 +44,7 @@ test('should list order service', async () => {
     expect(screen.getByText('b21a68e5-20ba-4af7-941a-41984663fd09')).toBeInTheDocument()
     expect(screen.getByText('123')).toBeInTheDocument()
     expect(screen.getByText('Monitor')).toBeInTheDocument()
-    expect(screen.getByText('01/01/2023	')).toBeInTheDocument()
+    expect(screen.getByText('01/01/2023')).toBeInTheDocument()
     expect(screen.getByText('Entegrador Teste - 01234')).toBeInTheDocument()
     expect(screen.getByText('Recebedor Teste - 01234567')).toBeInTheDocument()
     expect(screen.getByText('Em Manuntenção')).toBeInTheDocument()
