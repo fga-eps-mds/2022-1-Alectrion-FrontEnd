@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Providers from '../../utils/test-utils'
 
-import OderServiceTable, { OrderService } from './index'
+import OderServiceTable, {OrderService} from './index'
 
 
 test('should list order service', async () => {

@@ -11,7 +11,7 @@ import { dateFormat } from '../../utils/dateFormat'
 import { useNavigate } from 'react-router-dom'
 import { EditOSButton } from '../edit-os-button'
 
-interface OrderService {
+export interface OrderService {
   id: string
   date: string
   description: string
