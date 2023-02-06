@@ -35,7 +35,7 @@ interface OrderServicesProps {
 function handleToStatus(status: string) {
   switch(status){
     case 'MAINTENANCE': {
-      return 'Em Manuntenção';
+      return 'Em Manutenção';
     }
     case 'WARRANTY': {
       return 'Garantia'
